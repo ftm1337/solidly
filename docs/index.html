@@ -315,7 +315,7 @@ ra = [{"inputs":[{"internalType":"address","name":"_factory","type":"address"},{
 async function getAmountOut(a,i,o,p){
 	if(isFinite(a) == false){$("inp_0").value = "0.0";$("inp_1").value = "0.0";return}
 	R = new ethers.Contract(RUTR,ra,provider);
-	let oar = await (R.getAmountOut( BigInt(a) * BigInt(10**(toks[i][0])) ,i ,o))
+	let oar = await (R.getAmountOut( BigInt(a * 10**(toks[i][0])) ,i ,o))
 	p == 0 ? $("inp_0").value = "0.0" : $("inp_1").value = "0.0"
 	Promise.all([oar,i,o,p]).then( oa => {
 		ret = (Number(oa[0][0]) / 10**(toks[oa[2]][0]))
@@ -363,6 +363,13 @@ async function _swap()
 		to:t_o,
 		stable:false
 	}]
+	console.log(
+		amt,
+		BigInt(inpu),
+		rout,
+		window.ethereum.selectedAddress,
+		(Date.now()/1e3 + 30*60*60).toFixed()
+	)
 	let txr = await R.swapExactTokensForTokensSupportingFeeOnTransferTokens(
 		amt,
 		BigInt(inpu),
@@ -384,7 +391,7 @@ async function gubs()
 		var q = _t1.balanceOf(window.ethereum.selectedAddress)
 		await Promise.all([p,q,t_i,t_o]).then(s=>{
 			$("bal0").innerHTML=(s[0]/(10**toks[s[2]][0])).toFixed(toks[s[2]]) + " "+toks[s[2]][1];
-			$("bal1").innerHTML=(s[0]/(10**toks[s[3]][0])).toFixed(toks[s[3]]) + " "+toks[s[3]][1];
+			$("bal1").innerHTML=(s[1]/(10**toks[s[3]][0])).toFixed(toks[s[3]]) + " "+toks[s[3]][1];
 		})
 	}
 	catch(e){console.log(e);/*$("cw_m").innerHTML=e*/}
