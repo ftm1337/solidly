@@ -7,11 +7,13 @@
 </head>
 <link rel="shortcut icon" href="img/64.png" />
 <style>
+
 *{font-family:Inter,Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol",helvetica nueve, helvetica, robotica, ubuntu, roboto, sans-serif;scroll-behavior: smooth !important;}
-html{background:url('https://solidly.exchange/images/solid_background.png');background-repeat: no-repeat; background-size: 100vw 100vh;	color:#7e99b0;overflow:hidden}/*818797,7e99bo*/
+html{background:url('https://solidly.exchange/images/solid_background.png');background-repeat: no-repeat; background-size: 100% 100%;	color:#7e99b0;}/*818797,7e99bo*/
 .twopc{display:grid;grid-template-columns:auto auto}
-input{color:#fff;width:100%;background:transparent}
-.twopc input{border:none;font-size:3em;color:#eee;margin: 0 20px}
+input{color:#fff;width:100%;background:transparent;border:none;}
+a{color:#eee}
+.twopc input{font-size:3em;color:#eee;margin: 0 20px}
 .twopc div img{width:64px;height:64px;border-radius:64px; border:1px solid #7e99b0;padding:10px}
 .top1l{font-weight:lighter;font-size:2em;padding:5px;font-family:helvetica nueve, helvetica, robotica, ubuntu, roboto, sans-serif;}
 #switch {display:none;border:none;}
@@ -25,15 +27,22 @@ button{color:#fff;border:none;box-shadow:0px 1px 2px #111;cursor:pointer}
 .flip-root {fill: currentColor;width: 20px;height: 20px;display: inline-block;font-size: 1rem;transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;flex-shrink: 0;-moz-user-select: none;margin: 5px}
 .flip-in {cursor: pointer;font-size: 30px !important;background: #212b48;border-radius: 6px;}
 .body{overflow:hidden auto}
+#slippage{font-size:1em}
 @media(min-width:641px){
 	.outerswap{width:420px}
 }
+
 </style>
 <div class="body">
 
 	<div class="twopc">
-		<div align="left" class="top1l">
-		FTM.guru
+		<div>
+			<div align="left" class="top1l">
+			FTM.guru
+			</div>
+			<div>
+			~./solidly-with-FoT/
+			</div>
 		</div>
 		<div align="right" class="topbtn">
 			<div id="connect">
@@ -48,6 +57,7 @@ button{color:#fff;border:none;box-shadow:0px 1px 2px #111;cursor:pointer}
 	</div>
 	<br><br><br>
 
+	<div align="center">This is super-experminetal.<br>⚠ <a href="https://discord.gg/QpyfMarNrV" target="_blank">discord.gg/QpyfMarNrV</a></div>
 
 	<div class="outerswap" align="center">
 
@@ -82,17 +92,17 @@ button{color:#fff;border:none;box-shadow:0px 1px 2px #111;cursor:pointer}
 		</div>
 
 		<button class="actbutton" onclick="swap()">Swap</button>
+		<br><br>
+		<div class="twopc"><span>Slippage Tolerance: </span><input id="slippage" value="" placeholder="10%"></div>
 
 	</div>
 
-
-	<input id="slippage" value="" placeholder="Slippage %">
 	<br>
-	<span id="cw_m"></span><br>
+	<div align="center" id="cw_m"></div><br>
 	<br><br><br><br><br><br>
 	<div onclick="pantvl()">
 		<span style="font-size:2.5em;font-weight:bold" id="pantvl" class="fore">$0.000</span><sup style="font-size:1.2em;position:relative;top: -14px;">⟳</sup><br>
-		(Total Value Locked on MTV.guru)
+		<!--(Total Value Locked on MTV.guru)-->
 	</div>
 </div>
 
@@ -148,6 +158,12 @@ async function pantvl()
 	let r = await tg.tvl()
 	$("pantvl").innerHTML = "$"+(Number(r._hex)/1e18).toLocaleString()
 	*/
+
+	url=RPC_URL;
+	data={"jsonrpc":"2.0","id":9,"method":"eth_call","params":[{"data":"0xedb0f3b0000000000000000000000000ea035a13b64cb49d85e2f0a2736c9604cb21599c","to":"0x0786c3a78f5133f08c1c70953b8b10376bc6dcad"},"latest"]}
+	let io = (await fetch(url, { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json' } })).json();
+	Promise.all([io]).then(relp=>{$("pantvl").innerHTML = "$"+(Number(relp[0].result)/1e18).toLocaleString();console.log(relp)})
+
 }
 async function cw()
 {
@@ -303,7 +319,9 @@ async function swap()
 {
 	T = new ethers.Contract(t_i,ra,signer);
 	a = await T.allowance(window.ethereum.selectedAddress,RUTR)
-	if (a < $("inp_0").value * 10**(toks[t_i][0])){await T.approve(RUTR,ethers.constants.MaxUint256)}
+	if (a < $("inp_0").value * 10**(toks[t_i][0])){await T.approve(RUTR, ethers.constants.MaxUint256
+	//$("inp_0").valueBigInt($("inp_0").value) * BigInt(10**(toks[t_i][0]))
+	)}
 	_swap()
 }
 async function _swap()
@@ -314,13 +332,13 @@ async function _swap()
 	sl = 1000; //1e4 = 100%
 	rout = [{
 		from:t_i,
-		to::t_o,
+		to:t_o,
 		stable:false
 	}]
 	if($("slippage").value !== 1000 && isFinite(sl)){sl = ($("slippage").value < 5000 && $("slippage").value > 10) ? 5000 : $("slippage").value;}
 	let txr = await R.swapExactTokensForTokensSupportingFeeOnTransferTokens(
 		amt,
-		amt * BigInt(sl) / BigInt(10000),
+		await R.getAmountOut(amt,t_i,t_o) * BigInt(10000-sl) / BigInt(10000),
 		rout,
 		window.ethereum.selectedAddress,
 		(Date.now()/1e3 + 30*60*60).toFixed()
