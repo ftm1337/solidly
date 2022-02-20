@@ -57,7 +57,7 @@ button{color:#fff;border:none;box-shadow:0px 1px 2px #111;cursor:pointer}
 	</div>
 	<br><br><br>
 
-	<div align="center">This is super-experminetal.<br>⚠ <a href="https://discord.gg/QpyfMarNrV" target="_blank">discord.gg/QpyfMarNrV</a></div>
+	<div align="center">This is super-expermintal.<br>⚠ <a href="https://discord.gg/QpyfMarNrV" target="_blank">discord.gg/QpyfMarNrV</a></div>
 
 	<div class="outerswap" align="center">
 
@@ -65,7 +65,7 @@ button{color:#fff;border:none;box-shadow:0px 1px 2px #111;cursor:pointer}
 		<div class="innerarea">
 			<div class="twopc">
 				<div>
-					<img src="../img/ftm.svg" id="inp" value="0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83">
+					<img src="../img/ftm.svg" id="inp" value="0x04068da6c83afcfa0e13ba15a6696662335d5b75">
 				</div>
 				<div>
 					<div align="left">Balance: <span id="bal0">0.0 FTM</span></div>
@@ -115,7 +115,7 @@ DECIMAL = 18;
 decEARN = 18;
 EXPLORE = "https://ftmscan.com/address/";
 tsca = "0x0786c3a78f5133f08c1c70953b8b10376bc6dcad";
-RUTR = "0x1900f84680b940d7b05aed5e436df7306d37e3f9";
+RUTR = "0xF02382e9c35D5043aA20855d1EeaA959E2FF6590";
 function $(_) {return document.getElementById(_);}
 let provider= {};
 let signer= {};
@@ -298,11 +298,11 @@ async function getAmountOut(a,i,o,p){
 		p == 0 ? $("inp_0").value = ret : $("inp_1").value = ret
 	})
 }
-t_i = "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83"
+t_i = "0x04068da6c83afcfa0e13ba15a6696662335d5b75"
 t_o = "0xf43Cc235E686d7BC513F53Fbffb61F760c3a1882"
 toks = {
 "0xf43Cc235E686d7BC513F53Fbffb61F760c3a1882" : [18],
-"0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83" : [18],
+"0x04068da6c83afcfa0e13ba15a6696662335d5b75" : [18],
 }
 
 function flip()
@@ -343,7 +343,23 @@ async function _swap()
 		window.ethereum.selectedAddress,
 		(Date.now()/1e3 + 30*60*60).toFixed()
 	);
-	txr.wait()
+	await txr.wait()
+	console.log("swap:",txr)
+}
+async function gubs()
+{
+	try
+	{
+		_t0 = new ethers.Contract(t_i, ra, provider);
+		_t1 = new ethers.Contract(t_o, ra, provider);
+		var p = _t0.balanceOf(window.ethereum.selectedAddress)
+		var q = _t1.balanceOf(window.ethereum.selectedAddress)
+		await Promise.all([p,q,t_i,t_o]).then(s=>{
+			$("bal0").innerHTML=(s[0]/(10**toks[s[2]])).toFixed(toks[s[2]]);
+			$("bal1").innerHTML=(s[0]/(10**toks[s[3]])).toFixed(toks[s[3]]);
+		})
+	}
+	catch(e){console.log(e);/*$("cw_m").innerHTML=e*/}
 }
 </script>
 
