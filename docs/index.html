@@ -36,8 +36,6 @@ button{color:#fff;border:none;box-shadow:0px 1px 2px #111;cursor:pointer}
 		<div id="connect">
 			<button onclick="cw()" id="btn-connect">Connect Wallet</button>
 		</div>
-			<br>
-			<span id="cw_m"></span><br>
 		<div id="switch">
 			<button onclick="cw()" id="btn-switch">Switch?</button>
 			<br>
@@ -85,7 +83,9 @@ button{color:#fff;border:none;box-shadow:0px 1px 2px #111;cursor:pointer}
 </div>
 
 
-
+<input id="slippage" value="" placeholder="Slippage %">
+<br>
+<span id="cw_m"></span><br>
 <br><br><br><br><br><br>
 <div onclick="pantvl()">
 	<span style="font-size:2.5em;font-weight:bold" id="pantvl" class="fore">$0.000</span><sup style="font-size:1.2em;position:relative;top: -14px;">⟳</sup><br>
@@ -298,7 +298,7 @@ sl = 1000; //1e4 = 100%
 async function swap()
 {
 	T = new ethers.Contract(t_i,ra,signer);
-	a = await T.allowance(RUTR,window.ethereum.selectedAddress)
+	a = await T.allowance(window.ethereum.selectedAddress,RUTR)
 	if (a < $("inp_0").value * 10**(toks[t_i][0])){await T.approve(RUTR,ethers.constants.MaxUint256)}
 	_swap()
 }
@@ -306,7 +306,7 @@ async function _swap()
 {
 
 	R = new ethers.Contract(RUTR,ra,signer);
-	amt = BigInt(a) * BigInt(10**(toks[i][0]))
+	amt = BigInt(a) * BigInt(10**(toks[t_i][0]))
 	sl = 1000; //1e4 = 100%
 	rout = [{
 		"from":t_i,
