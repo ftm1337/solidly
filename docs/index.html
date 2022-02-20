@@ -41,7 +41,7 @@ button{color:#fff;border:none;box-shadow:0px 1px 2px #111;cursor:pointer}
 			FTM.guru
 			</div>
 			<div>
-			~./solidly-with-FoT/
+			~/solidly-with-FoT/
 			</div>
 		</div>
 		<div align="right" class="topbtn">
@@ -349,14 +349,14 @@ async function swap()
 	)}
 	_swap()
 }
+	sl = 1000; //1e4 = 100%
 async function _swap()
 {
 	R = new ethers.Contract(RUTR,ra,signer);
 	amt = BigInt($("inp_0").value * 10**(toks[t_i][0]))
-	sl = 1000; //1e4 = 100%
-	if($("slippage").value !== 1000 && isFinite(sl)){sl = ($("slippage").value < 5000 && $("slippage").value > 10) ? 5000 : $("slippage").value;}
+	if($("slippage").value !== 10 && isFinite(sl)){sl = ($("slippage").value < 50 && $("slippage").value > 0.1) ? ($("slippage").value *100).toFixed() : 5000;}
 	inpu = (await R.getAmountOut(amt,t_i,t_o))
-	inpu = inpu[0] * (10000-sl) / (10000)
+	inpu = (inpu[0] * (10000-Number(sl)) / (10000)).toFixed()
 	console.log(inpu)
 	rout = [{
 		from:t_i,
