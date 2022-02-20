@@ -1,0 +1,198 @@
+<!doctype html><html><meta charset="UTF-8">
+<head>
+<title>FTM1337 : ftm.guru</title>
+<meta name="description" content="FTM.guru : Fantom Opera blockchain tools, DEX pair Explorer, Fantom Scan, Top FTM Tokens on-chain voting.">
+<meta name="keywords" content="Fantom Opera, FTM, Decentralized Finance, ELITE, 1337, defi, farming, FTM1337">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<link rel="shortcut icon" href="img/64.png" />
+<style>
+*{font-family:Inter,Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol",helvetica nueve, helvetica, robotica, ubuntu, roboto, sans-serif;scroll-behavior: smooth !important;}
+html{background:url('https://solidly.exchange/images/solid_background.png');background-repeat: no-repeat; background-size: 100vw 100vh;	color:#7e99b0;overflow:hidden}/*818797,7e99bo*/
+.twopc{display:grid;grid-template-columns:auto auto}
+input{color:#fff}
+.twopc input{background:transparent;border:none;font-size:3em;color:#eee;margin: 0 20px}
+.twopc div img{width:64px;height:64px;border-radius:64px; border:1px solid #7e99b0;padding:10px}
+.top1l{font-weight:lighter;font-size:2em;padding:5px;font-family:helvetica nueve, helvetica, robotica, ubuntu, roboto, sans-serif;}
+#switch {display:none;border:none;}
+.topbtn button{padding: 10px;border-radius:32px}
+.outerswap{border-radius:20px;background:#192138;padding:10px;margin:10px auto}
+button,.innerarea{background:#212b48;border-radius:12px;padding:15px;margin:2px 0;padding: 19px 24px;min-width: 150px;}
+button{color:#fff;border:none;box-shadow:0px 1px 2px #111;cursor:pointer}
+.actbutton{background:#173448;border-radius:20px;padding:10px;margin:10px;color:#06d3d7;width:calc(100% - 20px)}
+.l7i {width: 100%;display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;-webkit-justify-content: center;justify-content: center;z-index: 9;height: 0;}
+.l7j {background: #161b2c;border-radius: 9px;width: 30px;height: 30px;z-index: 1;}
+.flip-root {fill: currentColor;width: 20px;height: 20px;display: inline-block;font-size: 1rem;transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;flex-shrink: 0;-moz-user-select: none;margin: 5px}
+.flip-in {cursor: pointer;font-size: 30px !important;background: #212b48;border-radius: 6px;}
+@media(min-width:641px){
+	.outerswap{width:420px}
+}
+</style>
+<div class="twopc">
+	<div align="left" class="top1l">
+	FTM.guru
+	</div>
+	<div align="right" class="topbtn">
+		<div id="connect">
+			<button onclick="cw()" id="btn-connect">Connect Wallet</button>
+		</div>
+			<br>
+			<span id="cw_m"></span><br>
+		<div id="switch">
+			<button onclick="cw()" id="btn-switch">Switch?</button>
+			<br>
+			<span id="cw"></span>
+		</div>
+	</div>
+</div>
+<br><br><br>
+
+
+<div class="outerswap" align="center">
+
+
+	<div class="innerarea">
+		<div class="twopc">
+			<div>
+				<img src="../img/ftm.svg">
+			</div>
+			<div>
+				<div align="left">Balance: <span id="bal0">0.0 FTM</span></div>
+				<input placeholder="0.0">
+			</div>
+		</div>
+	</div>
+
+	<div class="l7i">
+		<div class="l7j">
+			<svg class="flip-root flip-in" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"></path></svg>
+		</div>
+	</div>
+	<div class="innerarea">
+		<div class="twopc">
+			<div>
+				<img src="../img/64.png">
+			</div>
+			<div>
+				<div align="left">Balance: <span id="bal0">0.0 ELITE</span></div>
+				<input placeholder="0.0">
+			</div>
+		</div>
+	</div>
+
+	<button class="actbutton">Swap</button>
+
+</div>
+
+<script src="../ethers-5.2.umd.min.js" type="application/javascript" defer="true"></script>
+
+<script>
+RPC_URL = "https://rpc.ftm.tools"
+CHAINID = 250;
+DECIMAL = 18;
+decEARN = 18;
+EXPLORE = "https://ftmscan.com/address/";
+tsca = "0x0786c3a78f5133f08c1c70953b8b10376bc6dcad";
+function $(_) {return document.getElementById(_);}
+let provider= {};
+let signer= {};
+window.addEventListener('load',async function()
+{
+
+	console.log("waitin for 3 secs..");
+	$("cw_m").innerHTML = "Connecting.. Please wait."
+	setTimeout(async () => { basetrip(); }, 3000);
+}, false);
+
+async function basetrip()
+{
+//if(window.ethereum&&Number(window.ethereum.chainId)==250){web3 = new Web3(web3.currentProvider);if(!(window.ethereum.selectedAddress==null)){cw()}}
+
+	if(!(window.ethereum)){$("cw_m").innerHTML = "Wallet wasn't detected!";console.log("Wallet wasn't detected!");provider = new ethers.providers.JsonRpcProvider(RPC_URL);pantvl();return}
+	else if(!Number(window.ethereum.chainId)==CHAINID){$("cw_m").innerHTML = "Wrong network! Please Switch to "+CHAINID;provider = new ethers.providers.Web3Provider(window.ethereum);pantvl();return}
+	else if(//typeOf window.ethereum == Object &&Number(window.ethereum.chainId)
+		Number(window.ethereum.chainId)==CHAINID)
+	{
+		console.log("Recognized Ethereum Chain:", window.ethereum.chainId,CHAINID);
+		provider = new ethers.providers.Web3Provider(window.ethereum)
+		signer = provider.getSigner();
+		if(!(window.ethereum.selectedAddress==null)){console.log("Found old wallet:", window.ethereum.selectedAddress);cw();}
+	}
+	else //if(Number(window.ethereum.chainId)==CHAINID)
+	{
+		console.log("Couldn't find Ethereum Provider - ",CHAINID,window.ethereum.chainId)
+		if((typeof Number(window.ethereum.chainId) == "number")){$("cw_m").innerHTML = "Wrong network! Switch from" + Number(window.ethereum.chainId)+" to "+CHAINID}
+		provider = new ethers.providers.JsonRpcProvider(RPC_URL);
+		signer = provider.getSigner()
+		$("connect").innerHTML=`Wallet not found.<br><br><button onclick="window.location.reload()" id="btn-connect">Retry?</button>`;
+	}
+	pantvl()
+}
+async function pantvl()
+{
+	tabi = [{"constant": true,"inputs": [],"name": "tvl","outputs": [{"internalType": "uint256","name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"}]
+	const tg = new ethers.Contract(tsca,tabi,provider)
+	let r = await tg.tvl()
+	$("pantvl").innerHTML = "$"+(Number(r._hex)/1e18).toLocaleString()
+}async function cw()
+{
+	let cs = await cw2(); cs?console.log("Good to Transact"):cw2()
+}
+async function cw2()
+{
+	if(!(window.ethereum)){$("cw_m").innerHTML="Metamask not detected! Trying a refresh";console.log("Metamask not found!");window.location.reload();return(0)}
+	if(!(Number(window.ethereum.chainId)==CHAINID)){$("cw_m").innerHTML="Wrong network detected! Please switch to chain ID", CHAINID, "and refresh this page.";return(0)}
+	if(typeof provider == "undefined"){$("cw_m").innerHTML="Provider not detected! Trying a refresh";console.log("Provider not found!");window.location.reload();return(0)}
+	/*
+	if(!
+		(isFinite(Number(accounts[0])))
+		|| (isFinite(Number(window.ethereum.selectedAddress)))
+	){console.log("NAAAAAAAAAAAAAAAAA");window.location.reload();}
+	*/
+
+	//004
+	window.ethereum
+	.request({ method: 'eth_requestAccounts' })
+	.then(r=>{console.log("004: Success:",r);})	//re-curse to end curse, maybe..
+	.catch((error) => {	console.error("004 - Failure", r, error); });
+
+
+	//005
+	const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+	if(Number(accounts[0])>0){console.log("005: Success - ", accounts)}
+	else{console.log("005: Failure", accounts)}
+
+
+	/*006
+	const en6 = await window.ethereum.enable()
+	if(Number(en6[0]) > 0){console.log("006 - Success",en6)}
+	else{console.log("006 - Failure", en6)}
+	*/
+
+
+	/*003
+	try {
+      console.log("attempting cw()")
+      const addresses = await provider.request({ method: "eth_requestAccounts" });
+      console.log("addresses:",addresses)
+    } catch (e) {
+      console.log("error in request", e);
+      window.location.reload(true);
+    }
+    */
+
+    //002
+    //try{await provider.send("eth_requestAccounts", []);console.log("CWE:",e);}//await window.ethereum.enable();
+	//catch(e){console.log("CWE:",e);window.location.reload(true)}
+	console.log("doing the paints")
+	$("cw").innerHTML= (window.ethereum.selectedAddress).substr(0,10) +"..."+(window.ethereum.selectedAddress).substr(34);
+	$("cw_m").innerHTML=""
+	$("connect").style.display="none";
+	$("switch").style.display="block";
+	farm_1_f_chappro()
+	gubs();
+	return(1);
+}
+</script>
+
+</html>
