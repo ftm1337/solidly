@@ -24,76 +24,77 @@ button{color:#fff;border:none;box-shadow:0px 1px 2px #111;cursor:pointer}
 .l7j {background: #161b2c;border-radius: 9px;width: 30px;height: 30px;z-index: 1;}
 .flip-root {fill: currentColor;width: 20px;height: 20px;display: inline-block;font-size: 1rem;transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;flex-shrink: 0;-moz-user-select: none;margin: 5px}
 .flip-in {cursor: pointer;font-size: 30px !important;background: #212b48;border-radius: 6px;}
+.body{overflow:hidden auto}
 @media(min-width:641px){
 	.outerswap{width:420px}
 }
 </style>
-<body>
+<div class="body">
 
-<div class="twopc">
-	<div align="left" class="top1l">
-	FTM.guru
+	<div class="twopc">
+		<div align="left" class="top1l">
+		FTM.guru
+		</div>
+		<div align="right" class="topbtn">
+			<div id="connect">
+				<button onclick="cw()" id="btn-connect">Connect Wallet</button>
+			</div>
+			<div id="switch">
+				<button onclick="cw()" id="btn-switch">Switch?</button>
+				<br>
+				<span id="cw"></span>
+			</div>
+		</div>
 	</div>
-	<div align="right" class="topbtn">
-		<div id="connect">
-			<button onclick="cw()" id="btn-connect">Connect Wallet</button>
+	<br><br><br>
+
+
+	<div class="outerswap" align="center">
+
+
+		<div class="innerarea">
+			<div class="twopc">
+				<div>
+					<img src="../img/ftm.svg" id="inp" value="0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83">
+				</div>
+				<div>
+					<div align="left">Balance: <span id="bal0">0.0 FTM</span></div>
+					<input id="inp_0" onchange="getAmountOut(Number(this.value), t_i, t_o, 1);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" placeholder="0.0">
+				</div>
+			</div>
 		</div>
-		<div id="switch">
-			<button onclick="cw()" id="btn-switch">Switch?</button>
-			<br>
-			<span id="cw"></span>
+
+		<div class="l7i" onclick="flip()">
+			<div class="l7j">
+				<svg class="flip-root flip-in" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"></path></svg>
+			</div>
 		</div>
+		<div class="innerarea">
+			<div class="twopc">
+				<div>
+					<img src="../img/64.png" id="out" value="0xf43Cc235E686d7BC513F53Fbffb61F760c3a1882">
+				</div>
+				<div>
+					<div align="left">Balance: <span id="bal0">0.0 ELITE</span></div>
+					<input id="inp_1" onchange="getAmountOut(Number(this.value), t_o, t_i, 0);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" placeholder="0.0">
+				</div>
+			</div>
+		</div>
+
+		<button class="actbutton" onclick="swap()">Swap</button>
+
+	</div>
+
+
+	<input id="slippage" value="" placeholder="Slippage %">
+	<br>
+	<span id="cw_m"></span><br>
+	<br><br><br><br><br><br>
+	<div onclick="pantvl()">
+		<span style="font-size:2.5em;font-weight:bold" id="pantvl" class="fore">$0.000</span><sup style="font-size:1.2em;position:relative;top: -14px;">⟳</sup><br>
+		(Total Value Locked on MTV.guru)
 	</div>
 </div>
-<br><br><br>
-
-
-<div class="outerswap" align="center">
-
-
-	<div class="innerarea">
-		<div class="twopc">
-			<div>
-				<img src="../img/ftm.svg" id="inp" value="0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83">
-			</div>
-			<div>
-				<div align="left">Balance: <span id="bal0">0.0 FTM</span></div>
-				<input id="inp_0" onchange="getAmountOut(Number(this.value), t_i, t_o, 1);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" placeholder="0.0">
-			</div>
-		</div>
-	</div>
-
-	<div class="l7i" onclick="flip()">
-		<div class="l7j">
-			<svg class="flip-root flip-in" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"></path></svg>
-		</div>
-	</div>
-	<div class="innerarea">
-		<div class="twopc">
-			<div>
-				<img src="../img/64.png" id="out" value="0xf43Cc235E686d7BC513F53Fbffb61F760c3a1882">
-			</div>
-			<div>
-				<div align="left">Balance: <span id="bal0">0.0 ELITE</span></div>
-				<input id="inp_1" onchange="getAmountOut(Number(this.value), t_o, t_i, 0);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" placeholder="0.0">
-			</div>
-		</div>
-	</div>
-
-	<button class="actbutton" onclick="swap()">Swap</button>
-
-</div>
-
-
-<input id="slippage" value="" placeholder="Slippage %">
-<br>
-<span id="cw_m"></span><br>
-<br><br><br><br><br><br>
-<div onclick="pantvl()">
-	<span style="font-size:2.5em;font-weight:bold" id="pantvl" class="fore">$0.000</span><sup style="font-size:1.2em;position:relative;top: -14px;">⟳</sup><br>
-	(Total Value Locked on MTV.guru)
-</div>
-</body>
 
 <script src="../ethers-5.2.umd.min.js" type="application/javascript" defer="true"></script>
 
@@ -203,8 +204,8 @@ async function cw2()
 	$("cw_m").innerHTML=""
 	$("connect").style.display="none";
 	$("switch").style.display="block";
-	farm_1_f_chappro()
-	gubs();
+	//farm_1_f_chappro()
+	//gubs();
 	return(1);
 }
 ra = [{"inputs":[{"internalType":"address","name":"_factory","type":"address"},{"internalType":"address","name":"_wftm","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"uint256[]","name":"amounts","type":"uint256[]"},{"components":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct BaseV1Router02.route[]","name":"routes","type":"tuple[]"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"UNSAFE_swapExactTokensForTokens","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenA","type":"address"},{"internalType":"address","name":"tokenB","type":"address"},{"internalType":"bool","name":"stable","type":"bool"},{"internalType":"uint256","name":"amountADesired","type":"uint256"},{"internalType":"uint256","name":"amountBDesired","type":"uint256"},{"internalType":"uint256","name":"amountAMin","type":"uint256"},{"internalType":"uint256","name":"amountBMin","type":"uint256"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"addLiquidity","outputs":[{"internalType":"uint256","name":"amountA","type":"uint256"},{"internalType":"uint256","name":"amountB","type":"uint256"},{"internalType":"uint256","name":"liquidity","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"bool","name":"stable","type":"bool"},{"internalType":"uint256","name":"amountTokenDesired","type":"uint256"},{"internalType":"uint256","name":"amountTokenMin","type":"uint256"},{"internalType":"uint256","name":"amountFTMMin","type":"uint256"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"addLiquidityFTM","outputs":[{"internalType":"uint256","name":"amountToken","type":"uint256"},{"internalType":"uint256","name":"amountFTM","type":"uint256"},{"internalType":"uint256","name":"liquidity","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"factory","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"address","name":"tokenIn","type":"address"},{"internalType":"address","name":"tokenOut","type":"address"}],"name":"getAmountOut","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"bool","name":"stable","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"},{"components":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct BaseV1Router02.route[]","name":"routes","type":"tuple[]"}],"name":"getAmountsOut","outputs":[{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"tokenA","type":"address"},{"internalType":"address","name":"tokenB","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"name":"getReserves","outputs":[{"internalType":"uint256","name":"reserveA","type":"uint256"},{"internalType":"uint256","name":"reserveB","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"pair","type":"address"}],"name":"isPair","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"tokenA","type":"address"},{"internalType":"address","name":"tokenB","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"name":"pairFor","outputs":[{"internalType":"address","name":"pair","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"tokenA","type":"address"},{"internalType":"address","name":"tokenB","type":"address"},{"internalType":"bool","name":"stable","type":"bool"},{"internalType":"uint256","name":"amountADesired","type":"uint256"},{"internalType":"uint256","name":"amountBDesired","type":"uint256"}],"name":"quoteAddLiquidity","outputs":[{"internalType":"uint256","name":"amountA","type":"uint256"},{"internalType":"uint256","name":"amountB","type":"uint256"},{"internalType":"uint256","name":"liquidity","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"tokenA","type":"address"},{"internalType":"address","name":"tokenB","type":"address"},{"internalType":"bool","name":"stable","type":"bool"},{"internalType":"uint256","name":"liquidity","type":"uint256"}],"name":"quoteRemoveLiquidity","outputs":[{"internalType":"uint256","name":"amountA","type":"uint256"},{"internalType":"uint256","name":"amountB","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"tokenA","type":"address"},{"internalType":"address","name":"tokenB","type":"address"},{"internalType":"bool","name":"stable","type":"bool"},{"internalType":"uint256","name":"liquidity","type":"uint256"},{"internalType":"uint256","name":"amountAMin","type":"uint256"},{"internalType":"uint256","name":"amountBMin","type":"uint256"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"removeLiquidity","outputs":[{"internalType":"uint256","name":"amountA","type":"uint256"},{"internalType":"uint256","name":"amountB","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"bool","name":"stable","type":"bool"},{"internalType":"uint256","name":"liquidity","type":"uint256"},{"internalType":"uint256","name":"amountTokenMin","type":"uint256"},{"internalType":"uint256","name":"amountFTMMin","type":"uint256"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"removeLiquidityFTM","outputs":[{"internalType":"uint256","name":"amountToken","type":"uint256"},{"internalType":"uint256","name":"amountFTM","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"bool","name":"stable","type":"bool"},{"internalType":"uint256","name":"liquidity","type":"uint256"},{"internalType":"uint256","name":"amountTokenMin","type":"uint256"},{"internalType":"uint256","name":"amountFTMMin","type":"uint256"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"removeLiquidityFTMSupportingFeeOnTransferTokens","outputs":[{"internalType":"uint256","name":"amountToken","type":"uint256"},{"internalType":"uint256","name":"amountFTM","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"bool","name":"stable","type":"bool"},{"internalType":"uint256","name":"liquidity","type":"uint256"},{"internalType":"uint256","name":"amountTokenMin","type":"uint256"},{"internalType":"uint256","name":"amountFTMMin","type":"uint256"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"bool","name":"approveMax","type":"bool"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"removeLiquidityFTMWithPermit","outputs":[{"internalType":"uint256","name":"amountToken","type":"uint256"},{"internalType":"uint256","name":"amountFTM","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"bool","name":"stable","type":"bool"},{"internalType":"uint256","name":"liquidity","type":"uint256"},{"internalType":"uint256","name":"amountTokenMin","type":"uint256"},{"internalType":"uint256","name":"amountFTMMin","type":"uint256"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"bool","name":"approveMax","type":"bool"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"removeLiquidityFTMWithPermitSupportingFeeOnTransferTokens","outputs":[{"internalType":"uint256","name":"amountToken","type":"uint256"},{"internalType":"uint256","name":"amountFTM","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenA","type":"address"},{"internalType":"address","name":"tokenB","type":"address"},{"internalType":"bool","name":"stable","type":"bool"},{"internalType":"uint256","name":"liquidity","type":"uint256"},{"internalType":"uint256","name":"amountAMin","type":"uint256"},{"internalType":"uint256","name":"amountBMin","type":"uint256"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"bool","name":"approveMax","type":"bool"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"removeLiquidityWithPermit","outputs":[{"internalType":"uint256","name":"amountA","type":"uint256"},{"internalType":"uint256","name":"amountB","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenA","type":"address"},{"internalType":"address","name":"tokenB","type":"address"}],"name":"sortTokens","outputs":[{"internalType":"address","name":"token0","type":"address"},{"internalType":"address","name":"token1","type":"address"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"uint256","name":"amountOutMin","type":"uint256"},{"components":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct BaseV1Router02.route[]","name":"routes","type":"tuple[]"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"swapExactFTMForTokens","outputs":[{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amountOutMin","type":"uint256"},{"components":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct BaseV1Router02.route[]","name":"routes","type":"tuple[]"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"swapExactFTMForTokensSupportingFeeOnTransferTokens","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"uint256","name":"amountOutMin","type":"uint256"},{"components":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct BaseV1Router02.route[]","name":"routes","type":"tuple[]"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"swapExactTokensForETHSupportingFeeOnTransferTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"uint256","name":"amountOutMin","type":"uint256"},{"components":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct BaseV1Router02.route[]","name":"routes","type":"tuple[]"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"swapExactTokensForFTM","outputs":[{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"uint256","name":"amountOutMin","type":"uint256"},{"components":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct BaseV1Router02.route[]","name":"routes","type":"tuple[]"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"swapExactTokensForTokens","outputs":[{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"uint256","name":"amountOutMin","type":"uint256"},{"internalType":"address","name":"tokenFrom","type":"address"},{"internalType":"address","name":"tokenTo","type":"address"},{"internalType":"bool","name":"stable","type":"bool"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"swapExactTokensForTokensSimple","outputs":[{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"stateMutability":"nonpayable","type":"function"},
@@ -316,7 +317,7 @@ async function _swap()
 		"stable":false
 	}]
 	if($("slippage").value !== 1000 && isFinite(sl)){sl = ($("slippage").value < 5000 && $("slippage").value > 10) ? 5000 : $("slippage").value;}
-	let txr = await R.swapExactTokensForTokensSupportingFeeOnTransfer(
+	let txr = await R.swapExactTokensForTokensSupportingFeeOnTransferTokens(
 		amt,
 		amt * BigInt(sl) / BigInt(10000),
 		rout,
