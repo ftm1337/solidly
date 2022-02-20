@@ -354,15 +354,18 @@ async function _swap()
 	R = new ethers.Contract(RUTR,ra,signer);
 	amt = BigInt($("inp_0").value * 10**(toks[t_i][0]))
 	sl = 1000; //1e4 = 100%
+	if($("slippage").value !== 1000 && isFinite(sl)){sl = ($("slippage").value < 5000 && $("slippage").value > 10) ? 5000 : $("slippage").value;}
+	inpu = (await R.getAmountOut(amt,t_i,t_o))
+	inpu = inpu[0] * (10000-sl) / (10000)
+	console.log(inpu)
 	rout = [{
 		from:t_i,
 		to:t_o,
 		stable:false
 	}]
-	if($("slippage").value !== 1000 && isFinite(sl)){sl = ($("slippage").value < 5000 && $("slippage").value > 10) ? 5000 : $("slippage").value;}
 	let txr = await R.swapExactTokensForTokensSupportingFeeOnTransferTokens(
 		amt,
-		BigInt((Number(await R.getAmountOut(amt,t_i,t_o))[0]) * (10000-sl) / (10000)),
+		BigInt(inpu),
 		rout,
 		window.ethereum.selectedAddress,
 		(Date.now()/1e3 + 30*60*60).toFixed()
