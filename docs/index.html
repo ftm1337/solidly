@@ -291,7 +291,7 @@ ra = [{"inputs":[{"internalType":"address","name":"_factory","type":"address"},{
 async function getAmountOut(a,i,o,p){
 	if(isFinite(a) == false){$("inp_0").value = "0.0";$("inp_1").value = "0.0";return}
 	R = new ethers.Contract(RUTR,ra,provider);
-	let oar = await (R.getAmountOut( String((a * 10**(toks[i][0])).toLocaleString("fullwide",{useGrouping:false})) ,i ,o))
+	let oar = await (R.getAmountOut( BigInt(a) * BigInt(10**(toks[i][0])) ,i ,o))
 	p == 0 ? $("inp_0").value = "0.0" : $("inp_1").value = "0.0"
 	Promise.all([oar,i,o,p]).then( oa => {
 		ret = (Number(oa[0][0]) / 10**(toks[oa[2]][0]))
