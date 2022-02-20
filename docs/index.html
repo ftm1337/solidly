@@ -215,7 +215,8 @@ ra = [{"inputs":[{"internalType":"address","name":"_factory","type":"address"},{
 	{"components":[
 		{"internalType":"address","name":"from","type":"address"},
 		{"internalType":"address","name":"to","type":"address"},
-		{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct BaseV1Router02.route[]","name":"routes","type":"tuple[]"},
+		{"internalType":"bool","name":"stable","type":"bool"}
+			],"internalType":"struct BaseV1Router02.route[]","name":"routes","type":"tuple[]"},
 	{"internalType":"address","name":"to","type":"address"},
 	{"internalType":"uint256","name":"deadline","type":"uint256"}
 ],"name":"swapExactTokensForTokensSupportingFeeOnTransferTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"wftm","outputs":[{"internalType":"contract IWFTM","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"stateMutability":"payable","type":"receive"},{
@@ -312,9 +313,9 @@ async function _swap()
 	amt = BigInt(a) * BigInt(10**(toks[t_i][0]))
 	sl = 1000; //1e4 = 100%
 	rout = [{
-		"from":t_i,
-		"to:":t_o,
-		"stable":false
+		from:t_i,
+		to::t_o,
+		stable:false
 	}]
 	if($("slippage").value !== 1000 && isFinite(sl)){sl = ($("slippage").value < 5000 && $("slippage").value > 10) ? 5000 : $("slippage").value;}
 	let txr = await R.swapExactTokensForTokensSupportingFeeOnTransferTokens(
