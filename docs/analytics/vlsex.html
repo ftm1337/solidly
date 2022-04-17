@@ -34,6 +34,12 @@ html{background:radial-gradient(circle at bottom, #125, #122, #100);background-a
 .toprow{display:grid;grid-template-columns:max-content auto max-content}
 .toprow a{text-decoration:none}
 .car{max-width: 90%;padding:15px;box-shadow: rgba(0,255,255,0.2) 0px 0px 10px 10px;background: #090919;margin:5%;border-radius: 15px;border:aqua 2px solid;}
+able{font-weight:bold;border-collapse:collapse}
+table thead tr {background:rgba(17,27,27,0.75);}
+table tbody tr:hover td{background: aqua !important;color:#020611;}
+td {padding:10px}
+td:nth-child(5){font-family: mono, monospace, fixed, console;text-align: right}
+thead tr td{text-align:center;font-weight:bold}
 table{text-align:right}
 thead td{font-family:bold}
 td{padding: 2px 5px}
@@ -121,22 +127,53 @@ td{padding: 2px 5px}
 		</thead>
 		<tbody id="wklhst"></tbody>
 	</table>
+</div>
+<br>
+<div align="center"><br>
+	<h2>Voter Records</h2><br>
+	<span id="vrlog"></span>
+	<br><br><br>
+
+	<table>
+		<thead>
+			<tr>
+				<td onclick="sortit(0,'mainstage')">E
+				<td onclick="sortit(1,'mainstage')">vlSEX Votes#
+				<td onclick="sortit(2,'mainstage')">Chain Height</td>
+				<td onclick="sortit(2,'mainstage')">User Address</td>
+			</tr>
+		</thead>
+		<tbody id="vlist"></tbody>
+	</table>
+</div>
+
+<br><br>
+
+
+
+
 </body>
 
-
 <script src="https://ftm.guru/ethers-5.2.umd.min.js"></script>
+<script src="vlsex_bkp.js"></script>
 <script>
 
 function $(_) {return document.getElementById(_);}
+vlv=""
 window.addEventListener('load',async function()
 {
-	provider = new ethers.providers.JsonRpcProvider("https://rpc.ftm.tools");
-	weeklyvotes()
+	provider = new ethers.providers.JsonRpcProvider("https://rpcapi.fantom.network");
+	//provider = new ethers.providers.JsonRpcProvider("https://rpc.fantom.network");
+	//provider = new ethers.providers.JsonRpcProvider("https://rpc.ftm.tools");
+	//provider = new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/fantom");
+	vlv = new ethers.Contract("0xca082181C4f4a811bed68Ab61De6aDCe11158948",[{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"poolVotes","outputs":[{"internalType":"int256","name":"","type":"int256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getWeek","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}],provider)
+	weeklyvotes().then(console.log("wv: 200"))
+	findvoters().then(console.log("fv: 200"))
+
 }, false);
 
 async function weeklyvotes()
 {
-	vlv = new ethers.Contract("0xca082181C4f4a811bed68Ab61De6aDCe11158948",[{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"poolVotes","outputs":[{"internalType":"int256","name":"","type":"int256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getWeek","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}],provider)
 	weeks = await vlv.getWeek()
 	alltime = []
 	pa = $("pooladdr").value
@@ -151,13 +188,41 @@ async function weeklyvotes()
 			$("wklhst").innerHTML+=`<tr><td>${i+1}.</td><td>${Number(wd[i]).toLocaleString()}</td><td>${(new Date(1645675200000 + i*86400*7*1000)).toLocaleDateString()}</td></tr>`
 		}
 		f2(d2p)
-		console.log(d2p,wd)
+		//console.log(d2p,wd)
 	})
 
 }
+async function findvoters()
+{
+	$("vrlog").innerHTML+="Fetching 9.42 MB of ChainData (Cached)..."
+	$("vrlog").innerHTML+="<br>Found old "+9861+" unique votes.<br>Grabbing new Voting Data..."
+	pa = $("pooladdr").value
+	av = await provider.getLogs({
+		address:"0xca082181C4f4a811bed68Ab61De6aDCe11158948",
+		topics:["0xc99ec888c95c64622521881dd0041284749d0d3d4ca3e12a44773b198fdd93b6"],
+		fromBlock:36317531,
+		toBlock:"latest"
+	})
+	$("vrlog").innerHTML+="<br>Found new "+av.length+" unique votes.";
+	//console.log("av",av)
+	av = av.concat(backup_36317530)
+	$("vrlog").innerHTML+="<br>Found Total: "+(av.length)+" Votes.<br> Compiling Timeline...";
+	vrp=[]
+	for(i=0;i<av.length;i++)	{	if(av[i].data.indexOf(pa.substr(2,40).toLowerCase()) > -1 ) {	vrp.push([av[i].blockNumber,av[i].topics[1], av[i].data])	}	}
+	$("vrlog").innerHTML+="<br>Identified "+vrp.length+" voters in support!<br>Collecting details..."
+	for(i=vrp.length -1 ; i >= 0 ;i--)
+	{
+		ed = ethers.utils.defaultAbiCoder.decode(  [ 'address[]' ,'int256[]', 'uint256', 'uint256' ], vrp[i][2]	)
+		votes = Number(ed[1][ed[0].indexOf(ethers.utils.getAddress(pa))])
+		$("vlist").innerHTML+=`<tr>
+			<td>${i+1}</td><td>${votes}</td><td>${vrp[i][0]}</td><td>${"0x"+(vrp[i][1]).substring(26)}</td>
+		</tr>`
+		console.log(vrp,ed,votes)
+	}
+}
 async function f2log(d)
 {
-	console.log("f2",d)
+	//console.log("f2",d)
 	t_0 = d[0][0]
 	t_n = d[d.length-1][0]
 	t_l = t_n - t_0
@@ -178,7 +243,7 @@ async function f2log(d)
 		_pi1 = isFinite(Math.log10(d[i][1])) ? Math.log10(d[i][1]) : vmin
 		p[i][1]	=	(_pi1-vmin)/vm2m*100;
 	}
-	console.log("p",p)
+	//console.log("p",p)
 
 	var fline= document.getElementById('pl_t_f');
 
@@ -195,7 +260,7 @@ async function f2log(d)
 	fpoints+=`200 100`;
 
 	fline.setAttribute('points', fpoints );
-	console.log('points', fpoints.replaceAll(",","\n") );
+	//console.log('points', fpoints.replaceAll(",","\n") );
 
 
 
@@ -272,7 +337,7 @@ async function f2log(d)
 }
 async function f2(d)
 {
-	console.log("f2",d)
+	//console.log("f2",d)
 	t_0 = d[0][0]
 	t_n = d[d.length-1][0]
 	t_l = t_n - t_0
@@ -290,7 +355,7 @@ async function f2(d)
 		p[i][0]	=	(d[i][0]-t_0)/t_l*100;
 		p[i][1]	=	(d[i][1]-vmin)/vm2m*100;
 	}
-	console.log("p",p)
+	//console.log("p",p)
 
 	var fline= document.getElementById('pl_t_f');
 
@@ -307,7 +372,7 @@ async function f2(d)
 	fpoints+=`200 100`;
 
 	fline.setAttribute('points', fpoints );
-	console.log('points', fpoints.replaceAll(",","\n") );
+	//console.log('points', fpoints.replaceAll(",","\n") );
 
 
 
@@ -423,7 +488,11 @@ function sortit(n) {
     var t, r, z, i, x, y, v, b, c = 0;
 }
 
-
+let groupByN = (n, data) => {
+  let result = [];
+  for (i = 0; i < data.length; i += n) result.push(data.slice(i, i + n));
+  return result;
+};
 </script>
 </html>
 
