@@ -15,7 +15,7 @@ input{color:#fff;width:100%;background:transparent;border:none;}
 a{color:#eee}
 .twopc input{font-size:3em;color:#eee;margin: 0 20px}
 .twopc div img{width:64px;height:64px;border-radius:64px; border:1px solid #7e99b0;padding:10px}
-.top1l{font-weight:lighter;font-size:2em;padding:5px;font-family:helvetica nueve, helvetica, robotica, ubuntu, roboto, sans-serif;}
+.top1l{font-size:2em;padding:5px;font-family:helvetica nueve, helvetica, robotica, ubuntu, roboto, sans-serif;}
 #switch {display:none;border:none;}
 .topbtn button{padding: 10px;border-radius:32px}
 .outerswap{border-radius:20px;background:#192138;padding:10px;margin:10px auto}
@@ -34,10 +34,28 @@ table{font-weight:bold;border-collapse:collapse}
 table thead tr {background:rgba(17,27,27,0.75);}
 table tbody tr:hover td{background: aqua !important;color:#020611;}
 td {padding:10px}
+td:nth-child(5){font-family: mono, monospace, fixed, console;text-align: right}
+thead tr td{text-align:center;font-weight:bold}
+.btnimg{height: 32px;padding:2px 4px;border-radius: 10px}
 @media(min-width:641px){
 	.outerswap{width:420px}
+	td{font-size: 2em;font-weight:lighter}
 }
-
+* {
+  scrollbar-width: thick;
+  scrollbar-color: #07f #147;
+}
+*::-webkit-scrollbar {
+  width: 20px;
+}
+*::-webkit-scrollbar-track {
+  background: #147;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #07f;
+  border-radius: 20px;
+  border: 3px solid #147;
+}
 </style>
 <div class="body">
 
@@ -68,36 +86,39 @@ td {padding:10px}
 	<div align="center">
 		Solidly Extended allows Swapping of Tokens that have a Fee-on-Transfer directly from its User Interface, without the need of interacting with pesky Smart Contracts and making confused token approvals. This includes Reflection-based tokens, Auto-LP tokens, Rebase tokens, Elastic tokens andother exotic DeFi assets that have a dynamic behaviour. Best examples are ELITE, BOMB, PGUNK and others.
 
-		<br><br><a href="https://github.com/andrecronje/solidly/pulls/52" target="_blank"><button>Github: Pull Request #52</button></a>
-		<br><br><a href="https://ftmscan.com/address/0xdf69daa5340072ded600c566019dcb61d29332f2" target="_blank"><button>BaseV1Router02: FTMScan</button></a>
+		<br><br><a href="https://github.com/andrecronje/solidly/pulls/52" target="_blank"><img class="btnimg" src="https://ftm.guru/icons/github.png" style="background:rgba(255,255,255,1)"></a>
+		<a href="https://ftmscan.com/address/0xdf69daa5340072ded600c566019dcb61d29332f2" target="_blank"><img class="btnimg" src="https://ftm.guru/icons/ftmscan.svg"></a>
 
 		<br><br><hr><br><br>
 		<h2>Explore Markets</h2>
-		<table>
-			<thead>
-				<tr><td colspan="2">Base</td><td colspan="2">Quote</td><td>Liquidity</td></tr>
-			</thead>
-			<tbody id="t_b">
-				<tr onclick="window.location='WFTM_ELITE'">
-					<td>WFTM</td><td><img src="https://ftm.guru/icons/ftm.svg"></td><td><img src="https://ftm.guru/icons/64.png"></td><td>ELITE</td><td id="WFTM_ELITE">$0</td>
-				</tr>
-				<tr onclick="window.location='BEETS_ELITE'">
-					<td>BEETS</td><td><img src="https://ftm.guru/icons/beets.png"></td><td><img src="https://ftm.guru/icons/64.png"></td><td>ELITE</td><td id="BEETS_ELITE">$0</td>
-				</tr>
-				<tr onclick="window.location='BOMB_ELITE'">
-					<td>BOMB</td><td><img src="https://ftm.guru/icons/bomb.svg"></td><td><img src="https://ftm.guru/icons/64.png"></td><td>ELITE</td><td id="BOMB_ELITE">$0</td>
-				</tr>
-				<tr onclick="window.location='USDC_ELITE'">
-					<td>USDC</td><td><img src="https://ftm.guru/icons/usdc.svg"></td><td><img src="https://ftm.guru/icons/64.png"></td><td>ELITE</td><td id="USDC_ELITE">$0</td>
-				</tr>
-			</tbody>
-		</table>
+		<div style="overflow:auto;"align="center">
+
+			<table>
+				<thead>
+					<tr><td colspan="2">Assets</td><td colspan="2">Base</td><td>Net Liquidity</td></tr>
+				</thead>
+				<tbody id="t_b">
+					<tr onclick="window.location='WFTM_ELITE'">
+						<td>WFTM</td><td><img src="https://ftm.guru/icons/ftm.svg"></td><td><img src="https://ftm.guru/icons/64.png"></td><td>ELITE</td><td id="WFTM_ELITE">$0</td>
+					</tr>
+					<tr onclick="window.location='BEETS_ELITE'">
+						<td>BEETS</td><td><img src="https://ftm.guru/icons/beets.png"></td><td><img src="https://ftm.guru/icons/64.png"></td><td>ELITE</td><td id="BEETS_ELITE">$0</td>
+					</tr>
+					<tr onclick="window.location='BOMB_ELITE'">
+						<td>BOMB</td><td><img src="https://ftm.guru/icons/bomb.svg"></td><td><img src="https://ftm.guru/icons/64.png"></td><td>ELITE</td><td id="BOMB_ELITE">$0</td>
+					</tr>
+					<tr onclick="window.location='USDC_ELITE'">
+						<td>USDC</td><td><img src="https://ftm.guru/icons/usdc.svg"></td><td><img src="https://ftm.guru/icons/64.png"></td><td>ELITE</td><td id="USDC_ELITE">$0</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		<br><br>
 
 	</div>
 
 
-	<div align="center">This is super-experimental.<br>⚠ <a href="https://discord.gg/QpyfMarNrV" target="_blank">discord.gg/QpyfMarNrV</a></div>
+	<div align="center">This is super-experimental.<br>⚠ <a href="https://discord.gg/QpyfMarNrV" target="_blank">discord.gg/QpyfMarNrV</a></div><br><br>
 
 
 <script>
@@ -115,7 +136,7 @@ async function glp()
 	Promise.all(pr).then(pd=>{
 		for(i=0;i< bk.length;i++)
 		{
-			$(bk[i][1]).innerHTML = "$ " + Number(pd[0]).toFixed()
+			$(bk[i][1]).innerHTML = "$" + Number(pd[i].usd_value).toLocaleString(undefined,{minimumFractionDigits: 2, maximumFractionDigits: 2})
 		}
 	})
 }
