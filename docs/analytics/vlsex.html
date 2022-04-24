@@ -36,9 +36,9 @@ html{background:radial-gradient(circle at bottom, #125, #122, #100);background-a
 .car{max-width: 90%;padding:15px;box-shadow: rgba(0,255,255,0.2) 0px 0px 10px 10px;background: #090919;margin:5%;border-radius: 15px;border:aqua 2px solid;}
 able{font-weight:bold;border-collapse:collapse}
 table thead tr {background:rgba(17,27,27,0.75);}
-table tbody tr:hover td{background: aqua !important;color:#020611;}
+table tbody tr:hover td,table tbody tr:hover td a{background: aqua !important;color:#020611;}
 td {padding:10px}
-td:nth-child(5){font-family: mono, monospace, fixed, console;text-align: right}
+td,td a {font-family: mono, monospace, fixed, console;text-align: right}
 thead tr td{text-align:center;font-weight:bold}
 table{text-align:right}
 thead td{font-family:bold}
@@ -120,9 +120,9 @@ td{padding: 2px 5px}
 	<table>
 		<thead>
 			<tr>
-				<td onclick="sortit(0,'mainstage')">⛓
-				<td onclick="sortit(1,'mainstage')">vlSEX Votes#
-				<td onclick="sortit(2,'mainstage')">Start of Epoch</td>
+				<td onclick="sortit(0,'wklhst')">⛓
+				<td onclick="sortit(1,'wklhst')">vlSEX Votes#
+				<td onclick="sortit(2,'wklhst')">End of Epoch</td>
 			</tr>
 		</thead>
 		<tbody id="wklhst"></tbody>
@@ -137,10 +137,10 @@ td{padding: 2px 5px}
 	<table>
 		<thead>
 			<tr>
-				<td onclick="sortit(0,'mainstage')">E
-				<td onclick="sortit(1,'mainstage')">vlSEX Votes#
-				<td onclick="sortit(2,'mainstage')">Chain Height</td>
-				<td onclick="sortit(2,'mainstage')">User Address</td>
+				<td onclick="sortit(0,'vlist')">#
+				<td onclick="sortit(1,'vlist')">Votes
+				<td onclick="sortit(2,'vlist')">Address of vlSEX Voter</td>
+				<td onclick="sortit(3,'vlist')">Chain Height</td>
 			</tr>
 		</thead>
 		<tbody id="vlist"></tbody>
@@ -182,7 +182,7 @@ async function weeklyvotes()
 	for(i=0;i< Number(weeks)+1;i++){alltime[i] = vlv.poolVotes(pa,i)}
 	Promise.all(alltime).then(wd=>{
 		d2p = []
-		for(i=0;i< wd.length;i++)
+		for(i=wd.length-1;i>=0;i--)
 		{
 			d2p[i] = [1645675200000 + i*86400*7*1000 , Number(wd[i])] ;
 			$("wklhst").innerHTML+=`<tr><td>${i+1}.</td><td>${Number(wd[i]).toLocaleString()}</td><td>${(new Date(1645675200000 + i*86400*7*1000)).toLocaleDateString()}</td></tr>`
@@ -205,7 +205,7 @@ async function findvoters()
 	})
 	$("vrlog").innerHTML+="<br>Found new "+av.length+" unique votes.";
 	//console.log("av",av)
-	av = av.concat(backup_36317530)
+	av = backup_36317530.concat(av)
 	$("vrlog").innerHTML+="<br>Found Total: "+(av.length)+" Votes.<br> Compiling Timeline...";
 	vrp=[]
 	for(i=0;i<av.length;i++)	{	if(av[i].data.indexOf(pa.substr(2,40).toLowerCase()) > -1 ) {	vrp.push([av[i].blockNumber,av[i].topics[1], av[i].data])	}	}
@@ -215,7 +215,7 @@ async function findvoters()
 		ed = ethers.utils.defaultAbiCoder.decode(  [ 'address[]' ,'int256[]', 'uint256', 'uint256' ], vrp[i][2]	)
 		votes = Number(ed[1][ed[0].indexOf(ethers.utils.getAddress(pa))])
 		$("vlist").innerHTML+=`<tr>
-			<td>${i+1}</td><td>${votes}</td><td>${vrp[i][0]}</td><td>${"0x"+(vrp[i][1]).substring(26)}</td>
+			<td>${i+1}</td><td>${votes}</td><td>${"0x"+(vrp[i][1]).substring(26)}</td><td><a href="https://ftmscan.com/block/${vrp[i][0]}" target="_blank">${vrp[i][0]}</a></td>
 		</tr>`
 		console.log(vrp,ed,votes)
 	}
@@ -448,9 +448,9 @@ async function f2(d)
 	*/
 }
 
-function sortit(n) {
+function sortit(n,el) {
   var t, r, z, i, x, y, v, b, c = 0;
-  t = document.getElementById("maintable").getElementsByTagName("tbody")[0];
+  t = document.getElementById(el);
   z = true;
   b = "a";
   while (z) {
