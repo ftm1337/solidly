@@ -161,7 +161,8 @@ VD =
 		bribepp:1337,
 		first:	0,
 		end:	36574588,
-		elitep:	1280,
+		times:	"13 April - 20 April, 2022",
+		elitep:	1359,
 		xeliter:126246988,
 		voters:
 		[
@@ -184,7 +185,8 @@ VD =
 		bribepp:1337,
 		start:	0,
 		end:	35993203,
-		elitep:	1280,
+		times:	"6 April - 13 April, 2022",
+		elitep:	1468,
 		xeliter:126246988,
 		voters:
 		[
@@ -212,9 +214,11 @@ function mktable()
 			<br><br><br><br>
 			<hr class="hhr">
 			<h3>Round ${VD[i].round}</h3>
+			<b>${VD[i].times}</b>
+			<br><br>
 			<table class="tsu">
 				<tr><td>Votes for Us</td><td>${VD[i].forus}</td></tr>
-				<tr><td>Total vlSEX</td><td>${VD[i].vlsex}</td></tr>
+				<tr><td>Active vlSEX</td><td>${VD[i].vlsex}</td></tr>
 				<tr><td>Our vlSEX %</td><td>${ VD[i].forus / VD[i].vlsex * 100 } %</td></tr>
 				<tr><td>ve of Solidex</td><td>${VD[i].ssolid}</td></tr>
 				<tr><td>Our ve benefit</td><td>${ VD[i].forus / VD[i].vlsex * VD[i].ssolid }</td></tr>
