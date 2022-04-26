@@ -8,6 +8,7 @@
 <link rel="shortcut icon" href="https://ftm.guru/img/64.png" />
 <style>
 
+
 *{font-family:Inter,Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol",helvetica nueve, helvetica, robotica, ubuntu, roboto, sans-serif;scroll-behavior: smooth !important;}
 html{background:url('https://solidly.exchange/images/solid_background.png');background-repeat: no-repeat; background-size: 100% 100%;	color:#7e99b0;}/*818797,7e99bo*/
 .twopc{display:grid;grid-template-columns:auto auto}
@@ -32,10 +33,11 @@ hr{box-shadow: rgba(0,255,255,0.2) 0px 0px 10px 10px;background: #090919;border-
 #t_b img{height:32px;width:32px;}
 table{font-weight:bold;border-collapse:collapse}
 table thead tr {background:rgba(17,27,27,0.75);}
-table tbody tr:hover td{background: aqua !important;color:#020611;}
+table tbody tr:hover td{background: aqua !important;color:#020611;cursor: zoom-in}
 td {padding:10px}
 td:nth-child(5){font-family: mono, monospace, fixed, console;text-align: right}
-thead tr td{text-align:center;font-weight:bold}
+thead tr td{text-align:left;font-weight:bold}
+table tr td:last-child{font-weight:bolder}
 .btnimg{height: 16px;padding:2px 4px;border-radius: 4px}
 .lowerbar{
   font-size: 1.25em;
@@ -52,7 +54,7 @@ thead tr td{text-align:center;font-weight:bold}
 .lowerbar .subimg{width:16px;height:16px;position: relative;right:9px;top:4px;margin-right:-11px}
 @media(min-width:641px){
 	.outerswap{width:420px}
-	td{font-size: 2em;font-weight:lighter}
+	td{font-size: 1.5em;font-weight:lighter}
 }
 * {
   scrollbar-width: thick;
@@ -69,6 +71,7 @@ thead tr td{text-align:center;font-weight:bold}
   border-radius: 20px;
   border: 3px solid #147;
 }
+
 </style>
 <div class="body">
 
@@ -108,7 +111,7 @@ thead tr td{text-align:center;font-weight:bold}
 
 			<table>
 				<thead>
-					<tr><td colspan="2">Assets</td><td colspan="2">Base</td><td>Net Liquidity</td></tr>
+					<tr><td onclick="sortit(0,'t_b')" colspan="2">Assets</td><td onclick="sortit(3,'t_b')" colspan="2">Base</td><td onclick="sortit(4,'t_b')">Liquidity</td></tr>
 				</thead>
 				<tbody id="t_b">
 					<tr onclick="window.location='WFTM_ELITE'">
@@ -122,6 +125,15 @@ thead tr td{text-align:center;font-weight:bold}
 					</tr>
 					<tr onclick="window.location='USDC_ELITE'">
 						<td>USDC</td><td><img src="https://ftm.guru/icons/usdc.svg"></td><td><img src="https://ftm.guru/icons/64.png"></td><td>ELITE</td><td id="USDC_ELITE">$0</td>
+					</tr>
+					<tr onclick="window.location='BOMB_WFTM'">
+						<td>BOMB</td><td><img src="https://ftm.guru/icons/bomb.svg"></td><td><img src="https://ftm.guru/icons/ftm.svg"></td><td>WFTM</td><td id="BOMB_WFTM">$0</td>
+					</tr>
+					<tr onclick="window.location='PGUNK_BOMB'">
+						<td>PGUNK</td><td><img src="https://ftm.guru/icons/pgunk.svg"></td><td><img src="https://ftm.guru/icons/bomb.svg"></td><td>BOMB</td><td id="PGUNK_BOMB">$0</td>
+					</tr>
+					<tr onclick="window.location='DIAMOND_BOMB'">
+						<td>DIAMOND</td><td><img src="https://ftm.guru/icons/diamond.svg"></td><td><img src="https://ftm.guru/icons/bomb.svg"></td><td>BOMB</td><td id="DIAMOND_BOMB">$0</td>
 					</tr>
 				</tbody>
 			</table>
@@ -164,8 +176,9 @@ async function glp()
 	Promise.all(pr).then(pd=>{
 		for(i=0;i< bk.length;i++)
 		{
-			$(bk[i][1]).innerHTML = "$" + Number(pd[i].usd_value).toLocaleString(undefined,{minimumFractionDigits: 2, maximumFractionDigits: 2})
+			$(bk[i][1]).innerHTML = "$" + Number(pd[i].usd_value).toLocaleString(undefined,{minimumFractionDigits: 0, maximumFractionDigits: 0})
 		}
+		sortit(4,'t_b');sortit(4,'t_b');
 	})
 }
 bk=
@@ -174,6 +187,49 @@ bk=
 	["0x3dfba1b3d4885b23321c853e04979e723d9ea29e", "BEETS_ELITE"],
 	["0x4833A16fC0D5CB63Dbe2Cb97A4C501E4A6810A38", "BOMB_ELITE"],
 	["0xeb30fc283d1ceb163ca848d13b06261784945395", "USDC_ELITE"],
+	["0xc92448a961eb4f7a06da2719482e203cf1603b0a", "BOMB_WFTM"],
+	["0x270b4cdeaebc4e0522aa4371a9be38c624193cee", "PGUNK_BOMB"],
+	["0x2f1569094CB256fB745901fa92e57aF011D32B2C", "DIAMOND_BOMB"],
 ]
+
+function sortit(n,el) {
+  var t, r, z, i, x, y, v, b, c = 0;
+  t = document.getElementById(el);
+  z = true;
+  b = "a";
+  while (z) {
+    z = false;
+    r = t.rows;
+    for (i = 1; i < (r.length - 1); i++) {
+      v = false;
+      x = (r[i].getElementsByTagName("TD")[n].textContent).replace(/,| |\.|\$|%/g,'');
+      if(isFinite(x)){x=Number(x)}else{x=x.toLowerCase()}
+      y = (r[i + 1].getElementsByTagName("TD")[n].textContent).replace(/,| |\.|\$|%/g,'');
+      if(isFinite(y)){y=Number(y)}else{y=y.toLowerCase()}
+      if (b == "a") {
+        if ((x) > (y)) {
+          v= true;
+          break;
+        }
+      } else if (b == "d") {
+        if ((x) < (y)) {
+          v = true;
+          break;
+        }
+      }
+    }
+    if (v) {
+      r[i].parentNode.insertBefore(r[i + 1], r[i]);
+      z = true;
+      c ++;
+    } else {
+      if (c == 0 && b == "a") {
+        b = "d";
+        z = true;
+      }
+    }
+  }
+    var t, r, z, i, x, y, v, b, c = 0;
+}
 </script>
 </html>

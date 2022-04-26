@@ -1,0 +1,333 @@
+<!doctype html><html><meta charset="UTF-8">
+<head>
+<meta name="description" content="0xDAO : Live vlOXD Votes | FTM.guru">
+<meta name="keywords" content="Fantom Opera, List, Dashboard, Tracker, Explorer, FTM, Decentralized Finance, ELITE, 1337, defi, farming, FTM1337">
+<title>0xDAO : Live vlOXD Votes | FTM.guru</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="img/FMC.svg" />
+<style>
+@font-face{font-family:bold;src: url(https://ftm.guru/font/bold.ttf);}
+@font-face{ font-family:italic;src: url(https://ftm.guru/font/italic.ttf);}
+@font-face{ font-family:light;src: url(https://ftm.guru/font/light.ttf);}
+@font-face{ font-family:light_italic;src: url(https://ftm.guru/font/light_italic.ttf);}
+@font-face{ font-family:regular;src: url(https://ftm.guru/font/regular.ttf);}
+@font-face{ font-family:regular_italic;src: url(https://ftm.guru/font/regular_italic.ttf);}
+*{font-family:regular;}
+svg text {font-size: 4px !important;}
+
+html{background:radial-gradient(circle at bottom, #125, #122, #100);background-attachment: fixed;}
+.mainpanel,.mainstage{background: rgba(15,15,31,0.5);}
+*{text-shadow:6px 6px 5px black;color:#e3e9f2}
+.lowerbar{
+  font-size: 1.25em;
+  font-weight: bolder;
+}
+.lowerbar a{
+  font-size: 0.75em;
+  font-weight: lighter;
+  padding: 10px 10px 10px 0px;
+  color:#32fbe2;
+  text-decoration: none
+}
+.lowerbar img{width:24px}
+.lowerbar .subimg{width:16px;height:16px;position: relative;right:9px;top:4px;margin-right:-11px}
+.toprow{display:grid;grid-template-columns:max-content auto max-content}
+.toprow a{text-decoration:none}
+.car{max-width: 90%;padding:15px;box-shadow: rgba(0,255,255,0.2) 0px 0px 10px 10px;background: #090919;margin:5%;border-radius: 15px;border:aqua 2px solid;}
+able{font-weight:bold;border-collapse:collapse}
+table thead tr {background:rgba(17,27,27,0.75);}
+table tbody tr:hover td,table tbody tr:hover td a{background: aqua !important;color:#020611;}
+td a {padding:10px;text-decoration:none}
+table{text-align:left}
+tbody tr td:nth-child(2),tbody tr td:nth-child(4),tbody tr td:nth-child(5) {font-family: mono, monospace, fixed, console;text-align: right !important}
+thead tr td{text-align:center;font-weight:bold}
+thead td{font-family:bold}
+td{padding: 2px 5px}
+@media(min-width:641px){
+	.hhr{width: 555px}
+	#htc,.car{height: 70vh;width: 80vw;margin: auto;padding: 0}
+	svg text {font-size: 2px !important;}
+	svg polyline#pl_t_f {stroke-width: 0.25;}
+}
+* {
+  scrollbar-width: thick;
+  scrollbar-color: #07f #147;
+}
+*::-webkit-scrollbar {
+  width: 20px;
+}
+*::-webkit-scrollbar-track {
+  background: #147;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #07f;
+  border-radius: 20px;
+  border: 3px solid #147;
+}
+table{
+  counter-reset: rowNumber;
+  border-collapse:collapse;
+}
+thead tr::before{
+  counter-increment: (rowNumber+1);
+  content: "# . ⚡ 🤑";
+  position:relative; top:
+}
+tbody tr::before {
+  counter-increment: rowNumber;
+  content: counter(rowNumber) " . "  "🐌";
+  position:relative; top:;
+}
+tbody tr.topvoted::before {
+  counter-increment: rowNumber;
+  content: counter(rowNumber) " . " " 🚀";
+}
+tbody tr.bribepool.topvoted::before {
+  counter-increment: rowNumber;
+  content: counter(rowNumber) " . " " 🚀 💸";
+}
+tbody tr.bribepool::before {
+  counter-increment: rowNumber;
+  content: counter(rowNumber) " . " " 🐌 💸";
+}
+.topvoted td{background:rgba(0,255,255,0.1);}
+</style>
+</head>
+<body>
+
+<div class="toprow" style="font-weight:bolder">
+	<div><a href="index.html"><img style="position:relative;top:2px" src="https://ftm.guru/icons/FMC.svg" width="16px"> Solidex L2 Bribes</a></div>
+	<div></div>
+	<div>By <a href="https://ftm.guru">FTM.guru</a></div>
+</div>
+
+<h1 align="center">0xDAO : Live vlOXD Votes</h1>
+<br><br>
+
+
+
+
+
+<h4 align="">Facts & Regulations</h4>
+<ul align="left">
+<li>Only Top 30🚀 Pools will get voted.</li>
+<li>Pools are finalized 20 min. before Thrurday.</li>
+<li>Vote once. Set & forget. Auto-Repeat.</li>
+<li>vlOXD voter can change votes anytime.</li>
+<li>Special Pools Bribe💸 all voters.</li>
+<li id="oxCF"></li>
+<!--<li id="oxUF"></li>-->
+</ul>
+<br>
+
+<div align="center" id="rdata">
+
+	<table>
+		<thead>
+			<tr>
+				<td>Pool</td>
+				<td>Votes</td>
+				<td>Type</td>
+				<td>Popularity</td>
+				<td>Weight</td>
+			</tr>
+		</thead>
+		<tbody id="t_b">
+		</tbody>
+	</table>
+</div>
+
+
+
+
+
+<br><br>
+
+
+
+
+</body>
+
+<script src="https://ftm.guru/ethers-5.2.umd.min.js"></script>
+<script src="vlsex_bkp.js"></script>
+<script>
+
+function $(_) {return document.getElementById(_);}
+vlv=""
+window.addEventListener('load',async function()
+{
+	provider = new ethers.providers.JsonRpcProvider("https://rpcapi.fantom.network");
+	mktable()
+
+}, false);
+
+
+function sortit(n,el) {
+  var t, r, z, i, x, y, v, b, c = 0;
+  t = document.getElementById(el);
+  z = true;
+  b = "a";
+  while (z) {
+    z = false;
+    r = t.rows;
+    for (i = 0; i < (r.length - 1); i++) {
+      v = false;
+      x = (r[i].getElementsByTagName("TD")[n].textContent)//.replace(/,| |\.|\$|%/g,'');
+      if(isFinite(x)){x=Number(x)}else{x=x.toLowerCase()}
+      y = (r[i + 1].getElementsByTagName("TD")[n].textContent)//.replace(/,| |\.|\$|%/g,'');
+      if(isFinite(y)){y=Number(y)}else{y=y.toLowerCase()}
+      if (b == "a") {
+        if ((x) > (y)) {
+          v= true;
+          break;
+        }
+      } else if (b == "d") {
+        if ((x) < (y)) {
+          v = true;
+          break;
+        }
+      }
+    }
+    if (v) {
+      r[i].parentNode.insertBefore(r[i + 1], r[i]);
+      z = true;
+      c ++;
+    } else {
+      if (c == 0 && b == "a") {
+        b = "d";
+        z = true;
+      }
+    }
+  }
+    var t, r, z, i, x, y, v, b, c = 0;
+}
+
+let groupByN = (n, data) => {
+  let result = [];
+  for (i = 0; i < data.length; i += n) result.push(data.slice(i, i + n));
+  return result;
+};
+
+
+VD=""
+async function mktable()
+{
+
+	vs = new ethers.Contract("0xda007a39a692b0fefe9c6cb1a185feab2722c4fd",[{"inputs":[{"internalType":"uint256","name":"length","type":"uint256"}],"name":"votes","outputs":[{"components":[{"internalType":"address","name":"poolAddress","type":"address"},{"internalType":"int256","name":"weight","type":"int256"}],"internalType":"struct IVotingSnapshot.Vote[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"topVotesWeight","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}],provider)
+	vdata = await Promise.all([vs.votes(1e8),vs.topVotesWeight()])
+	VD = vdata[0]
+	vwg = 0;
+	for (i=0; i< VD.length; i++){vwg+=Number(Number(VD[i][1]))}
+	$("oxCF").innerHTML = "0xDAO Consensus Factor: " + (Number(vdata[1])/vwg*100).toLocaleString(undefined,{minimumFractionDigits: 4, maximumFractionDigits: 4}) + "%"
+
+	for (i=0; i< VD.length; i++)
+	{
+		su = document.createElement("tr")
+		su.innerHTML = `
+			<td><a href="https://ftmscan.com/address/${VD[i][0]}">${gsm(VD[i][0])[1]}</a></td>
+			<td>${Number((Number(VD[i][1])/1e18).toFixed(0)).toLocaleString()}</td>
+			<td>${gsm(VD[i][0])[0] == "vAMM" ? "Volatile" : "Stable"}</td>
+			<td>${(Number(VD[i][1])/vwg*100).toLocaleString(undefined,{minimumFractionDigits: 4, maximumFractionDigits: 4}) +"%"}</td>
+			<td>${i< 30 ? ((Number(VD[i][1])/Number(vdata[1])*100).toLocaleString(undefined,{minimumFractionDigits: 4, maximumFractionDigits: 4}) + "%") : (0).toLocaleString(undefined,{minimumFractionDigits: 2, maximumFractionDigits: 4})+"%"}</td>
+		`;
+		if(i< 30) {su.setAttribute("class","topvoted"); }
+		if(gsm(VD[i][0])[1].indexOf("ELITE")>-1) {su.setAttribute("class","bribepool")}
+		$("t_b").append(su);
+	}
+}
+smt =
+{
+  "0x5821573d8F04947952e76d94f3ABC6d7b43bF8d0": "sAMM-USDC/DEI",
+  "0x270b4cdEAebC4E0522AA4371a9BE38c624193cEe": "vAMM-BOMB/PGUNK",
+  "0xF42dBcf004a93ae6D5922282B304E2aEFDd50058": "vAMM-DEI/DEUS",
+  "0xBF50837741EF621edbFf4E2fD32D342fE2a2dDD6": "vAMM-SPIRIT/SINSPIRIT",
+  "0x3d58F5c76D8833A18E9CF084d2a4ce5c2E2B9062": "sAMM-pFTM/WFTM",
+  "0xa61DE98597f7da23f26C8D594Cce4884AFCe37EB": "vAMM-SCARAB/GSCARAB",
+  "0xa3bf7336FDbCe054c4B5Bad4FF8d79539dB2a2b3": "vAMM-SOLID/oxSOLID",
+  "0xD9A4108CBB40a12dE16dFFDc54aE5065878816d7": "vAMM-USDC/WeVE",
+  "0xFa9eAcdC763500Ba4ab6bA2BFcF154d5a4B19eD7": "vAMM-USDC/DEI",
+  "0xaff3943D7bA6170becB551e916314DE0523AF531": "vAMM-WFTM/PANIC",
+  "0x4bBd8467ccd49D5360648CE14830f43a7fEB6e45": "vAMM-FXS/FRAX",
+  "0xb0ffAE1c213EAA031AA20a1DAC86f543438e8202": "vAMM-WFTM/ETH",
+  "0xFC666F470cdbfF969A3ad9a881615e15435C5e11": "vAMM-WFTM/KP3R",
+  "0xcB6eAB779780c7FD6d014ab90d8b10e97A1227E2": "vAMM-WFTM/OXD",
+  "0x333BD3a0722C756a88eEf074149ef95EF38b6D53": "vAMM-WFTM/BELUGA",
+  "0x6519546433dCB0a34A0De908e1032c46906EF664": "vAMM-bveOXD/OXD",
+  "0xA7f3CD681e449AB346a69E41229C9eC9AC30C8a9": "vAMM-pFTM/PAE",
+  "0xc8bd5D731fa7F60636BADa56869d23356Ff1e08B": "vAMM-WFTM/BRUSH",
+  "0xA20E7F1dE770dCd49C8E7ce183C35D0741722460": "vAMM-WFTM/oxSOLID",
+  "0x742C384D6EDeC91466042ba84E5e751c4eAFf962": "sAMM-SPIRIT/SINSPIRIT",
+  "0x783f1eDBE336981dFCb74Bd0B803655F55AaDF48": "vAMM-WFTM/TAROT",
+  "0x9861B8a9Acc9B4f249981164bFe7f84202068bfE": "vAMM-LQDR/WFTM",
+  "0xBad7D3DF8E1614d985C3D9ba9f6ecd32ae7Dc20a": "vAMM-USDC/WFTM",
+  "0x5C2086035285075b07C709bc1106174c0fAc4Ec2": "vAMM-SOLID/DEI",
+  "0x2f1569094CB256fB745901fa92e57aF011D32B2C": "vAMM-BOMB/DIAMOND",
+  "0xe4bc39fdD4618a76f6472079C329bdfa820afA75": "vAMM-WFTM/SOLID",
+  "0x4FE782133af0f7604B9B89Bf95893ADDE265FEFD": "vAMM-xTAROT/TAROT",
+  "0xd6be7592E5C424623c8C9557738970aE19ab5de2": "sAMM-SPIRIT/LINSPIRIT",
+  "0xd0184791ADfa030Bdf8a1F2d626f823d1c2b0159": "sAMM-tFTM/WFTM",
+  "0x2ddf6fE0918678B5224630124f32042894e221dd": "vAMM-WFTM/DEI",
+  "0x5ef8f0bd4F071B0199603a28ec9343F3651999c0": "vAMM-WFTM/RDL",
+  "0xb0D9B878edEce2019D4c57bD34c6f8c169c860F2": "vAMM-WFTM/ELITE",
+  "0x304B61f3481C977Ffbe630B55f2aBeEe74792664": "vAMM-IB/WFTM",
+  "0xc92448a961Eb4f7A06dA2719482e203Cf1603B0A": "vAMM-WFTM/BOMB",
+  "0x4303eDB91d23FC648bFEEb65349596bcf4DF0742": "vAMM-OXD/DEI",
+  "0xB1Ead3Edb37A8159f57226F3D138F058b1C56232": "vAMM-SOLIDsex/SEX",
+  "0x5E697C70a3DDc7AB0ba5414aD911147f21bdb383": "sAMM-USDC/OXD",
+  "0x94bE7e51efE2A0C06c2281b6b385FCD12C84d6F9": "vAMM-WFTM/MULTI",
+  "0x6B987e02Ca5eAE26D8B2bCAc724D4e03b3B0c295": "vAMM-OATH/WFTM",
+  "0xED7Fd242ce91a541ABcaE52f3d617dacA7fe6e34": "vAMM-CRV/WFTM",
+  "0xDc5Cb03270Dfb60B14F12c2257220f660368f4dF": "vAMM-OXD/DEUS",
+  "0xFCEC86aF8774d69e2e4412B8De3f4aBf1f671ecC": "vAMM-WFTM/SEX",
+  "0x86dD79265814756713e631Dde7E162bdD538b7B1": "vAMM-WFTM/SCREAM",
+  "0x78200cCDA774Ca3823959E06eeF7a7992553aDed": "vAMM-dGME/DEI",
+  "0xB60a9eEc3A3487329dB011cd750592268A9f9fC8": "vAMM-OXD/DEI",
+  "0x95Ba7d2C058eF480E2b22e862882e2076B26A316": "vAMM-SPELL/sSPELL",
+  "0x62E2819Dd417F3b430B6fa5Fd34a49A377A02ac8": "sAMM-SOLIDsex/SOLID",
+  "0xfe92a1E87627C5A31be97fF1179CBF7B5538dc1f": "sAMM-WFTM/TOMB",
+  "0xa7Ea870dc93ffB712ca74b43eFCA9B07556d1303": "sAMM-binSPIRIT/SPIRIT",
+  "0x759d12bEf107E51A711A502CB81f3DbD2748EBf1": "vAMM-wpc/WeVE",
+  "0x9ae95682bde174993ecb818Cc23E8607d2e54667": "vAMM-WFTM/FRAX",
+  "0x6058345A4D8B89Ddac7042Be08091F91a404B80b": "sAMM-BTC/renBTC",
+  "0x3d19E12883f801Ab22dEde5590465aF5851965c5": "sAMM-TOMB/BASED",
+  "0x33166B70cC06b4f4f3Be52E9A9FbFE87a789103C": "vAMM-WFTM/PILLS",
+  "0xC0240Ee4405f11EFb87A00B432A8be7b7Afc97CC": "sAMM-USDC/DAI",
+  "0xa66901D1965F5410dEeB4d0Bb43f7c1B628Cb20b": "vAMM-WFTM/SOLIDsex",
+  "0x5A3AA3284EE642152D4a2B55BE1160051c5eB932": "vAMM-BEETS/fBEETS",
+  "0x843e27CFd961FE5066A7cDFF86E1E3b5F0ADD36e": "vAMM-LIQR/Fantom-L",
+  "0xd7C590a05c9Bf78a51e5171613f83e6a88a6851a": "vAMM-LQDR/DEI",
+  "0xf3a5afCA41475F6578E64c743b5f7C9c77E0FB8A": "vAMM-BOO/SOLID",
+  "0xeAa8DC34d3AD1910da9eA6B2099b08FC1d6D292b": "vAMM-WFTM/BTC",
+  "0x62cFabD431fEf4159a013A5309f54B42b46Da268": "vAMM-fUSDT/WFTM",
+  "0xB2A931f695DA937e426cf5b71C87CACcDa6db194": "vAMM-bveOXD/DEI",
+  "0x154eA0E896695824C87985a52230674C2BE7731b": "sAMM-USDC/FRAX",
+  "0x387a11D161f6855Bd3c801bA6C79Fe9b824Ce1f3": "sAMM-WFTM/beFTM",
+  "0x2d1bE3C7DcA1A7c4D89DfDc1554AF428378CD951": "sAMM-SOLIDsex/SEX",
+  "0xbF1c168fd5cb65C6A3c31d3d48b222104258ba70": "sAMM-USDC/WeVE",
+  "0x8aeB0503E13F7bea02F80986a8FDb2AccE5C6b6C": "vAMM-BIFI/miMATIC",
+  "0x77bE68E1c645687Ae19CED5658064aB5059A576e": "vAMM-WFTM/BEETS",
+  "0xB4658cBC3624f35ae1aFFFfe33a1173325f9761a": "sAMM-USDC/WFTM",
+  "0xeB30fc283D1cEB163ca848D13b06261784945395": "vAMM-USDC/ELITE",
+  "0xbcab7d083Cf6a01e0DdA9ed7F8a02b47d125e682": "sAMM-USDC/MIM",
+  "0x74b61f876FB49C7e73dBDd3B2185390BFDC11fF5": "vAMM-SCREAM/xSCREAM",
+  "0x8aa410d8B0Cc3dE48AAC8eB5d928646A00e6ff04": "vAMM-WFTM/SYN",
+  "0x5e5e643edF8FeA9CAeFEAC1e4701f99C0568da82": "vAMM-USDC/OXD",
+  "0xF235510803629EFBb88c1Ff798f71ad68F5645ac": "vAMM-WFTM/LIQR",
+  "0x29a1780Be39c1911E55179F3eAD358767203ceCc": "vAMM-TOMB/miMATIC",
+  "0x4A81E80f7d77B4D1440A7Fef12bD47e0344F215B": "vAMM-WFTM/renBTC",
+  "0xd11e940c42e03d927cfd7426718bb4cA21d6015f": "vAMM-DEI/SCREAM",
+  "0xBC5F148258716241B7f333e386b8e0E298272800": "vAMM-USDC/SOLID",
+  "0xB1c21814e244A8EB54d2Cd10701daF972A33Fc1F": "vAMM-SC/WFTM",
+  "0x99a07AeBc849d7834A7229C9c64d1dfeACeA06a3": "vAMM-DAI/WeVE",
+  "0x3Eb6B799eA7F1d1904d810db61b1Ca771dCc1807": "vAMM-DAI/DEUS",
+  "0x2C16f8Dee16f631986916C8839D423B7375b544e": "vAMM-WFTM/renUSDC",
+  "0xF3EDA2d1c7135437FB19E32c38bC8fA2c6E9800A": "ox-sAMM-USDC/DEI"
+}
+function gsm(ad)
+{
+	ad=ethers.utils.getAddress(ad)
+	return (typeof smt[ad] == "undefined" ? ad.substr(0,10) : smt[ad] ).split("-");
+}
+</script>
+</html>
+

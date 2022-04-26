@@ -97,10 +97,10 @@ button{color:#fff;border:none;box-shadow:0px 1px 2px #111;cursor:pointer}
 		<div class="innerarea">
 			<div class="twopc">
 				<div>
-					<img src="../img/ftm.svg" id="inp" value="0x04068da6c83afcfa0e13ba15a6696662335d5b75">
+					<img src="../img/bomb.svg" id="inp" value="0x04068da6c83afcfa0e13ba15a6696662335d5b75">
 				</div>
 				<div>
-					<div align="left">Balance: <span id="bal0">0.0 WFTM</span></div>
+					<div align="left">Balance: <span id="bal0">0.0 BOMB</span></div>
 					<input id="inp_0" onchange="getAmountOut(Number(this.value), t_i, t_o, 1);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" placeholder="0.0">
 				</div>
 			</div>
@@ -114,10 +114,10 @@ button{color:#fff;border:none;box-shadow:0px 1px 2px #111;cursor:pointer}
 		<div class="innerarea">
 			<div class="twopc">
 				<div>
-					<img src="../img/64.png" id="out" value="0xf43Cc235E686d7BC513F53Fbffb61F760c3a1882">
+					<img src="https://ftm.guru/icons/ftm.svg" id="out" value="0xf43Cc235E686d7BC513F53Fbffb61F760c3a1882">
 				</div>
 				<div>
-					<div align="left">Balance: <span id="bal1">0.0 ELITE</span></div>
+					<div align="left">Balance: <span id="bal1">0.0 WFTM</span></div>
 					<input id="inp_1" onchange="getAmountOut(Number(this.value), t_o, t_i, 0);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" placeholder="0.0">
 				</div>
 			</div>
@@ -373,11 +373,11 @@ async function getAmountOut(a,i,o,p){
 		p == 0 ? $("inp_0").value = ret : $("inp_1").value = ret
 	})
 }
-t_i = "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83"
-t_o = "0xf43Cc235E686d7BC513F53Fbffb61F760c3a1882"
+t_i = "0x8503eb4a136bdbeb323e37aa6e0fa0c772228378"
+t_o = "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83"
 toks = {
-"0xf43Cc235E686d7BC513F53Fbffb61F760c3a1882" : [18, "ELITE"],
-"0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83" : [18, "WFTM"]
+"0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83" : [18, "WFTM"],
+"0x8503eb4a136bdbeb323e37aa6e0fa0c772228378" : [0, "BOMB"]
 }
 
 function flip()
