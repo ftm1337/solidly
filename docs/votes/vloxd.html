@@ -231,7 +231,7 @@ async function mktable()
 			<td>${i< 30 ? ((Number(VD[i][1])/Number(vdata[1])*100).toLocaleString(undefined,{minimumFractionDigits: 4, maximumFractionDigits: 4}) + "%") : (0).toLocaleString(undefined,{minimumFractionDigits: 2, maximumFractionDigits: 4})+"%"}</td>
 		`;
 		if(i< 30) {su.setAttribute("class","topvoted"); }
-		if(gsm(VD[i][0])[1].indexOf("ELITE")>-1) {su.setAttribute("class","bribepool")}
+		if(typeof gsm(VD[i][0])[1] != "undefined" && gsm(VD[i][0])[1].indexOf("ELITE")>-1) {su.setAttribute("class","bribepool")}
 		$("t_b").append(su);
 	}
 }
@@ -321,13 +321,28 @@ smt =
   "0x99a07AeBc849d7834A7229C9c64d1dfeACeA06a3": "vAMM-DAI/WeVE",
   "0x3Eb6B799eA7F1d1904d810db61b1Ca771dCc1807": "vAMM-DAI/DEUS",
   "0x2C16f8Dee16f631986916C8839D423B7375b544e": "vAMM-WFTM/renUSDC",
-  "0xF3EDA2d1c7135437FB19E32c38bC8fA2c6E9800A": "ox-sAMM-USDC/DEI"
+  "0xF3EDA2d1c7135437FB19E32c38bC8fA2c6E9800A": "ox-sAMM-USDC/DEI",
+  "0xB2ba57ad3314C062226DA4b5bc25Dd6398d6b546":	"vAMM-DEI/dEUR"
 }
 function gsm(ad)
 {
 	ad=ethers.utils.getAddress(ad)
-	return (typeof smt[ad] == "undefined" ? ad.substr(0,10) : smt[ad] ).split("-");
+	rad = (typeof smt[ad] == "undefined" ? ad.substr(0,10) : smt[ad] )
+	return rad.indexOf("-") > -1 ? rad.split("-") : [rad,rad];
 }
+
+//gsm_evm
+ass={}
+async function fs()
+{
+ for (i=0;i<VD.length;i++)
+	{
+		t = new ethers.Contract(VD[i][0],[{"constant": true,"inputs": [],"name": "symbol","outputs": [{"internalType": "string","name": "","type": "string"}],"payable": false,"stateMutability": "view","type": "function"}],provider)
+		sm = await t.symbol()
+		ass[VD[i][0]] = sm
+	}
+}
+fs()
 </script>
 </html>
 
