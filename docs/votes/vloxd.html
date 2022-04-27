@@ -115,7 +115,7 @@ tbody tr.bribepool::before {
 <li>Vote once. Set & forget. Auto-Repeat.</li>
 <li>vlOXD voter can change votes anytime.</li>
 <li>Special Pools Bribe💸 all voters.</li>
-<li id="oxCF"></li>
+<li>0xDAO Consensus Factor:  <span id="oxCF">??.???</span></li>
 <!--<li id="oxUF"></li>-->
 </ul>
 <br>
@@ -218,7 +218,7 @@ async function mktable()
 	VD = vdata[0]
 	vwg = 0;
 	for (i=0; i< VD.length; i++){vwg+=Number(Number(VD[i][1]))}
-	$("oxCF").innerHTML = "0xDAO Consensus Factor: " + (Number(vdata[1])/vwg*100).toLocaleString(undefined,{minimumFractionDigits: 4, maximumFractionDigits: 4}) + "%"
+	$("oxCF").innerHTML = (Number(vdata[1])/vwg*100).toLocaleString(undefined,{minimumFractionDigits: 4, maximumFractionDigits: 4}) + "%"
 
 	for (i=0; i< VD.length; i++)
 	{
@@ -231,7 +231,7 @@ async function mktable()
 			<td>${i< 30 ? ((Number(VD[i][1])/Number(vdata[1])*100).toLocaleString(undefined,{minimumFractionDigits: 4, maximumFractionDigits: 4}) + "%") : (0).toLocaleString(undefined,{minimumFractionDigits: 2, maximumFractionDigits: 4})+"%"}</td>
 		`;
 		if(i< 30) {su.setAttribute("class","topvoted"); }
-		if(typeof gsm(VD[i][0])[1] != "undefined" && gsm(VD[i][0])[1].indexOf("ELITE")>-1) {su.setAttribute("class","bribepool")}
+		if(typeof gsm(VD[i][0])[1] != "undefined" && gsm(VD[i][0])[1].indexOf("ELITE")>-1) {su.setAttribute("class", i < 30 ? "topvoted bribepool" : "bribepool")}
 		$("t_b").append(su);
 	}
 }
