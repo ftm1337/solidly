@@ -62,7 +62,7 @@ td{padding: 2px 5px}
 <h1 align="center">vls Voting: Weekly Weights</h1>
 <br><br>
 <div align="center">
-	<input id="pooladdr" value="0xb0d9b878edece2019d4c57bd34c6f8c169c860f2" style="background:#000;color:#fff;border-radius:25px;width:50%" onchange="weeklyvotes()" oninput="this.onchange"><br><br>
+	<input id="pooladdr" value="0xb0d9b878edece2019d4c57bd34c6f8c169c860f2" style="background:#000;color:#fff;border-radius:25px;width:50%" onchange="getana()" oninput="this.onchange"><br><br>
 	<div class="car" >
 		<svg id="htc" viewbox="0 0 100 100" preserveAspectRatio="none">
 			<polyline stroke-width="0.25" points="0 5, 100 5" fill="none" stroke="grey" stroke-opacity="0.25"></polyline>
@@ -172,6 +172,11 @@ window.addEventListener('load',async function()
 
 }, false);
 
+async function getana()
+{
+	weeklyvotes().then(console.log("wv: 200"))
+	findvoters().then(console.log("fv: 200"))
+}
 async function weeklyvotes()
 {
 	weeks = await vlv.getWeek()
@@ -182,6 +187,7 @@ async function weeklyvotes()
 	for(i=0;i< Number(weeks)+1;i++){alltime[i] = vlv.poolVotes(pa,i)}
 	Promise.all(alltime).then(wd=>{
 		d2p = []
+		$("wklhst").innerHTML=""
 		for(i=wd.length-1;i>=0;i--)
 		{
 			d2p[i] = [1645675200000 + i*86400*7*1000 , Number(wd[i])] ;
@@ -210,6 +216,7 @@ async function findvoters()
 	vrp=[]
 	for(i=0;i<av.length;i++)	{	if(av[i].data.indexOf(pa.substr(2,40).toLowerCase()) > -1 ) {	vrp.push([av[i].blockNumber,av[i].topics[1], av[i].data])	}	}
 	$("vrlog").innerHTML+="<br>Identified "+vrp.length+" voters in support!<br>Collecting details..."
+	$("vlist").innerHTML = ""
 	for(i=vrp.length -1 ; i >= 0 ;i--)
 	{
 		ed = ethers.utils.defaultAbiCoder.decode(  [ 'address[]' ,'int256[]', 'uint256', 'uint256' ], vrp[i][2]	)

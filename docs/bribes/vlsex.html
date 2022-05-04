@@ -146,11 +146,53 @@ let groupByN = (n, data) => {
 };
 
 
+/*
+Find TX: "Submit Votes"
+https://ftmscan.com/address/0xca082181c4f4a811bed68ab61de6adce11158948?fromaddress=0xde1db5af0e72270c97bd4ae588f12995a6048307
 
+Note end := tx.blockNumber
+
+See tx Log: SubmittedVote (address caller, address[] pools, int256[] weights)
+Find total of all votes : = vlsex
+
+Find forus:= From https://ftm.guru/solidly/analytics/vlsex
+
+Find elitep:= await tvlGuru.methods.p_t_coin_usd("0xea035a13b64cb49d85e2f0a2736c9604cb21599c").call(35993203)
+
+Find ssolid := await venft.methods.balanceOfNFT(8).call(37106514)
+
+Find vesolid :=	await venft.methods.totalSupply().call(37106514)
+
+Batch Mint:	0x2AA5d15Eb36E5960d056e8FeA6E7BB3e2a06A351
+https://ftmscan.com/address/0x4bc8ea84bdc3ebb01d495e5d1605d4f082aeb5d7#writeContract
+
+*/
 		//	E% = ssolid x ( forus / global ),
 		//	B$ = E% x bribepp
 VD =
 [
+	//Week 3
+	{
+		round:	3,
+		vlsex:	31029368,
+		forus:	81618,
+		ssolid:	16737746955568475866695310 / 1e18,
+		vesolid:59195898413504594642392720 / 1e18,
+		bribepp:1000,
+		first:	0,
+		end:	37106514,
+		times:	"20 April - 27 April, 2022",
+		elitep:	1468,
+		xeliter:125424231,
+		voters:
+		[
+			[10614	,"0xe12c849046d447e60e6fb47baca6dc8561d3cbf7"],
+			[2045	,"0xc07686af7aee9353d8e88febfbd72ec68411cccd"],
+			[44306	,"0x6c2693f5a936f37ed03cfa8465bf2d8beff19a0f"],
+			[20434	,"0xc56e12fd9435bbedd79e03429cfe798271aa4b5e"],
+			[4219	,"0x167d87a906da361a10061fe42bbe89451c2ee584"]
+		]
+	},
 	//Week 2
 	{
 		round:	2,
