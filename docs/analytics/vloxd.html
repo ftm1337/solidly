@@ -149,9 +149,9 @@ window.addEventListener('load',async function()
 	//	User Proxy Factory:0xda00aad945d0d5f1b1b3fbb6e0ce3e36827a7bf5, but using oxLens here
 	LENS = new ethers.Contract("0xda00137c79b30bfe06d04733349d98cf06320e69",[{"inputs":[{"internalType":"address","name":"accountAddress","type":"address"}],"name":"votePositionsOf","outputs":[{"components":[{"internalType":"address","name":"delegateAddress","type":"address"},{"internalType":"uint256","name":"weightTotal","type":"uint256"},{"internalType":"uint256","name":"weightUsed","type":"uint256"},{"internalType":"uint256","name":"weightAvailable","type":"uint256"},{"components":[{"internalType":"address","name":"poolAddress","type":"address"},{"internalType":"int256","name":"weight","type":"int256"}],"internalType":"struct IVotingSnapshot.Vote[]","name":"votes","type":"tuple[]"}],"internalType":"struct OxLens.VotesData","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userProxyByAccount","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}],provider)
 	paint()
-	//lv = await getVotesAt("latest")
-	//CACHED.push(lv)
-	//paint()
+	lv = await getVotesAt("latest")
+	CACHED.push(lv)
+	paint()
 }, false);
 
 users=
