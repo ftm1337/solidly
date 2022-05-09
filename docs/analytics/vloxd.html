@@ -99,9 +99,9 @@ tbody tr::before {
 
 <h4 align="">Select the Pool Address</h4>
 <input id="pair_inp" placeholder="Enter LP Address" value="0xb0D9B878edEce2019D4c57bD34c6f8c169c860F2">
-<button onclick="paint()">Find voters</button>
+<button onclick="window.location.reload()">Find voters</button>
 <ul align="left">
-<li>Only 237 Active Voters since 18/Apr/2022</li>
+<li>Only 405 Active Voters since 13/Apr/2022</li>
 <li>Others are not included on this roster.</li>
 <li>Please <a href="discord.gg/QpyfMarNrV" target="_blank">Contact us</a> to get addresses included.</li>
 <!--<li id="oxUF"></li>-->
@@ -1091,7 +1091,7 @@ async function getuspro(u)
 
 function paint()
 {
-	PAIR = $("pair_inp").value;
+	PAIR = ethers.utils.getAddress($("pair_inp").value);
 	$("t_b").innerHTML = ""
 	for(i=0;i< users.length; i++)
 	{
