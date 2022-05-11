@@ -1,0 +1,326 @@
+<!doctype html><html><meta charset="UTF-8">
+<head>
+<meta name="description" content="0xDAO L2 Bribes for vlOXD Voters | FTM.guru">
+<meta name="keywords" content="Fantom Opera, List, Dashboard, Tracker, Explorer, FTM, Decentralized Finance, ELITE, 1337, defi, farming, FTM1337">
+<title>0xDAO L2 Bribes for vlOXD Voters | FTM.guru</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="img/FMC.svg" />
+<style>
+@font-face{font-family:bold;src: url(https://ftm.guru/font/bold.ttf);}
+@font-face{ font-family:italic;src: url(https://ftm.guru/font/italic.ttf);}
+@font-face{ font-family:light;src: url(https://ftm.guru/font/light.ttf);}
+@font-face{ font-family:light_italic;src: url(https://ftm.guru/font/light_italic.ttf);}
+@font-face{ font-family:regular;src: url(https://ftm.guru/font/regular.ttf);}
+@font-face{ font-family:regular_italic;src: url(https://ftm.guru/font/regular_italic.ttf);}
+*{font-family:regular;}
+svg text {font-size: 4px !important;}
+
+html{background:radial-gradient(circle at bottom, #125, #122, #100);background-attachment: fixed;}
+.mainpanel,.mainstage{background: rgba(15,15,31,0.5);}
+*{text-shadow:6px 6px 5px black;color:#e3e9f2}
+.lowerbar{
+  font-size: 1.25em;
+  font-weight: bolder;
+}
+.lowerbar a{
+  font-size: 0.75em;
+  font-weight: lighter;
+  padding: 10px 10px 10px 0px;
+  color:#32fbe2;
+  text-decoration: none
+}
+.lowerbar img{width:24px}
+.lowerbar .subimg{width:16px;height:16px;position: relative;right:9px;top:4px;margin-right:-11px}
+.toprow{display:grid;grid-template-columns:max-content auto max-content}
+.toprow a{text-decoration:none}
+.car{max-width: 90%;padding:15px;box-shadow: rgba(0,255,255,0.2) 0px 0px 10px 10px;background: #090919;margin:5%;border-radius: 15px;border:aqua 2px solid;}
+able{font-weight:bold;border-collapse:collapse}
+table thead tr {background:rgba(17,27,27,0.75);}
+table tbody tr:hover td{background: aqua !important;color:#020611;}
+td {padding:10px}
+.tsu td:nth-child(2) {font-family: mono, monospace, fixed, console;text-align: right}
+.tsu td{text-align: left}
+thead tr td{text-align:center;font-weight:bold}
+table{text-align:right}
+thead td{font-family:bold}
+td{padding: 2px 5px}
+@media(min-width:641px){
+	.hhr{width: 555px}
+	#htc,.car{height: 70vh;width: 80vw;margin: auto;padding: 0}
+	svg text {font-size: 2px !important;}
+	svg polyline#pl_t_f {stroke-width: 0.25;}
+}
+</style>
+</head>
+<body>
+
+<div class="toprow" style="font-weight:bolder">
+	<div><a href="index.html"><img style="position:relative;top:2px" src="https://ftm.guru/icons/FMC.svg" width="16px">0xDAO L2 Bribes</a></div>
+	<div></div>
+	<div>By <a href="https://ftm.guru">FTM.guru</a></div>
+</div>
+
+<h1 align="center">0xDAO L2 Bribes for vlOXD Voters</h1>
+<br><br>
+
+
+
+
+
+<h2 align="center"> Voter-Bribe Round Data</h2>
+
+<div align="center" id="rdata">
+
+
+</div>
+
+
+
+
+
+<br><br>
+
+
+
+
+</body>
+
+<script src="https://ftm.guru/ethers-5.2.umd.min.js"></script>
+<script src="vloxd_bkp.js"></script>
+<script>
+
+function $(_) {return document.getElementById(_);}
+vlv=""
+snaps = [36573970,37105839,37567659];
+
+window.addEventListener('load',async function()
+{
+	provider = new ethers.providers.JsonRpcProvider("https://rpcapi.fantom.network");
+
+
+	vloxd = new ethers.Contract("0xdcc208496b8fcc8e99741df8c6b8856f1ba1c71f",[{"inputs":[{"internalType":"address","name":"_user","type":"address"}],"name":"userBalance","outputs":[{"internalType":"uint256","name":"balance","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"}],"name":"getActiveUserLocks","outputs":[{"internalType":"uint256[2][]","name":"lockData","type":"uint256[2][]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"}],"name":"userWeight","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalWeight","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}],provider)
+
+	venft = new ethers.Contract("0xcbd8fea77c2452255f59743f55a3ea9d83b3c72b",[{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"locked","outputs":[{"internalType":"int128","name":"amount","type":"int128"},{"internalType":"uint256","name":"end","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"balanceOfNFT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}],provider);
+
+	vevoter = new ethers.Contract("0xdc819f5d05a6859d2facbb4a44e5ab105762dbae",[{"inputs":[{"internalType":"address","name":"__ve","type":"address"},{"internalType":"address","name":"_factory","type":"address"},{"internalType":"address","name":"_gauges","type":"address"},{"internalType":"address","name":"_bribes","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"int256","name":"weight","type":"int256"}],"name":"Abstained","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"gauge","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Attach","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"lp","type":"address"},{"indexed":true,"internalType":"address","name":"gauge","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Deposit","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"gauge","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Detach","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"gauge","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"DistributeReward","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"gauge","type":"address"},{"indexed":false,"internalType":"address","name":"creator","type":"address"},{"indexed":true,"internalType":"address","name":"bribe","type":"address"},{"indexed":true,"internalType":"address","name":"pool","type":"address"}],"name":"GaugeCreated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"reward","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"NotifyReward","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"voter","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"int256","name":"weight","type":"int256"}],"name":"Voted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"whitelister","type":"address"},{"indexed":true,"internalType":"address","name":"token","type":"address"}],"name":"Whitelisted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"lp","type":"address"},{"indexed":true,"internalType":"address","name":"gauge","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Withdraw","type":"event"},{"inputs":[],"name":"_ve","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"address","name":"account","type":"address"}],"name":"attachTokenToGauge","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"bribefactory","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"bribes","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address[]","name":"_bribes","type":"address[]"},{"internalType":"address[][]","name":"_tokens","type":"address[][]"},{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"claimBribes","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"_fees","type":"address[]"},{"internalType":"address[][]","name":"_tokens","type":"address[][]"},{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"claimFees","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"_gauges","type":"address[]"},{"internalType":"address[][]","name":"_tokens","type":"address[][]"}],"name":"claimRewards","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"claimable","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_pool","type":"address"}],"name":"createGauge","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"address","name":"account","type":"address"}],"name":"detachTokenFromGauge","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"_gauges","type":"address[]"}],"name":"distribute","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_gauge","type":"address"}],"name":"distribute","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"start","type":"uint256"},{"internalType":"uint256","name":"finish","type":"uint256"}],"name":"distribute","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"distribute","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"_gauges","type":"address[]"}],"name":"distributeFees","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"distro","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"emitDeposit","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"emitWithdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"factory","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"gaugefactory","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"gauges","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address[]","name":"_tokens","type":"address[]"},{"internalType":"address","name":"_minter","type":"address"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"isGauge","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"isWhitelisted","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"length","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"listing_fee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minter","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"notifyRewardAmount","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"poke","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"poolForGauge","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"poolVote","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"pools","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"reset","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"totalWeight","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"updateAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"_gauges","type":"address[]"}],"name":"updateFor","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"start","type":"uint256"},{"internalType":"uint256","name":"end","type":"uint256"}],"name":"updateForRange","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_gauge","type":"address"}],"name":"updateGauge","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"usedWeights","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"address[]","name":"_poolVote","type":"address[]"},{"internalType":"int256[]","name":"_weights","type":"int256[]"}],"name":"vote","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"}],"name":"votes","outputs":[{"internalType":"int256","name":"","type":"int256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"weights","outputs":[{"internalType":"int256","name":"","type":"int256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_token","type":"address"},{"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"whitelist","outputs":[],"stateMutability":"nonpayable","type":"function"}],provider)
+
+	vloxdvoter = new ethers.Contract("0xda007a39a692b0fefe9c6cb1a185feab2722c4fd",[{"inputs":[],"name":"topVotes","outputs":[{"components":[{"internalType":"address","name":"poolAddress","type":"address"},{"internalType":"int256","name":"weight","type":"int256"}],"internalType":"struct IVotingSnapshot.Vote[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"topVotesWeight","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}],provider)
+	mktable()
+
+}, false);
+
+
+function sortit(n,el) {
+  var t, r, z, i, x, y, v, b, c = 0;
+  t = document.getElementById(el);
+  z = true;
+  b = "a";
+  while (z) {
+    z = false;
+    r = t.rows;
+    for (i = 0; i < (r.length - 1); i++) {
+      v = false;
+      x = (r[i].getElementsByTagName("TD")[n].textContent)//.replace(/,| |\.|\$|%/g,'');
+      if(isFinite(x)){x=Number(x)}else{x=x.toLowerCase()}
+      y = (r[i + 1].getElementsByTagName("TD")[n].textContent)//.replace(/,| |\.|\$|%/g,'');
+      if(isFinite(y)){y=Number(y)}else{y=y.toLowerCase()}
+      if (b == "a") {
+        if ((x) > (y)) {
+          v= true;
+          break;
+        }
+      } else if (b == "d") {
+        if ((x) < (y)) {
+          v = true;
+          break;
+        }
+      }
+    }
+    if (v) {
+      r[i].parentNode.insertBefore(r[i + 1], r[i]);
+      z = true;
+      c ++;
+    } else {
+      if (c == 0 && b == "a") {
+        b = "d";
+        z = true;
+      }
+    }
+  }
+    var t, r, z, i, x, y, v, b, c = 0;
+}
+
+let groupByN = (n, data) => {
+  let result = [];
+  for (i = 0; i < data.length; i += n) result.push(data.slice(i, i + n));
+  return result;
+};
+
+
+/*
+Find TX: "Submit Votes"
+	from Discord
+
+Note end := tx.blockNumber
+	snaps[N]
+
+Find total of all votes : = vloxd
+	tv = await vloxdvoter.topVotes()
+	s=0;for(i=0;i< tv.length;i++){s+=Number(temp0[i][1])}
+
+Find forus:=
+	tv = await vloxdvoter.topVotes()
+	Find Weight at our pair
+	//Verify Our Weight:=	Number(await vevoter.votes(2,"0xb0D9B878edEce2019D4c57bD34c6f8c169c860F2",{"blockTag":snaps[N]}))
+
+Find elitep:= await tvlGuru.methods.p_t_coin_usd("0xea035a13b64cb49d85e2f0a2736c9604cb21599c").call(35993203)
+
+Find osolid := await venft.methods.balanceOfNFT(8).call(37106514)
+
+Find vesolid :=	await venft.methods.totalSupply().call(37106514)
+
+Batch Mint:	0x2AA5d15Eb36E5960d056e8FeA6E7BB3e2a06A351
+https://ftmscan.com/address/0x4bc8ea84bdc3ebb01d495e5d1605d4f082aeb5d7#writeContract
+
+*/
+		//	E% = osolid x ( forus / global ),
+		//	B$ = E% x bribepp
+VD =
+[
+	{
+		round:	2,
+		vloxd:	2660270.322316257171341312,
+		forus:	  15029.671565195999182848,
+		osolid:	16938135451739716484857856 / 1e18,
+		vesolid:59195898413504594642392720 / 1e18,
+		bribepp:777,
+		first:	0,
+		end:	37106514,
+		times:	"28 April - 4 May, 2022",
+		elitep:	800,
+		xeliter:125424231,
+		voters:
+		[
+			[			6079			,	"0x9ce153cfa091d1cb364a147577c1dd626486fcf8	"]	,
+			[			3065			,	"0x6ec7b4fec23015ed9daa8dbf0e3573da69e5d36e	"]	,
+			[			1542			,	"0x43da6d2db9651b7042e31ffb2607a7cfa4d5d03b	"]	,
+			[			1422			,	"0x6d5c8b593958ee0cb7ad6ac2531ab1b818186857	"]	,
+			[			1295			,	"0xeb4576fe753dab07635c0bb6c8f0a355e1db5d31	"]	,
+			[			679			,	"0x6a02225ef927f8c617156b1ddf883293895b109d	"]	,
+			[			428			,	"0xb86b5568853c5963dd9b9836f5ec94a15966bbc9	"]	,
+			[			357			,	"0x6c2693f5a936f37ed03cfa8465bf2d8beff19a0f	"]	,
+			[			143			,	"0xc07686af7aee9353d8e88febfbd72ec68411cccd	"]	,
+			[			13			,	"0x1a540dde160bf0c47e529a36cd9574854fd34189	"]	,
+			[			7			,	"0x848a9126ff57004aa8bfdc99384f36a4754d4367	"]	,
+		]
+	},
+
+	{
+		round:	1,
+		vloxd:	2564799.234676886694002688,
+		forus:	  12973.520690067179307008,
+		osolid:	16920039251967953862656000 / 1e18,
+		vesolid:59195898413504594642392720 / 1e18,
+		bribepp:1000,
+		first:	0,
+		end:	snaps[1],
+		times:	"20 April - 27 April, 2022",
+		elitep:	1468,
+		xeliter:125424231,
+		voters:
+		[
+			[		6079			,	"0x9ce153cfa091d1cb364a147577c1dd626486fcf8	"],
+			[		1542			,	"0x6ec7b4fec23015ed9daa8dbf0e3573da69e5d36e	"],
+			[		1422			,	"0x43da6d2db9651b7042e31ffb2607a7cfa4d5d03b	"],
+			[		1295			,	"0x6d5c8b593958ee0cb7ad6ac2531ab1b818186857	"],
+			[		679				,	"0xeb4576fe753dab07635c0bb6c8f0a355e1db5d31	"],
+			[		590				,	"0x6a02225ef927f8c617156b1ddf883293895b109d	"],
+			[		428				,	"0xb86b5568853c5963dd9b9836f5ec94a15966bbc9	"],
+			[		419				,	"0x6c2693f5a936f37ed03cfa8465bf2d8beff19a0f	"],
+			[		357				,	"0xc07686af7aee9353d8e88febfbd72ec68411cccd	"],
+			[		143				,	"0x1a540dde160bf0c47e529a36cd9574854fd34189	"],
+			[		13				,	"0x848a9126ff57004aa8bfdc99384f36a4754d4367	"],
+			[		7				,	"0x71c1bffe933698f39b03c6c7545dfb193c4c8b86	"]
+		]
+	},
+
+	{
+		round:	0,
+		vloxd:	2677252.89122107252,
+		forus:	0,
+		osolid:	16900778928263793670619136 / 1e18,
+		vesolid:59154245209705467777287102 / 1e18,
+		bribepp:1337,
+		first:	0,
+		end:	snaps[0],
+		times:	"13 April - 20 April, 2022",
+		elitep:	1359,
+		xeliter:126246988,
+		voters:
+		[
+			[1295,		"0x6d5c8b593958ee0cb7ad6ac2531ab1b818186857"],
+			[353,		"0x8a1f93a1f6336452adca8284c818b218408fce2c"],
+			[143,		"0x1a540dde160bf0c47e529a36cd9574854fd34189"],
+		]
+	}
+];
+
+
+
+function mktable()
+{
+	for (i=0; i< VD.length; i++)
+	{
+		su = document.createElement("div")
+		ih=`
+			<br><br><br><br>
+			<hr class="hhr">
+			<h3>Round ${VD[i].round}</h3>
+			<b>${VD[i].times}</b>
+			<br><br>
+			<table class="tsu">
+				<tr><td>Votes for Us</td><td>${VD[i].forus}</td></tr>
+				<tr><td>Active vloxd</td><td>${VD[i].vloxd}</td></tr>
+				<tr><td>Our vloxd %</td><td>${ VD[i].forus / VD[i].vloxd * 100 } %</td></tr>
+				<tr><td>ve of 0xDAO</td><td>${VD[i].osolid}</td></tr>
+				<tr><td>Our ve benefit</td><td>${ VD[i].forus / VD[i].vloxd * VD[i].osolid }</td></tr>
+				<tr><td>Global veSOLID</td><td>${VD[i].vesolid}</td></tr>
+				<tr><td>Our Solidly %</td><td>${ ( VD[i].forus / VD[i].vloxd * VD[i].osolid ) / VD[i].vesolid * 100 } %</td></tr>
+				<tr><td>Bribes per %</td><td>$${VD[i].bribepp}</td></tr>
+				<tr><td>Net Bribes</td><td>$${ ( VD[i].forus / VD[i].vloxd * VD[i].osolid ) / VD[i].vesolid * 100 * VD[i].bribepp }</td></tr>
+				<tr><td>ELITE Price</td><td>${VD[i].elitep}</td></tr>
+				<tr><td>Bribed XELITE</td><td>${ ( ( ( VD[i].forus / VD[i].vloxd * VD[i].osolid ) / VD[i].vesolid * 100 * VD[i].bribepp ) / VD[i].elitep * VD[i].xeliter ).toFixed() }</td></tr>
+				<tr><td>XELITE per Vote</td><td>${ ( ( VD[i].forus / VD[i].vloxd * VD[i].osolid ) / VD[i].vesolid * 100 * VD[i].bribepp ) / VD[i].elitep * VD[i].xeliter / VD[i].forus }</td></tr>
+				<tr><td>Rewards per Vote</td><td>$${ ( 1 / VD[i].vloxd * VD[i].osolid ) / VD[i].vesolid * 100 * VD[i].bribepp }</td></tr>
+			</table>
+			<br><br>
+			<table class="tsuv">
+				<thead>
+					<tr>
+						<td onclick="sortit(0,'tsuv_${i}')">Votes</td>
+						<td onclick="sortit(1,'tsuv_${i}')">XELITE Bribe</td>
+						<td onclick="sortit(2,'tsuv_${i}')">Value</td>
+						<td onclick="sortit(3,'tsuv_${i}')">Voter Address</td>
+					</tr>
+				</thead>
+				<tbody id="tsuv_${i}">
+		`;
+		for(j=0;j< VD[i].voters.length;j++)
+		{
+			ih += `
+				<tr>
+					<td>${VD[i].voters[j][0]}</td>
+					<td>${ ( ( ( VD[i].forus / VD[i].vloxd * VD[i].osolid ) / VD[i].vesolid * 100 * VD[i].bribepp ) / VD[i].elitep * VD[i].xeliter / VD[i].forus * VD[i].voters[j][0] ).toFixed() }</td>
+					<td>$${ ( ( VD[i].voters[j][0] / VD[i].vloxd * VD[i].osolid ) / VD[i].vesolid * 100 * VD[i].bribepp ).toFixed(2) }</td>
+					<td>${VD[i].voters[j][1]}</td>
+				</tr>
+			`
+		}
+		su.innerHTML = ih + "</tbody></table>"
+		$("rdata").append(su);
+		sortit(1,'tsuv_'+i);sortit(1,'tsuv_'+i);
+	}
+}
+</script>
+</html>
+
