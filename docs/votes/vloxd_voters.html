@@ -1,0 +1,295 @@
+<!doctype html><html><meta charset="UTF-8">
+<head>
+<meta name="description" content="0xDAO : vlOXD Voter History | FTM.guru">
+<meta name="keywords" content="Fantom Opera, List, Dashboard, Tracker, Explorer, FTM, Decentralized Finance, ELITE, 1337, defi, farming, FTM1337">
+<title>0xDAO : vlOXD Voter History | FTM.guru</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="img/FMC.svg" />
+<style>
+@font-face{font-family:bold;src: url(https://ftm.guru/font/bold.ttf);}
+@font-face{ font-family:italic;src: url(https://ftm.guru/font/italic.ttf);}
+@font-face{ font-family:light;src: url(https://ftm.guru/font/light.ttf);}
+@font-face{ font-family:light_italic;src: url(https://ftm.guru/font/light_italic.ttf);}
+@font-face{ font-family:regular;src: url(https://ftm.guru/font/regular.ttf);}
+@font-face{ font-family:regular_italic;src: url(https://ftm.guru/font/regular_italic.ttf);}
+*{font-family:regular;}
+svg text {font-size: 4px !important;}
+
+html{background:radial-gradient(circle at bottom, #125, #122, #100);background-attachment: fixed;}
+.mainpanel,.mainstage{background: rgba(15,15,31,0.5);}
+*{text-shadow:6px 6px 5px black;color:#e3e9f2}
+.lowerbar{
+  font-size: 1.25em;
+  font-weight: bolder;
+}
+.lowerbar a{
+  font-size: 0.75em;
+  font-weight: lighter;
+  padding: 10px 10px 10px 0px;
+  color:#32fbe2;
+  text-decoration: none
+}
+.lowerbar img{width:24px}
+.lowerbar .subimg{width:16px;height:16px;position: relative;right:9px;top:4px;margin-right:-11px}
+.toprow{display:grid;grid-template-columns:max-content auto max-content}
+.toprow a{text-decoration:none}
+.car{max-width: 90%;padding:15px;box-shadow: rgba(0,255,255,0.2) 0px 0px 10px 10px;background: #090919;margin:5%;border-radius: 15px;border:aqua 2px solid;}
+able{font-weight:bold;border-collapse:collapse}
+table thead tr {background:rgba(17,27,27,0.75);}
+table tbody tr:hover td,table tbody tr:hover td a{background: aqua !important;color:#020611;}
+td a {padding:10px;text-decoration:none}
+table{text-align:left}
+thead tr td{text-align:center;font-weight:bold}
+thead td{font-family:bold}
+td{padding: 2px 5px;text-align:right}
+td:first-child{text-align: left}
+input,button{background:#000;border-radius:10px;}
+input{min-width:50vw;text-align:center}
+@media(min-width:641px){
+	.hhr{width: 555px}
+	#htc,.car{height: 70vh;width: 80vw;margin: auto;padding: 0}
+	svg text {font-size: 2px !important;}
+	svg polyline#pl_t_f {stroke-width: 0.25;}
+}
+* {
+  scrollbar-width: thick;
+  scrollbar-color: #07f #147;
+}
+*::-webkit-scrollbar {
+  width: 20px;
+}
+*::-webkit-scrollbar-track {
+  background: #147;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #07f;
+  border-radius: 20px;
+  border: 3px solid #147;
+}
+table{
+  counter-reset: rowNumber;
+  border-collapse:collapse;
+}
+thead tr::before{
+  counter-increment: (rowNumber+1);
+  content: "#. 🤑";
+  position:relative; top:
+}
+tbody tr::before {
+  counter-increment: rowNumber;
+  content: counter(rowNumber) " . "  "🚀";
+  position:relative; top:;
+}
+</style>
+</head>
+<body>
+
+<div class="toprow" style="font-weight:bolder">
+	<div><a href="index.html"><img style="position:relative;top:2px" src="https://ftm.guru/icons/FMC.svg" width="16px"> Solidity L2 Bribes</a></div>
+	<div></div>
+	<div>By <a href="https://ftm.guru">FTM.guru</a></div>
+</div>
+
+<h1 align="center">0xDAO : vlOXD Voter History</h1>
+<br><br>
+
+
+
+
+
+<h4 align="">Select the Pool Address</h4>
+<input id="pair_inp" placeholder="Enter LP Address" value="0xb0D9B878edEce2019D4c57bD34c6f8c169c860F2">
+<button onclick="paint()">Find voters</button>
+<ul align="left">
+<li>Only Active Voters since 18 Apr 2022 are included on this roster.</li>
+<li>Please <a href="discord.gg/QpyfMarNrV" target="_blank">Contact us</a> to get addresses included.</li>
+<!--<li id="oxUF"></li>-->
+</ul>
+<br>
+
+<div align="center" id="rdata">
+
+	<table>
+		<thead>
+			<tr>
+				<td>User Address</td>
+				<td>21 Apr</td>
+				<td>28 Apr</td>
+				<td>05 May</td>
+				<td>Current</td>
+			</tr>
+		</thead>
+		<tbody id="t_b">
+		</tbody>
+	</table>
+</div>
+
+
+
+
+
+<br><br>
+
+
+
+
+</body>
+
+<script src="https://ftm.guru/ethers-5.2.umd.min.js"></script>
+<script src="CACHED.js"></script>
+<script>
+
+function $(_) {return document.getElementById(_);}
+vlv=""
+window.addEventListener('load',async function()
+{
+	provider = new ethers.providers.JsonRpcProvider("https://rpcapi.fantom.network");
+	//mktable()
+	//	User Proxy Factory:0xda00aad945d0d5f1b1b3fbb6e0ce3e36827a7bf5, but using oxLens here
+	LENS = new ethers.Contract("0xda00137c79b30bfe06d04733349d98cf06320e69",[{"inputs":[{"internalType":"address","name":"accountAddress","type":"address"}],"name":"votePositionsOf","outputs":[{"components":[{"internalType":"address","name":"delegateAddress","type":"address"},{"internalType":"uint256","name":"weightTotal","type":"uint256"},{"internalType":"uint256","name":"weightUsed","type":"uint256"},{"internalType":"uint256","name":"weightAvailable","type":"uint256"},{"components":[{"internalType":"address","name":"poolAddress","type":"address"},{"internalType":"int256","name":"weight","type":"int256"}],"internalType":"struct IVotingSnapshot.Vote[]","name":"votes","type":"tuple[]"}],"internalType":"struct OxLens.VotesData","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userProxyByAccount","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}],provider)
+	paint()
+	lv = await getVotesAt("latest")
+	CACHED.push(lv)
+	paint()
+}, false);
+
+users= ["0x0076fcc7d245f6c7aaf07238adfb48adc62bdd55","0x015f9945f2925a84073f13ae761f4da3fd91f33e","0x03da4af92cdfe051f70897ad41bb80a24f08eb7e","0x06355362cd8ab65f6349535d0aac83dd911c3d54","0x071bac0768ba4236c7e28d79b6ccad452e3d414d","0x083b23284440c53c2639bf805b49dc6d4a423bba","0x083df0282ab7680098af6059f0422ef87900d22d","0x09c7a150c3766b3ac2804fc44b19b05e0e2067bb","0x0b3837b155b184bbd0eb77f36af8105b4945eecc","0x0c0c3df3ee78c0e503ae28e14d69a697653b554b","0x0db32190e72011f15ac925180180d3636e19b3e9","0x0dc9bd706f3df2a2abb5a17636c8dc9508df73f9","0x0de4348c28c4e9ef19d5faf4024ef6653c326ec8","0x103a1f94bc38313af8724777da71201e40adef5a","0x1222c2cdee2558addff353fcbaaf7db5a178c869","0x123b121bb9771cb171d34c835e92f891759bd79f","0x127e25d2106cf05d4198096ed750f9c3c69f8a1d","0x128138f94e1c1159afbb7950986d1eb62e648f59","0x13285463f7ec210454b56fde2c84ed3a78620770","0x14da174fab1356466af2dd0ecdf94204e828a732","0x14edc2ce4e34d610539543e19dbeac3ea8ac7d11","0x15800782f6dc1f46871f90e282cb64643bd67fd6","0x166c794d890dd91bbe71f304eca660e1c4892cbb","0x169feb5497ecd032ce26c173b2db232ba8b4a62e","0x19246d4cb92671d0f2166d00c9de687ead3206f8","0x1a540dde160bf0c47e529a36cd9574854fd34189","0x1a7763db12aad02c8205b6a6dd410b7e7323f103","0x1ab8eafa2b2d052f7675a040c6a10c2fdabf6fa9","0x1b5b5fb19d0a398499a9694ad823d786c24804cc","0x1bc2dd08c5332852cf647d746bc746b94d24950b","0x1c3283871ab8df8dde77436eff8ce5d4fd88efc8","0x1c51f54f1784f90b56af0b16d41108f5ab745045","0x208eb538146063edcf6141cfe215608ea7f4c7f9","0x21bfd32970fd6420657b978782e9ce443cee3c50","0x2354910d293e778aadf39b16deaadabb5b40d66b","0x237aa30084281a94803df9f13652e5f452458b18","0x23ddc3b1d7f2f674a8b974f581b0245e8bc66600","0x28aa4f9ffe21365473b64c161b566c3cdead0108","0x2a35905899e3722479072c094afb5f6a39ad1ec6","0x2c9021054abb84190c92adfe8085c8bd092faf70","0x2d59e650a72e3a707cdf4eb74b5b9988586b2d3f","0x2e6a27556bf03125b4db4704fcc86247d432365b","0x30e1b91a62c9f16bc83447eaf3b031800a6b4c60","0x32286ad4a0c602105f888d698f80a7a5275a1654","0x3331b5306cb318cb0564b3eff39e313b23dbd984","0x35e78a3df5b562e162b593e498389495959d5f55","0x37eedb7ac276bd6c894e81b8937b0b0bab154e22","0x3823a62339c5e9a75990efd1f91cdeff73bda609","0x3967d78660bcbc95c625d58a40c42ce10bd905d6","0x3a1b51be347cc35bee967fa6d32c07b63cd4e41e","0x3a8d048c8f687eb8eb81517d8dc38e2e5542c70d","0x3c7ac2ff76a1b4dcb2b69b1121fef5fb8dcdec43","0x3e7b8d12d4de6cb284a7d60bf92b462d2a6d6a2f","0x41ae2ecb07ee6f5bf7b93f5d6b26aac6e42eab5b","0x45fb84286c4ed459ebf1a49b3809af1fe5021f4f","0x4668b69ec8a429597da7530a8e328f6cfb96d71f","0x466928b1e8c757fa1e94db11209ddcf28f86e37a","0x491d927fa6c49460446346cc93e7b5e75b0b8c7b","0x49420af2473ae62c60f632ee84635cfa4beac3d4","0x4a8dd3b6f747cd77870fbdde3d6965614fc468a1","0x4b64ee4871a4d8432e184ee57d9df47846f6126c","0x4c7eabe657187d2c8c5f7e2bb453478f72fd00c9","0x4cae6fd5e70bf75cf7048a85858c169848fa3c2d","0x4e5b2447077fbbe3bd3d69bee701344e9ca7a8dc","0x50a201b8dadf001f4ee6f84a0bf94f63be874b99","0x5505f7442fcbad24f65265c422f8a055993815c4","0x5538793f0ed24fd4ea2fcd5225a40995a8f5ac3a","0x57354dd3787e50963d2c2d9925ed1237f4166fd1","0x5806594d03437742efdc1b33eea609a04c220b5f","0x5816bd4eba5e1674b830faf9e3857bdadea75646","0x58f9c22215d85bf1ffdb43c3a61d1c63c73d0735","0x5a3ab1a4d6ff1c7e4fb40220d2e07afb6bb0de79","0x5b3067c5e26fec823d6fbf8f315e43632658d2f6","0x5b655fecb44e923dc96808eab35e95f4c915655c","0x5d3f93700c77fdb3ebf78848c9be86ad7537338b","0x5f4d787692b0ab325df37e0b999c452d4561a8e6","0x5f4eca85055fff26decf454d49c0e9a1288a65bd","0x5fc9ff46636e48dff2e71ade1a0f420673895f92","0x614ee992a7db0dd1eea121f32f1cc8387ddc7fd5","0x64b4387eec286731272bc985eef4e879f7d684fc","0x66697dabffe51a73e506f463b27e388512ed6ecd","0x68353e0d46f1a0669f80d89f472172fe08f0860f","0x69b22dda2387b1d78f80f61d107c2313ec90e3ad","0x6a02225ef927f8c617156b1ddf883293895b109d","0x6a429aade86ead247e47d0a24a0e0acad47822c0","0x6b581a70f2836e33f3bc2054c15d41fba0bee1c9","0x6b96bbd6f1dfc08e3926a2448ed5a1c99b233b7a","0x6bdc653284bf4dc4a60c2da77057cef42b556034","0x6bff491860a9a20b0e87abff8c41a1d40111ad5e","0x6c0d470d97ef1f230eef10a5c848afcc8261ed67","0x6c2693f5a936f37ed03cfa8465bf2d8beff19a0f","0x6eaa1ee583106253459039de63b47510f4ea0bd3","0x6ec7b4fec23015ed9daa8dbf0e3573da69e5d36e","0x701386193b756f4931f68881f536724a808cdcba","0x709cf6b9fb921fc53b30b50a65f8aadf80fd8cb3","0x71ae112a1842d0c719185e9b8d0caafa4e00789b","0x73422a2722066c1750cb9fcbf79cabf1f08f9bf4","0x73b085ed81cb4f15b16e47d56e4d04091fab0af0","0x73d660ce3fc94ab93aabf83b0957e0d18efabbdf","0x7497b333895c64a56924b293e68a6468963f2a7e","0x7511ec0e7a8e2e0e826f28c1bc72befd84ea3e21","0x798a59cb1ef7110e91640fc6a8056d029ba8a42e","0x7cdc43434a6402040ea8770c2458bb57f646a86d","0x7ea2d94c0bb347014db4c08e70fac5f67793ffe0","0x7f519a1051a8e091e3bef874a1b6b50d9b8295f0","0x7f5a75fc88c4038fe980f6cc926d540f6b824cf8","0x81da0ed78f4b09f57a0ecfc7756d242240874e59","0x825736e7336232cc595c345d049474226fdd154e","0x8322961c710571556ec8bc91554f675cd1828e85","0x847a157305b1aaa7fece57c6845d678c5eacbed3","0x84d0f74d21a89f86b67e9a38d8559d0b4e10f12d","0x86ed8d965561418ec4fc347721bac919487c75af","0x86feea1e5a72a7f527b1001997bf61148b4a14f1","0x87c5993754a4d700af13e344118904511ff9ff57","0x88023c305b471649d326b7b95149146f4b5308b5","0x8857cbf7bb9d45da2969f24f950e00e07c975fc9","0x892a1616f06e75ce7b8d2a06e58bc6ff266bb291","0x8a8dfa9fb45b69d7038e6fe89284e590d9d03b84","0x8b3018ea2598bc46787e538283904d3d3b693ede","0x8b7fecc9ee60392c757caa03c67dcd811a64b4b8","0x8cfd183553dc0caf91a68af0c14e19a9ed549961","0x8d625863eec81d56fb4b2d5ac4653f4cf0ce7913","0x8d8da61aeffa75e61e26243a59ca056330d7749c","0x8e588831884659ba7bbb436d0cc1b13352178fa4","0x92864dcc5595d5693aa64304a19962c5184df7d7","0x941689a3677ae5d7547aa6b298773db1a50e2ebc","0x94bb64f974b5cc1aeeafaf66ac43c6195d6e7bb2","0x961ae23f0cd4cd82fc129563ae23d81223aaa2d3","0x99d9956a937d29c85068cbd4fe4b1e68e37b0706","0x99e8845841bde89e148663a6420a98c47e15ebce","0x99f06631425f01514e774bf3208909fdeb5305b3","0x9aae12dd452f78ae8919c2168717e7348392ad11","0x9acf8d0315094d33aa6875b673eb126483c3a2c0","0x9c9553cd0c8673651a36e5e11c4989bb629d4067","0x9ce153cfa091d1cb364a147577c1dd626486fcf8","0x9d29f6b447a8565139f5d99bd8f3377aca823aa3","0x9e89ef8566207628279b3b5835c7ac89ac329131","0xa016b59cea666f53da4da3c9f99b97da1e0b016b","0xa04970c922cea95a6a23da3f1ce36060c3e1d867","0xa049afef83d112f9b9ac4e9d743c50ad08ebee01","0xa064b34dc0aeef23e48b400dc4b0a3f940b55865","0xa23ce50882ea174bf3031d9002e9ee24441ade1c","0xa2828c02758ad0fea42d4db9f88683ee2334371d","0xa4fb8f10e99a0762cebebfcf3c69d20f67742c5b","0xa6e63f1f1305597171e093195a0e28de882da740","0xa719db5b3b6ac2a7d077c5f5286f865ca7b2e248","0xa8eabd6e436df522d7ea0a7cf40619eb10d5c8b3","0xa9bac21606aa9598d3cef968a76078ac1c071b2b","0xa9c31e1063457a068fe7f5d9428dc9dbb7bbbc50","0xaa1fdb9433fd9ac3366a7c082fcbd3a114377c04","0xabe73c0b2b972484ec91cdc513f32a3bd50ecacc","0xacd327490eeb54cc7d1c9c28e3b5a39f0e472be3","0xaf2f0c5b070e8a5dde4431785b7b6cce0629142e","0xaffefc4a1cef446f3ff22d219579a90239fb96d3","0xb0dacc3fac4dedb37c7ef2066f84110017d56480","0xb13cea39a360d03198d8031ae00bc3150bcf598b","0xb19b8760d98b7f61da719a94ba56e6cdf47c15b5","0xb52b961d364ef67ac00589ff7fa9b0782ba13665","0xb53ed4b7b068d41b590927650f4dfb2f797c3b22","0xb7542735bcad39f7294f981ed0adfe887ca18225","0xb75f189fbdb676e41c801987c98fabe23f59784a","0xb7b570dc117b4946925bc39166418516fb011cbb","0xb86b5568853c5963dd9b9836f5ec94a15966bbc9","0xb8b0e6f7ae1c23fb1c30d8dca79210b32bf3d0d7","0xb9328ae4ffadfad326eb39aa25429760ea28d043","0xb9f3983866fed73c61afd721779841ad871907b7","0xbbfbff2fea1950d404742deb24ece126f3796506","0xbd11f25ed4407b289bdd27d0668435a3493a4e02","0xbd24232607ed1e583fe27b1c58a6ef7a9c58e46f","0xbef0bf5006f57912f7eb22fa263954105c79c87c","0xbf81337357aeb9159d86d2939f94749450615ae7","0xbfc2a589dd081448cb3eea51166b329e712adc7b","0xc07686af7aee9353d8e88febfbd72ec68411cccd","0xc3d2f8569f3648b94bc9a7c6d0cc64591df51032","0xc3e9704b5ff6319de2c1b6acaa1039b96a22888b","0xc46cffa1df8c8192ae6c77fc695768c9521e0b85","0xc48155657b472add63836054870442172559aa69","0xc539bccd78c1e114a7bf100df9f3b14f5cc7b863","0xc5f103fb2b831d461465cd80cc7fc09ec5e36051","0xc62f2483eed109d42c78147ea618d858578103d8","0xc74cc1859e7c7750b6e4d2c0c9228aa287851936","0xc8b40fdb2693fcbd1ed0e92db931ea1e668ae828","0xc8c6bed3c421d3b5ddd0627c7d3ad1f95eab2d67","0xc92fbccadb15876ad8a95b8971ca409377c4caf8","0xc95f7358bee4409493e5955bfd861892ccc94180","0xcac0eb798903ffe73ab1776da3174e6e40e721c6","0xcaf81715eead1cfe1391ea5c9e23f9c47f1e1258","0xcba1a275e2d858ecffaf7a87f606f74b719a8a93","0xcbbbe8b6cb1d0de071728c36c29db40918f98231","0xd0018dc528e165c26b11737bf38dd184b1ce363e","0xd05d286c32bdfd1a801f33c2b3000be2d9a800ae","0xd117b0659e941cac62fd854459b511c1f1ed27a6","0xd131f1bcdd547e067af447dd3c36c99d6be9fdeb","0xd1b62db7ad09e615a4603e89c2f25fe8ad67e596","0xd1bdbf7bec76d6e3918cd3aa34028caadd3f424b","0xd506025708bbb9832022c9f9f1427037abacf5e4","0xd645e1cbf208f0a930572e0457826137089be5c6","0xd65370c5565f2bea121f3c22823233f98a4be793","0xd6f8f76ef075e9b585a847b730c0531c1354671a","0xda2d96eadab3671d9dfc6b2901aa85e99f8f0eb3","0xdac11260ea26aa7ace35f846ab7e389bd50c75ad","0xdb59f54f833ee542ab4f99cb3cdd66cd1aa7b318","0xdbaa2fbae299853e85f2a9a9881e16a7c63d2e47","0xdcf711eb2915518747b50edcccde429614b6da81","0xdcfc630f0510d13d6f200568fd449062f2aa4c72","0xdeba0e5653f6966b5411e57e44109eb5834927da","0xe07d7c0b98a498e44b9fbb87423b9f280736db25","0xe0cfe86f3f5ed07c18ce132ec7ff6fd98df4eeba","0xe2f22cd8f35510fc3a2d0722ae296245de63e48f","0xe45b0c5d1c5f2673d5ca8ddbc5c5cc8a1830f101","0xe69cce4c2b8e48fcbe9fe1125966aa160ec86e0e","0xe7250b214a98f36a78aaff673c40cee79dcb3f33","0xe7d304a8bd5e5c27aa86c5bcafe2d834c4578367","0xe810e951e0c8e2a2f78f8452584063a8654606a1","0xe9eab519e0c5708f0083c1d6d2742b16cca1ccf6","0xea8d665651d7b3d429fe6bbf6f895456ee2b6b6d","0xeabb2ce5cf00b8acdab9497c548c77a377e2ca44","0xeada6f19065e299666905136ab1f13c1cf744f1f","0xeb1b02ca1302746b9c71c845520a1b7e0ecd5777","0xeb4576fe753dab07635c0bb6c8f0a355e1db5d31","0xeb7fb6094bb359f4784a161a2eac15ff4402d502","0xee00824f08a92f51b230a12ee84095dfc9c26d2c","0xee5be303ae31fdd4dec7c1678b2d163592dc8e65","0xf278f9728551fe0d1ae6001012052d4ca7757f0e","0xf38b07b8ac72ad70806e902c2ecfb7edd36ca3f5","0xf423c071590095c9b6da5fa79e30f5ef6012abdf","0xf4a3adf696838d8f8035cdb4fcfa9403e3a16863","0xf54dd676da14ef761e349f57b331d68087d7dccd","0xf626e9a2fddbf55b0b1a87c56128a7ba6723a85a","0xf7ae52d44c7e06522b0c4ea2170d83c20a63cd1b","0xf7ce05cb95d321c7f22aefd1defb99e54e087b15","0xf93b495c4c9024a9c2ec4aa84098a9569025a6df","0xfa537c114edd1d85a6019222c1c0e90707d2088d","0xfc1b3ddc4c366a3a5dc810a56d609c487f352835","0xfe9d53b402fd957f5c1a4963526bb6984d9f8916","0xfec6b6cc468e543ae27d754685c3228ecfd20d8a","0x167d87a906da361a10061fe42bbe89451c2ee584"];
+uspro = ["0x3a586a07e6632cCa418F427FE84A8CeeB9C82f95","0xF4D038dc094D234176Bdd0F7Dbc36E57bcd3a1A9","0x9eB7713065f3048DB56E06F825694B05375b1248","0x6d309c2D46C5fb7fbaEE85058e944AE73499eb19","0x952b1e9a551b6ccE01034A04dB8539F82838828f","0xD3859fa9A8b29c495D40BDFA718DcE8E82977Ad2","0xacA46e5Fc0F2a2e785Dd042B56588E7a6d28EfBe","0x53669581568490e43F43DFD6a5a266613a10ec6c","0x17030cb910874a17eE50982b18Cf20cCA149bf2F","0x156314C28AB49aFceEd013E51FD2A2D7452cCE4c","0x7D72735Ae3b801501725FC026e52e28AE728825b","0x4803C3e0E210B497a326708AE660941215df6104","0x27e257d0B4aa77565f80f6123A0d73D7c4E9E933","0x1405DEa0b59762a3E8401308C5c945B672B1A8D8","0x4810e4B3F2e8cf32e24bbf919e751C05837c0778","0xD87E8CEe7010561DB11bafA79C7Ade0df1eEb044","0x08f6B91e8Fa0EDd9962df93533eDa9FBDb8A6281","0xCE6CD112B45920b59D865369297096028cc0C285","0x29c1Ae0D823baa2d2DeED4413A1408f6Ab4e4D4D","0x53Da1f1603Edf87355f2392b8641d364B34837C3","0x1d543Fdc01135e792814df839cb2793Ab6cCe68D","0xbB3310BE25F440D49A22a09e537c080fd79708cE","0x57BEFf50e13CB97F4fD3B726FEbe67a6b1DF4c57","0x1eDe6AbEd12FE0bB3eE422e85277bb99d0b7Fb8f","0x7490092716C4D736eE3078A2999F7B234EE5d246","0x094a538fA73CF801dA3adCF8A44e3A6576681a1a","0x7eC99956a3b64E16Ea5B711F6691962c57BCd349","0xC57C3fd6b97fEfae2191a7C5fAA706269C3D1934","0x4782dA4d195F82dFe1c0b84D5FA280cAF3bfD1a3","0x5Ffc8B33172D3A7CCF5003E672c51f5B15A05F3C","0xbC745734A20bC0Ef42917798628870546C834AA3","0xd23228C94DAd779333B5b7B32a8a529900A294B7","0xeAE42D5Eff8922B1aE10382bcffEc3b8655b09BF","0x660806E545Fd19CF95E7A6749C611f807654dE27","0x9b5Ca42b52889Fe7f8e9145D93637fa3CB649be9","0x0295Af02464505Bd932fb410815e89df6EeF964F","0x89Af74E55F5F6f56F793a2630707F3aEC6F14640","0x54e0703EbCB52F9bCc4A2e57D66a3297b2d28596","0x4077F1c7C187485d9979E49DFFE8a198EEcBbA65","0xAdcdD24110c670984Ab53CB17093496B8dAc5057","0x0D42be5C3e99368c6dFD8A29f188b3e2692c0Ba4","0xCBdC2dC708ba726C2c0Ee96031c8F23Dc420A72d","0x6715F165Ec362aAED6E6D6C5Ca454269d775616F","0x0103b2E6F2F56ccDc51a9200e373F4DeAFa960F7","0xEEF08526052A1562D43923B4693467c256aCA69C","0x9a6010e567DfABD07826466AE522Bc3d3D3201c3","0x161708B050692Ee59b70Ad86E8eFd0b08A0aa411","0xf27634F9D4Fb2FF238dbe9092975205980e81480","0x2562a3Db49aeD0639907DfB4944cb7422F7Dd07E","0xc98Bc990EAF6DD217FADD78aACA3d8980B05E110","0x62f71da13A382dE03D6A242b3c1e69944204AD82","0x2F37EE5870e0EdA52bBAB78ad411687545802E6A","0xe07B8276216CBA34cEEb51b955aaA530A513A69e","0xD5eEDaeF486c6e4273601917e94499273a0A6045","0x32032724210A23962Fb2e4dCaB0d9A36Dda01aAe","0x9CF065Df92CDDCdBd0b5e798B108205D2C3ad390","0x1D4c276EE1Ba917D3011758E5F53B61b65e7C6e7","0xBEBF5B550a8A8fFa7E7E44b133E817DE66009946","0xadF1966770C545A658437986582F5c4ea8CbA84F","0xF0E5ebbd1dE154F820e3CBa05dCfC423507a4187","0xE1347F92AA22213fBF5a7482B4Cb39ed7A046D08","0x866358a90bCF67d9199D0a29bFaF9F6e2FdF0cf7","0x0fdFA18b20feFCD9018a78898C44FdAFC05330Fd","0xcF228736BdD930F61FD901b566Eb46D9C5Bd5876","0xeE97FDC957BCCC9649642b5Ed13E9B274c00953f","0x232b4A89be3fFCc8b310844462DD932ca358e959","0xE29db25939cf196642a0d491B62BeC000356d060","0x195a29A0b2e2074ECbDA44cae0fD856F4A1583e2","0x010054d4402E6Dcc5f65926F1415827A50D7AB52","0xB37848afedC0e25378bDe74aDefEE896ef5e493E","0xe5Ef9523Af0557Fc3876894B7aC1e42979F4Ba46","0x25407D8554dA122F7afEcC96916C020db0ecA4e2","0xD355A2085cFb4Ca7b43848dff195Aa43084c432D","0xD1AFf60640B030E2cE74F674208e1Fe040dF0E38","0x5A9E5CfBA702c57D221B0E4E98563cf3a6d36E0F","0x265ADbAF5EcF22C57B6C7c4Fd7793d30605A6E79","0xf67fEa711edc305511b922209a8BA6970bA2F744","0xc3d8896c3B62154d64909bE4223aD743bB022451","0x2DE796219d615f265fFdF0470944c82bB62c1033","0x1d136Ce3Df427b0e5B4963a64251C8521a5430C4","0xD39d3329c041Eda93f8dCEB16f213F0a61528CfF","0xf8f0b08f620608b4F739E258a16ad29e175032b0","0xF413023797F620f8277FB47e420E8A66154a6cb2","0x150CF932B0C3D653A8d7cE4777dE47F8B1fA4DfB","0x8422878b6d27aEfa9191998A0C3D7dB6fbE2a6CB","0x9e38E54FB58e8E69Ad3e7198c9966CB3f382F83E","0xf5dd486C1bBBa79Ef81576b22564a88d09cD58bf","0xbd9ef8Ac49934b96f8b358A9B8f9E3b93B8aB632","0x3724fB803fc58d4Bb863309F834a402Ed7f5B5F1","0x33497E60732bc82CBFA12eB660702e601F5b66D8","0xe7b848EA9e5937a66bf67f4d42f22361039598F2","0x217bd6f27399f9aC4af2bDeBE24E853B0e26031B","0x048aC9f48fAD5b4C17aCD76495e5b9FdABA9F0c9","0x1Df6F6281c4ea1d1CB44461d7B0872bfb718c591","0xd87498253b0e981FB7FbFB6e9A536B73AdF26FFa","0xf4F3ab13E034B52542C0cDa3D1435A1E8c354392","0x4D2E391944E5627E5F77212acE26E08197C706a1","0x5D131049a716499Fd6Db792770946dd1dd08B817","0x29d70bc593e7B5EAaD2c9f09E1972a082cC08678","0xBd87FD86FF8A3eA03d4FC0b2E525B6616CA8315E","0xBbA37613B3123DB4728E172Ec202494C29002E8D","0x9227eEE5ebca46d300b4f85569Caa74386Da8Dd1","0x9F481E80FF8b26Fc89bCF2c98DE9ff7518921052","0x29C32484093b8f7b12707e78eE3893232a60D274","0x7d0C871B32895Eb4D5E39bcbC396e9Ff00B56BC8","0x6557d8038B6daDEdA11962Ad084A847fc16d20fc","0xF162B6099399A8c0cDaDCAEBE764B72F0b0aeE52","0x0F7414a27B7a1ef56D5d908dc93529B6E40A2346","0x42A467BB1310c7A31f8Cb79aa45A1F666A2A8AF2","0xAd57485752B45e46572320DC6eB568810915Ccd1","0x0831516905fa860092F9b5C551a482214f4AB86a","0x1ec0DAd373d2Fad316981A0ca556600aa56773b8","0xf151197FA7cA9D55FB0EF0d6aAdf613958fA8b33","0xdCC30838398966554227e5950c9d1A42bc9aadC0","0xD0767a658EA0AB680315086191E0De43cb06C5a1","0x77D31684aDe62E06c86F725AdAF16974fFa47203","0x98c488c16f342A893c11b89C9605F011FF095DD0","0x66CD6839CB26f306346B611b2bF13f94dD44fc7f","0x81B7bE85603aA16ba072a77a22D9697cFB1135f3","0x6344e856e1E4CF5e25691de6bb7D02061127826B","0x633FF2BF2DA91c7752C074D5dA1c4d7b2E3AB746","0x71E9E1Cf1ddb8cF8A972cf56Ebd110fE4Fc30de1","0x7B19B53f4be66Bb18Bdf02cA209Fb818C9c351D1","0x128F67a720ab3C83713016711A41FFce999202a7","0x3b73912a0c5dA8136F16D1212cAcd77a83F184fa","0x44785EfD796D6b7afDc83da6E373440B5E63BE94","0x84cb521CE1b3cEcD34385ec72E93fF856c77B0f7","0x21Dafd1f5Cb7F3b65AdB7dDb6B062dD876057388","0xcf129Ae45CF7fea6DfbD86685C8541Ac2EA9ef5C","0x3a8D995Dd1187806EE4D4bA0fEBC709C946dbb24","0x890B07f0eB0E977D07168993a9570ff2936DE0E5","0xB9bF546f8ad1848a632e531150fAf33a12585B18","0x2C23BfC00F6d8be1600C2CC05F16CF62a1Ae9253","0xc382E2878485Bb42C9abE86814567D8b39ab4DeF","0xA40F835b898F629FD37818C72399E14Fc428afe0","0xBA261B1498E09f71B290f560b3991c2E2feb034d","0xdAfaF24C53B63E11C762711437bc53b645Cc890D","0x16d851c49B400C7199056aeEbC16e25B380F0072","0xf885aE698ec56bD53A55856E2324D546d6B111E0","0x67572d46D0B54ce6fC5F8DD20f9040310f6977fC","0x41a3183dA52c6CbF262324854a282E69f00b2A10","0x5957F4F8Cd7b9b85e3Aa3E135877Ce1D79530907","0xa99E651b826AB3A316c290c275F89cA0c0B7eF05","0xd645F56bc088a188D61C14a105aDF7De1bA059de","0xD4a981B7b856a71b3BA1E2C8a889D494B3D63f68","0x28deB5aB7254270713fbb462A7c3e92d1B387C36","0xa01B0bc671cd0c51f9a9279630984Ae0abD26395","0x4175F096df44291181edE87E5E395cFdC0607AAE","0x7474b7e46e54a21Efbd9729808ab01bD9E0A4828","0xa9C8da115190b5Fc18087C46ca3dB22fB1eeC187","0xB52f971d7d81D221b785CA3BeaE94a7443E3E667","0xEA5096533056be3cAeD9A4482146CbEDFf578D1E","0xe0D7073eAA8DC0A99707eff3e3fcd79068FC3071","0xa6bfB0B537f76C397D687Ea41595724119046846","0x8907AcE688d438E7744E2397Db95383ce13aC452","0x0A6801BD7d016C0F943703a48480236Eb43C2c83","0x1BbAc957eD4Ba9F7922b9D45663ADA2841C44d48","0x59b31FFF68D69f6b71710Bce29B37dA8AF1c7D50","0xC9DBb9417d4aF5Eb8EC75e72309717dEdbB3799B","0x3aD9E5052F2cB9F682A2BF612d9a1F761E45Cf80","0x8c1F853d5C4FF294A40460eAeEaEF0F37E0c6895","0xD1a16595306A7495bd025373164E57e5DB0ad606","0x3F98333D2F704d314cdD7bd04352470413e06918","0xC2e12F2F176bF5fA8C70Fb848Cd02A7d0db7E6AC","0x5a54CcD7D22101e6537Db59F079be023aB063B49","0xaDe278f97050b0C1665D88a2d79e5D1167A7954C","0xC5599b99f9923442176aF4fa0825b3a80B050311","0x75cbEdd0D89fB753C08879aaD4082F462457C3E5","0x1BfBF68310ee25A6e7053D1d67DD14037EC20d3b","0x80531ceDDA9097E053f61FA286fcc03C66524775","0x473dC1d8f4c1E95E0BCbFfE6741cb7a37aA99D62","0xdBBb8416BAc6f29eF0B7EaB5074E6C5e9e56D012","0x7698a65Dd570EB8b0f8368b6354e1B81D5A862ad","0xb575515c2318EF83B0297828BA60f6F7993D7761","0x1Fc3b35CE5a8ba97a82f2b53Df93cCfe37a1484c","0x8DFd40565ff4D225d3748e8b8398C216D6aECfc3","0xcABD1Ea8dC071423Bc6dA7988310eAf14daBaa7f","0xe1C3Ac521860ca7d3E11276718e1eDDdF72DDDD5","0x67323C51ae7Cb4f1a134a1b19c7802c4D85c5595","0x838849e75491B6e93882f7041Bf0EDEd01c981B6","0x34A7546C483ED6b9E56813F41EC25710aF2c0dAc","0xe9Af450f2976ABEBE9BE7f24127d7680DAe8b9BE","0x9C98688017707f1250dfF96a67B038689444386c","0xECaA1Ef186fE7Fc740E690213b1F54b71DAd3790","0x822155901E609269eEDe3D8bf0Fa620c7656b92C","0xEF3900A4a4Ad1a9303CF3c27350ab1A80bb20Ef4","0x7Cd5b253037C0Fd6FC0cc175e7358d4D7BE57203","0x51d61199140E3b19161C38CE2B9aa31E2C1Bf8f9","0x30770Fa469724b4956644081543A16cc3e6cBCaA","0x1a44905b1Fd4668F8F0246E658dcE0d53Ef1834E","0x8C3b9242847808D9e62412163013BBd2e09D7D34","0xfD75FD162ae3d9509c760a6094C28062bab701c6","0x7a24d0e2eAD2639B430a43A014A413E4E698E554","0xaFbb24De01D76055a5e065B85625CD30D9DD9D97","0xbd6eC53d20983DE7c134B81005b082DE4F4B9d0b","0x3fB1BEd6B46667f9Aa72aD72B3a8fA439aCbDFf3","0x0168a6292956298Cd313233aeea5Ad28C8e52032","0x4d27a9063E51093042614d4fE02e5a4DbabD979F","0x4DA17370B16db75E8a0A8a4506c5893726a3883d","0x1895FBde797b5E98Ad314e5f7c968c5C8A24A6bE","0xE2244Fa7CB05Dd352BAa283e9A43299cF1446e56","0xdE0A74fc5A235F54593a49D96e9bb81E08dc7818","0x202CFe1462219822a8F5fD03F9dd46BFDcbDfFf0","0x135c37dE0d965df8412C65c8817EF69C9C5d5ba1","0x766fB464c854EceEb2565A1345898b4C4d1bDCb4","0x93F323108a534DffD77BbfB26A608b57d1B5915F","0x4ef80E12A16B0B6EDe67F2DA16C9cBAD9b7AC04e","0x9E05515F270635d56aDD050d41aAE0ab3D70b910","0x6D76eb480c970A60e221Cd3C1456BDF355c6bDE8","0x1F9Ae6097DE68971E2B2dC6cACcd94e1F6316789","0x9aA95499276B25385DD02Cadc7670Df86922E65d","0xeF97d98c1FA2393bDD5D7Bd04749c688Ca04F911","0x761e66AfFc54484F272ABF8633a1b579dbfACB54","0x2a85AAA6C8c67C53390B219a8eBa2962C06d45eB","0xf9C591a438263C5660Abf30Cd5D6040128d90238","0x1Cf3734D231d7de7C567E2F8b9F2bd794E211e8A","0xcbA696c608c608f078D6b752ff6Af88aB2865A38","0x462956921e16f939FefE853134089605533B5898","0x9F61B450f890F83EaAb78469Faf64a3Bf73F2126","0x3452F97C3302280cfA9dEb617D9a48BCF6A90502","0x2Dd1FF49d464A422Ff887f241396474053F7D022","0xd6203d8a0C4eF73A17EfaC7460a74Ec6263ee16B","0x08E94Ab25a51843f9477E1DBF55D79A492C2f137","0x9Dee9d406a04A78A95b92ffEaEd009fD83b925a3","0x2D41E338d5A9bF558B07D32F45b995660E7937B9","0x86e05ECD2D176f8fB68345F31B70af0bF350b25E","0x8eF17383B6bDA207CB6b63C2760Cb7684EBDC877","0xbbdB59359891CEF6986764B2A5595c8a12F406a5","0x2A9A556Ec2fdF51ac12F4274E860aD9f1a99BB54","0x8cb8C46172E7968c93a516844561b5Aa796fF435","0x759514d8936db00e24314BD20c0f495672e04e05","0x6A66Ab8A409B380b2566D925e77Abc12b71cc9ad","0x6a08876F0b619eb521661bA6718dCbDAA5564838","0x29274791a59953Cf1a4C52db33eeF78C26DF028f","0xeF46d5fA1927C7c48c87048FeE823fc602538497","0x1C716fA2429930cf303f3B5e56e74F0D06BCf115","0x8a996d911cc842b60fa38a1f09f8ad07f03b8ec6"]
+snaps = [36573970,37105839,37567659];
+
+
+
+
+
+
+function sortit(n,el) {
+  var t, r, z, i, x, y, v, b, c = 0;
+  t = document.getElementById(el);
+  z = true;
+  b = "a";
+  while (z) {
+    z = false;
+    r = t.rows;
+    for (i = 0; i < (r.length - 1); i++) {
+      v = false;
+      x = (r[i].getElementsByTagName("TD")[n].textContent)//.replace(/,| |\.|\$|%/g,'');
+      if(isFinite(x)){x=Number(x)}else{x=x.toLowerCase()}
+      y = (r[i + 1].getElementsByTagName("TD")[n].textContent)//.replace(/,| |\.|\$|%/g,'');
+      if(isFinite(y)){y=Number(y)}else{y=y.toLowerCase()}
+      if (b == "a") {
+        if ((x) > (y)) {
+          v= true;
+          break;
+        }
+      } else if (b == "d") {
+        if ((x) < (y)) {
+          v = true;
+          break;
+        }
+      }
+    }
+    if (v) {
+      r[i].parentNode.insertBefore(r[i + 1], r[i]);
+      z = true;
+      c ++;
+    } else {
+      if (c == 0 && b == "a") {
+        b = "d";
+        z = true;
+      }
+    }
+  }
+    var t, r, z, i, x, y, v, b, c = 0;
+}
+
+let groupByN = (n, data) => {
+  let result = [];
+  for (i = 0; i < data.length; i += n) result.push(data.slice(i, i + n));
+  return result;
+};
+
+async function mainsN(n)
+{
+	console.log("START: mainsN",n)
+	r = await getAllVotes(uspro,snaps[n])
+	vt = await siftvotes(r)
+	console.log("END: mainsN",vt)
+	return vt
+}
+
+
+async function getVotesAt(b)
+{
+	p=[];
+	for(i=0;i< uspro.length;i++){p[i] = (LENS.votePositionsOf(uspro[i],{blockTag:b}))}
+	vpp = await Promise.all(p)
+
+	vd=vpp;	ov=[];
+	for(i=0;i< vd.length;i++){ov.push(vd[i].votes)}
+	q=[];
+	for(i=0;i< ov.length;i++)
+	{
+  		tv={};
+  		for(j=0;j< ov[i].length;j++) {tv[ov[i][j][0]] = Number(ov[i][j][1])}
+		q.push(tv)
+	}
+	console.log("DONE! H=",b,"D=",q)
+	return q
+}
+
+async function getAllVotes(a,b)
+{
+
+	console.log("START: getAllVotes",a,b)
+	p=[];
+	for(i=0;i< users.length;i++){p[i] = LENS.votePositionsOf(a[i],{blockTag:b})}
+	vpp = await Promise.all(p)
+	console.log("END: getAllVotes",vpp)
+	return vpp
+}
+
+async function siftvotes(vd)
+{
+	console.log("START: siftvotes: ov",vd)
+	ov=[];
+	for(i=0;i< vd.length;i++){ov.push(vd[i].votes)}
+	console.log("START: siftvotes: q",ov)
+	q=[];
+	for(i=0;i< ov.length;i++)
+	{
+  		tv={};
+  		for(j=0;j< ov[i].length;j++) {tv[ov[i][j][0]] = Number(ov[i][j][1])}
+		q.push(tv)
+	}
+	console.log("END: siftvotes",q)
+	return q
+}
+
+async function getuspro(u)
+{
+	p=[];
+	for(i=0;i< u.length;i++){p[i] = LENS.userProxyByAccount(u[i])}
+	uspro = await Promise.all(p)
+	return uspro
+}
+
+function paint()
+{
+	PAIR = $("pair_inp").value;
+	$("t_b").innerHTML = ""
+	for(i=0;i< users.length; i++)
+	{
+		CV = []; CVS =0
+		for(k=0;k< CACHED.length;k++){CV.push(typeof (CACHED[k][i][PAIR]) == "undefined" ? 0 : (CACHED[k][i][PAIR]/1e18))}
+		for(k=0;k< CACHED.length;k++){CVS+=CV[k]}
+		if(CVS == 0 ){continue}
+		tr = document.createElement("tr");
+		tr.innerHTML = `<td>${users[i]}</td>`
+		for(k=0;k< CACHED.length;k++){tr.innerHTML +=`<td>${CV[k].toFixed()}</td>`}
+		$("t_b").append(tr)
+	}
+}
+
+</script>
+</html>
+

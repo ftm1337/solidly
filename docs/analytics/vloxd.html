@@ -112,12 +112,8 @@ tbody tr::before {
 
 	<table>
 		<thead>
-			<tr>
-				<td>User Address</td>
-				<td>21 Apr</td>
-				<td>28 Apr</td>
-				<td>05 May</td>
-				<td>Current</td>
+			<tr id="t_h">
+				<td onclick="sortit(0,'t_b')">User Address</td>
 			</tr>
 		</thead>
 		<tbody id="t_b">
@@ -145,13 +141,20 @@ vlv=""
 window.addEventListener('load',async function()
 {
 	provider = new ethers.providers.JsonRpcProvider("https://rpcapi.fantom.network");
+	for(i=0;i< snapt.length; i++){$("t_h").innerHTML+=`<td onclick="sortit(${i+1},'t_b')">${snapt[i]}</td>`}
+	$("t_h").innerHTML+=`<td onclick="sortit(${snapt.length+1},'t_b')">Current</td>`
 	//mktable()
 	//	User Proxy Factory:0xda00aad945d0d5f1b1b3fbb6e0ce3e36827a7bf5, but using oxLens here
 	LENS = new ethers.Contract("0xda00137c79b30bfe06d04733349d98cf06320e69",[{"inputs":[{"internalType":"address","name":"accountAddress","type":"address"}],"name":"votePositionsOf","outputs":[{"components":[{"internalType":"address","name":"delegateAddress","type":"address"},{"internalType":"uint256","name":"weightTotal","type":"uint256"},{"internalType":"uint256","name":"weightUsed","type":"uint256"},{"internalType":"uint256","name":"weightAvailable","type":"uint256"},{"components":[{"internalType":"address","name":"poolAddress","type":"address"},{"internalType":"int256","name":"weight","type":"int256"}],"internalType":"struct IVotingSnapshot.Vote[]","name":"votes","type":"tuple[]"}],"internalType":"struct OxLens.VotesData","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userProxyByAccount","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}],provider)
+
+	_n = $("t_h").getElementsByTagName("td").length
 	paint()
+	sortit(_n-2,"t_b");sortit(_n-2,"t_b");
 	lv = await getVotesAt("latest")
 	CACHED.push(lv)
 	paint()
+	sortit(_n-1,"t_b");sortit(_n-1,"t_b");
+
 }, false);
 
 users=
@@ -970,7 +973,8 @@ uspro =
   "0x2Ef9AA239B3D45B0830b2BC17A3FAC428a8F5979",
   "0x8a996d911CC842b60fA38A1F09f8Ad07f03b8EC6"
 ]
-snaps = [36573970,37105839,37567659];
+snaps = [36573970,37105839,37567659,37106514,38545715];
+snapt = ["21 Apr","28 Apr","05 May","12 May","19 May"]
 
 
 

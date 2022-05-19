@@ -4,7 +4,7 @@
 <meta name="keywords" content="Fantom Opera, List, Dashboard, Tracker, Explorer, FTM, Decentralized Finance, ELITE, 1337, defi, farming, FTM1337">
 <title>Solidex L2 Bribes for vlSEX Voters | FTM.guru</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="shortcut icon" href="img/FMC.svg" />
+<link rel="shortcut icon" href="https://ftm.guru/icons/FMC.svg" />
 <style>
 @font-face{font-family:bold;src: url(https://ftm.guru/font/bold.ttf);}
 @font-face{ font-family:italic;src: url(https://ftm.guru/font/italic.ttf);}
@@ -157,11 +157,13 @@ Find total of all votes : = vlsex
 
 Find forus:= From https://ftm.guru/solidly/analytics/vlsex
 
-Find elitep:= await tvlGuru.methods.p_t_coin_usd("0xea035a13b64cb49d85e2f0a2736c9604cb21599c").call(35993203)
+Find elitep:= await tvlGuru.methods.p_t_coin_usd("0xea035a13b64cb49d85e2f0a2736c9604cb21599c").call(bbstart
 
-Find ssolid := await venft.methods.balanceOfNFT(8).call(37106514)
+Find ssolid := await venft.methods.balanceOfNFT(8).call(bb)
 
-Find vesolid :=	await venft.methods.totalSupply().call(37106514)
+Find vesolid :=	await venft.methods.totalSupply().call(bb)
+
+Find xeliter := await X.methods.ELITEForxELITE(1).call(bb)
 
 Batch Mint:	0x2AA5d15Eb36E5960d056e8FeA6E7BB3e2a06A351
 https://ftmscan.com/address/0x4bc8ea84bdc3ebb01d495e5d1605d4f082aeb5d7#writeContract
@@ -171,6 +173,28 @@ https://ftmscan.com/address/0x4bc8ea84bdc3ebb01d495e5d1605d4f082aeb5d7#writeCont
 		//	B$ = E% x bribepp
 VD =
 [
+	//Week 5
+	{
+		round:	5,
+		start:	37106514,
+		end:	38067715,
+		times:	"5 May - 11 May, 2022",
+		vlsex:	9808165,
+		forus:	36333,
+		ssolid:	16802354066879794373078406 / 1e18,
+		vesolid:59617356872976306938063298 / 1e18,
+		bribepp:777,
+		elitep:	1124,
+		xeliter:125424231,
+		voters:
+		[
+			[34323,	"0xe71a9a01524e79bf3aa22eebdd96f697a4be3162"],
+			[2010,	"0x7760266298e5d3214e0ecc6cedf6e9952b123c3a"],
+			[-4000,	"0x2fef6742d30c81c518d7742d5c7ae6723f64a79c"],
+			[4000,	"0x167d87a906da361a10061fe42bbe89451c2ee584"]
+		],
+		tx: "0xf2e0afc8da3d652559e633452cc71c45a71b7c36eedc439a12b48f63d13aadef"
+	},
 	//Week 4
 	{
 		round:	4,
@@ -182,7 +206,7 @@ VD =
 		first:	0,
 		end:	37106514,
 		times:	"28 April - 4 May, 2022",
-		elitep:	800,
+		elitep:	1055,
 		xeliter:125424231,
 		voters:
 		[
