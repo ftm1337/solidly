@@ -77,7 +77,14 @@ button:hover{transform: translateY(-5px);}
 		<button id="step2" onclick="step2()">Register</button>
 	</div>
 
-	<div id="paneld">You have registered Successfully</div>
+	<div id="paneld">
+	<br>
+	<br>
+	You have registered Successfully!
+	<br>
+	<br>
+	<button id="stepnone" onclick="stepnone()">Un-Delegate</button>
+	</div>
 
 	<hr class="hhr">
 
@@ -596,10 +603,16 @@ today we started taking delegations for vloxd votes to an EOA we control. it wen
 
 */
 
-
 async function step1() {
 	UPI = new ethers.Contract("0xda00bff59141ca6375c4ae488da7b387960b4f10",[{"inputs":[{"internalType":"address","name":"accountAddress","type":"address"}],"name":"setVoteDelegate","outputs":[],"stateMutability":"nonpayable","type":"function"}],signer);
 	tx = await UPI.setVoteDelegate(GURUDAO)
+	await tx.wait()
+	basecheck()
+}
+
+async function stepnone() {
+	UPI = new ethers.Contract("0xda00bff59141ca6375c4ae488da7b387960b4f10",[{"inputs":[{"internalType":"address","name":"accountAddress","type":"address"}],"name":"setVoteDelegate","outputs":[],"stateMutability":"nonpayable","type":"function"}],signer);
+	tx = await UPI.setVoteDelegate("0x0000000000000000000000000000000000000000")
 	await tx.wait()
 	basecheck()
 }
@@ -624,8 +637,8 @@ async function basecheck() {
 		$("ua").innerHTML = ad;
 		$("ud").innerHTML = V[0] == "0x0000000000000000000000000000000000000000" ? "Nobody! ¯\_(ツ)_/¯" : V[0];
 		$("ud").innerHTML = V[0] == GURUDAO ? "Guru Network DAO (🦾, 🚀)" : V[0];
-		if(V[0] == GURUDAO) {$("paneld").style.display = ""; $("panel").style.display = "none"; }
-		else {$("paneld").style.display = "none"; $("panel").style.display = ""; }
+		if(V[0] == GURUDAO) {$("paneld").style.display = "revert"; $("panel").style.display = "none"; }
+		else {$("paneld").style.display = "none"; $("panel").style.display = "revert"; }
 		$("uu").innerHTML = Number(V[1])/1e18
 		$("uw").innerHTML = Number(V[2])/1e18
 		$("uv").innerHTML = Number(V[3])/1e18
