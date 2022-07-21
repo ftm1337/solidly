@@ -610,7 +610,7 @@ async function step2() {
 
 
 async function basecheck() {
-	UP = new ethers.Contract("",[{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userProxyByAccount","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}],provider)
+	UP = new ethers.Contract("0xda00aad945d0d5f1b1b3fbb6e0ce3e36827a7bf5",[{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userProxyByAccount","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}],provider)
 	VS = new ethers.Contract("0xda007a39a692b0fefe9c6cb1a185feab2722c4fd",[{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"voteDelegateByAccount","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"accountAddress","type":"address"}],"name":"voteWeightAvailableByAccount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"accountAddress","type":"address"}],"name":"voteWeightTotalByAccount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"voteWeightUsedByAccount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}],provider)
 	ad = await UP.userProxyByAccount(window.ethereum.selectedAddress)
 	vd = VS.voteDelegateByAccount(ad)
