@@ -83,9 +83,15 @@ button:hover{transform: translateY(-5px);}
 
 
 	<div>
-		<br><b>Your Address:</b> <span id="ua">Unknown</span>
+		<br><b>Your Address:</b> <span id="us">Unknown</span>
+		<br><b>Your 0xDAO Account:</b> <span id="ua">Undefined</span>
 		<br><b>Your Delegate:</b> <span id="ud">Nobody</span>
 		<br><b>Your Registration:</b> <span id="ur">Pending</span>
+		<br><br>
+		<br><b>Your Vote-Weight:</b> <span id="uw">Zero</span>
+		<br><b>Your Unused Power:</b> <span id="uu">Zero</span>
+		<br><b>Your Current Votes:</b> <span id="uv">Zero</span>
+
 	</div>
 
 	<hr class="hhr">
@@ -569,12 +575,33 @@ UserProxyInterface
 	function setVoteDelegate(address) external;
 	function clearVoteDelegate() external;
 	function voteDelegateByAccount(address) external view returns (address);
+
+
+
+0xDAOProxy
+	https://ftmscan.com/address/0xda00aad945d0d5f1b1b3fbb6e0ce3e36827a7bf5#readProxyContract
+
+	0x167d87a906da361a10061fe42bbe89451c2ee584	0x8a996d911CC842b60fA38A1F09f8Ad07f03b8EC6	GG
+	0x5c146cd18fa53914580573c9b9604588529406ca	0x5bABBC6DD46A14d95d0e91FCE820f5bbb39760C0	C1337
+	0x28aa4F9ffe21365473B64C161b566C3CdeAD0108	0x54e0703EbCB52F9bCc4A2e57D66a3297b2d28596	Fier
+	0x848a9126ff57004aa8bfdc99384f36a4754d4367	0x1F8F006ac655c1E8d22Ebf888Dda985F07eE5a81	user003		12605203798448322022	v
+	0x922731d7e2a193870f438abfc89f3c38df821190	0xF317E436bfF08ce952C2DAeE735D72233B8e292e	user004		0						o
+	0x9c9553cd0c8673651a36e5e11c4989bb629d4067	0xc382E2878485Bb42C9abE86814567D8b39ab4DeF	user005		564458538959924052165	v
+
+
+hello!
+today we started taking delegations for vloxd votes to an EOA we control. it went smooth, we got delegated and voted on behalf of our deleators successfully. however, when we try to submit votes on behalf of our biggest delegator at the VotingSnapshot contract, it reverts.. somehow it allows us to use 2500e18 of their votes but not more than that..
+
+
+
 */
 
 
 async function step1() {
 	UPI = new ethers.Contract("0xda00bff59141ca6375c4ae488da7b387960b4f10",[{"inputs":[{"internalType":"address","name":"accountAddress","type":"address"}],"name":"setVoteDelegate","outputs":[],"stateMutability":"nonpayable","type":"function"}],signer);
-	UPI.setVoteDelegate(GURUDAO)
+	tx = await UPI.setVoteDelegate(GURUDAO)
+	await tx.wait()
+	basecheck()
 }
 
 async function step2() {
@@ -583,8 +610,9 @@ async function step2() {
 
 
 async function basecheck() {
-	ad = window.ethereum.selectedAddress
+	UP = new ethers.Contract("",[{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userProxyByAccount","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}],provider)
 	VS = new ethers.Contract("0xda007a39a692b0fefe9c6cb1a185feab2722c4fd",[{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"voteDelegateByAccount","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"accountAddress","type":"address"}],"name":"voteWeightAvailableByAccount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"accountAddress","type":"address"}],"name":"voteWeightTotalByAccount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"voteWeightUsedByAccount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}],provider)
+	ad = await UP.userProxyByAccount(window.ethereum.selectedAddress)
 	vd = VS.voteDelegateByAccount(ad)
 	wa = VS.voteWeightAvailableByAccount(ad)
 	wt = VS.voteWeightTotalByAccount(ad)
@@ -592,8 +620,16 @@ async function basecheck() {
 
 	Promise.all([vd,wa,wt,wu])
 	.then(V=>{
-		$("ua") = ua;
-		$("ud") = V[0] == "0x0000000000000000000000000000000000000000" ? "Nobody" : V[0];
+		$("us").innerHTML = window.ethereum.selectedAddress;
+		$("ua").innerHTML = ad;
+		$("ud").innerHTML = V[0] == "0x0000000000000000000000000000000000000000" ? "Nobody" : V[0];
+		$("ud").innerHTML = V[0] == GURUDAO ? "Guru Network" : V[0];
+		if(V[0] == GURUDAO) {$("paneld").style.display = ""; $("panel").style.display = "none"; }
+		else {$("paneld").style.display = "none"; $("panel").style.display = ""; }
+		$("uu").innerHTML = Number(V[1])/1e18
+		$("uw").innerHTML = Number(V[2])/1e18
+		$("uv").innerHTML = Number(V[3])/1e18
+
 	})
 }
 
