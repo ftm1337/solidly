@@ -622,8 +622,8 @@ async function basecheck() {
 	.then(V=>{
 		$("us").innerHTML = window.ethereum.selectedAddress;
 		$("ua").innerHTML = ad;
-		$("ud").innerHTML = V[0] == "0x0000000000000000000000000000000000000000" ? "Nobody" : V[0];
-		$("ud").innerHTML = V[0] == GURUDAO ? "Guru Network" : V[0];
+		$("ud").innerHTML = V[0] == "0x0000000000000000000000000000000000000000" ? "Nobody! ¯\_(ツ)_/¯" : V[0];
+		$("ud").innerHTML = V[0] == GURUDAO ? "Guru Network DAO (🦾, 🚀)" : V[0];
 		if(V[0] == GURUDAO) {$("paneld").style.display = ""; $("panel").style.display = "none"; }
 		else {$("paneld").style.display = "none"; $("panel").style.display = ""; }
 		$("uu").innerHTML = Number(V[1])/1e18
