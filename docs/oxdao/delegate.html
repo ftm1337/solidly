@@ -7,6 +7,7 @@
 </head>
 <link rel="shortcut icon" href="https://ftm.guru/img/64.png" />
 <style>
+
 @font-face{font-family:bold;src: url(https://ftm.guru/font/bold.ttf);}
 @font-face{ font-family:italic;src: url(https://ftm.guru/font/italic.ttf);}
 @font-face{ font-family:light;src: url(https://ftm.guru/font/light.ttf);}
@@ -34,10 +35,17 @@ html{
   margin:5%
 }
 #paneld{display:none}
-.icons20 img{height: 20px }
+.icons20 img{height: 40px }
 
 button{box-shadow: 0px 0px 3px 3px rgba(0,255,255,0.5);color:white;background:purple;padding:2px 5px;border-radius: 10px;font-size: 1.2em}
 button:hover{transform: translateY(-5px);}
+
+table{border-collapse: collapse}
+thead td{font-family: bold}
+td{min-width: max-content;font-family:light}
+tbody td:nth-of-type(n+2){font-family: regular;text-align: right}
+tr:hover {background: yellow;color: navy}
+* a{color:aqua;text-decoration:none;font-family:bold}
 </style>
 
 <body>
@@ -48,9 +56,9 @@ button:hover{transform: translateY(-5px);}
 	<h2>Instructions</h2>
 	To continue earning bribes from ftm.guru, please complete these 2 transactions after connecting your wallet:<br>
 	<br>1. Delegate Voting Power
-	<br>2. Register your Delegation
+	<br><strike>2. Register your Delegation</strike>
 	<br><br>
-	<i>(Note: Self-Registrations begin from 1st August. All previous delegators will be auto-registered.)</i>
+	<i>(Note: Self-Registrations begin when we have more than 50 delegators.)</i>
 
 <hr class="hhr">
 
@@ -103,25 +111,81 @@ button:hover{transform: translateY(-5px);}
 
 	<hr class="hhr">
 
-	<h2>All our Delegators</h2>
-	(Registrations begin next week. This week's delegators will be auto-registered.)
+	<h2>We are thankful to all of our Delegators!</h2>
 
+	<div style="overflow:auto">
+		<table id="voters">
+			<thead>
+				<tr>
+					<td>Address of vlOXD-vote Delegator</td>
+					<!---<td>Delegator's Proxy Address</td>-->
+					<td>Jul-27</td>
+					<td>Aug-03</td>
+					<td>Aug-10</td>
+					<td>Aug-17</td>
+					<td>Aug-24</td>
+					<td>CURRENT</td>
+			</thead>
+			<tbody id="mtab">
+			</tbody>
+		</table>
+	</div>
 
+	<h2>Bribe Payouts</h2>
+	<h3>Old Voting bribes</h3>
+	For the voting period prior to 21-Jul, please refer to the old vlOXD Bribe Tracer:
+	<br><a href="https://ftm.guru/solidly/bribes/vloxd">ftm.guru/solidly/bribes/vloxd</a>
+
+	<br><br>
+	<h3>Delegation Rewards</h3>
+	We shifted to Delegation Rewards starting from 21-Jul-2022.
+	<h4>Round 1</h4>
+	Bribes for the period between 21-Jul to Aug-24 will be batched together and paid on 31-Aug-2022 using unlocked SOLID tokens instead of XELITE fNFTs. Major reward recipients (above $400) have been contacted directly and have promised to not sell SOLID on market.
+
+<!--
+
+	<div style="overflow:auto">
+		<table id="bribes">
+			<thead>
+				<tr>
+					<td>Voting Period</td>
+					<td>Payout</td>
+					<td>Vote-share</td>
+					<td>Total Votes</td>
+					<td>Delegated Votes</td>
+					<td>Reward</td>
+					<td>Token</td>
+					<td>Value</td>
+			</thead>
+			<tbody id="">
+				<tr>
+					<td>21-Jul : Aug-24</td>
+					<td>31-Aug</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+-->
 	<hr class="hhr">
 
 
 	<h2>What *is* this??</h2>
-	We bribe all vlOXD voters (A user who locks their OXD tokens at oxdao.fi) for giving us (Guru Network DAO) their voting powers in return of weekly rewards airdropped directly to their wallets. We then utilize these delegated voting rights to direct Solidly (Premium DEX on Fantom) emissions to the pools we deem most important. We started this trend of L2-bribes back in April '22 and look forward to continuing it in the foreseeable future.
+	We bribe all vlOXD voters (A user who locks their OXD tokens at oxdao.fi) for giving us (Guru Network DAO) their voting powers in return of monthly rewards airdropped directly to their wallets. We then utilize these delegated voting rights to direct Solidly (Premium DEX on Fantom) emissions to the pools we deem most important. We started this trend of L2-bribes back in April '22 and look forward to continuing it in the foreseeable future.
 
 
 	<br><br><br><br><b>Have more questions?</b>
-	<br>Come over to our friendly Discord!<br>
+	<br>Come over to our friendly community!<br>
 	<div class="icons20">
 		<a href="https://discord.gg/QpyfMarNrV" target="_blank"><img src="https://ftm.guru/icons/discord.svg"></a>
 		<a href="https://twitter.com/ftm1337" target="_blank"><img src="https://ftm.guru/icons/twitter.svg"></a>
 		<a href="https://t.me/ftm1337" target="_blank"><img src="https://ftm.guru/icons/telegram.svg"></a>
 	</div>
 	<br><br>
+	<a style="color:white;text-decoration:none;text-shadow:0px 1px 2px #000"href="https://ftm.guru"><h1>Powered by Guru Network<br>( 🦾, 🚀 )</h1></a>
+
 
 
 
@@ -150,9 +214,11 @@ let provider= {};
 let signer= {};
 window.addEventListener('load',async function()
 {
+	mktable()
 	console.log("waitin for 3 secs..");
 	$("cw_m").innerHTML = "Connecting.. Please wait."
-	setTimeout(async () => { await basetrip(); basecheck() }, 3000);
+	setTimeout(async () => { await basetrip(); basecheck() ; await cv()}, 3000);
+
 }, false);
 
 async function basetrip()
@@ -594,10 +660,170 @@ UserProxyInterface
 	0x848a9126ff57004aa8bfdc99384f36a4754d4367	0x1F8F006ac655c1E8d22Ebf888Dda985F07eE5a81	user003		12605203798448322022	v
 	0x922731d7e2a193870f438abfc89f3c38df821190	0xF317E436bfF08ce952C2DAeE735D72233B8e292e	user004		0						o
 	0x9c9553cd0c8673651a36e5e11c4989bb629d4067	0xc382E2878485Bb42C9abE86814567D8b39ab4DeF	user005		564458538959924052165	v
+	0xc8b40fdb2693fcbd1ed0e92db931ea1e668ae828	0xe9Af450f2976ABEBE9BE7f24127d7680DAe8b9BE	user006		102208052465349494336
+
+	0x96d8c4f7839f1da51bfe4d8262d0ab2c842ed02a	0xB5AF9A7f5eBD11e37aA7EF18C059Bb1B4cf49513
+	0x6ec7b4fec23015ed9daa8dbf0e3573da69e5d36e	0x048aC9f48fAD5b4C17aCD76495e5b9FdABA9F0c9
+	0x7c218a744fbf8dacb8256f6e39d712fed1f0d67f	0x9f534eaC97F321DceF3740A8eeb4f36337187D5c
+	0xaaee61b58dc32e7331104f7a51d2a3220edf4261	0x07C7ec15c671DEAEdE0ed2Ef004CE4C2ABD2A63a
+	0xd11bcc0e7d44169a572da39ca6297d0dfa5c17fa	0x2AC47CdCb3a1ca01Bd8A3fFdDFf017fB8fDb89E9
+	0x6a02225ef927f8c617156b1ddf883293895b109d	0x150CF932B0C3D653A8d7cE4777dE47F8B1fA4DfB
+	0x14edc2ce4e34d610539543e19dbeac3ea8ac7d11	0x1d543Fdc01135e792814df839cb2793Ab6cCe68D
+	0x2637652ac58addfb67b401a1befb5f48b967574d	0xe04f3988823038BDf32f423726E39F20A332d75E
+	0xdac11260ea26aa7ace35f846ab7e389bd50c75ad	0xE2244Fa7CB05Dd352BAa283e9A43299cF1446e56
+	0xc8b40fdb2693fcbd1ed0e92db931ea1e668ae828	0xe9Af450f2976ABEBE9BE7f24127d7680DAe8b9BE
 
 
-hello!
-today we started taking delegations for vloxd votes to an EOA we control. it went smooth, we got delegated and voted on behalf of our deleators successfully. however, when we try to submit votes on behalf of our biggest delegator at the VotingSnapshot contract, it reverts.. somehow it allows us to use 2500e18 of their votes but not more than that..
+0x96d8c4f7839f1da51bfe4d8262d0ab2c842ed02a
+0xb86b5568853c5963dd9b9836f5ec94a15966bbc9
+0x4cae6fd5e70bf75cf7048a85858c169848fa3c2d
+0x6ec7b4fec23015ed9daa8dbf0e3573da69e5d36e
+0x7c218a744fbf8dacb8256f6e39d712fed1f0d67f
+0xaaee61b58dc32e7331104f7a51d2a3220edf4261
+0xd11bcc0e7d44169a572da39ca6297d0dfa5c17fa
+0x6a02225ef927f8c617156b1ddf883293895b109d
+0x14edc2ce4e34d610539543e19dbeac3ea8ac7d11
+0x96d8c4f7839f1da51bfe4d8262d0ab2c842ed02a
+0x2637652ac58addfb67b401a1befb5f48b967574d
+0xdac11260ea26aa7ace35f846ab7e389bd50c75ad
+0xc8b40fdb2693fcbd1ed0e92db931ea1e668ae828
+0x5c146cd18fa53914580573c9b9604588529406ca
+0x922731d7e2a193870f438abfc89f3c38df821190
+0x9c9553cd0c8673651a36e5e11c4989bb629d4067
+0x848a9126ff57004aa8bfdc99384f36a4754d4367
+0x28aa4f9ffe21365473b64c161b566c3cdead0108
+0x6ec7b4fec23015ed9daa8dbf0e3573da69e5d36e
+[
+  [
+    "0x96d8c4f7839f1da51bfe4d8262d0ab2c842ed02a",
+    "0xB5AF9A7f5eBD11e37aA7EF18C059Bb1B4cf49513"
+  ],
+  [
+    "0xb86b5568853c5963dd9b9836f5ec94a15966bbc9",
+    "0x3F98333D2F704d314cdD7bd04352470413e06918"
+  ],
+  [
+    "0x4cae6fd5e70bf75cf7048a85858c169848fa3c2d",
+    "0x0fdFA18b20feFCD9018a78898C44FdAFC05330Fd"
+  ],
+  [
+    "0x6ec7b4fec23015ed9daa8dbf0e3573da69e5d36e",
+    "0x048aC9f48fAD5b4C17aCD76495e5b9FdABA9F0c9"
+  ],
+  [
+    "0x7c218a744fbf8dacb8256f6e39d712fed1f0d67f",
+    "0x9f534eaC97F321DceF3740A8eeb4f36337187D5c"
+  ],
+  [
+    "0xaaee61b58dc32e7331104f7a51d2a3220edf4261",
+    "0x07C7ec15c671DEAEdE0ed2Ef004CE4C2ABD2A63a"
+  ],
+  [
+    "0xd11bcc0e7d44169a572da39ca6297d0dfa5c17fa",
+    "0x2AC47CdCb3a1ca01Bd8A3fFdDFf017fB8fDb89E9"
+  ],
+  [
+    "0x6a02225ef927f8c617156b1ddf883293895b109d",
+    "0x150CF932B0C3D653A8d7cE4777dE47F8B1fA4DfB"
+  ],
+  [
+    "0x14edc2ce4e34d610539543e19dbeac3ea8ac7d11",
+    "0x1d543Fdc01135e792814df839cb2793Ab6cCe68D"
+  ],
+  [
+    "0x96d8c4f7839f1da51bfe4d8262d0ab2c842ed02a",
+    "0xB5AF9A7f5eBD11e37aA7EF18C059Bb1B4cf49513"
+  ],
+  [
+    "0x2637652ac58addfb67b401a1befb5f48b967574d",
+    "0xe04f3988823038BDf32f423726E39F20A332d75E"
+  ],
+  [
+    "0xdac11260ea26aa7ace35f846ab7e389bd50c75ad",
+    "0xE2244Fa7CB05Dd352BAa283e9A43299cF1446e56"
+  ],
+  [
+    "0xc8b40fdb2693fcbd1ed0e92db931ea1e668ae828",
+    "0xe9Af450f2976ABEBE9BE7f24127d7680DAe8b9BE"
+  ],
+  [
+    "0x5c146cd18fa53914580573c9b9604588529406ca",
+    "0x5bABBC6DD46A14d95d0e91FCE820f5bbb39760C0"
+  ],
+  [
+    "0x922731d7e2a193870f438abfc89f3c38df821190",
+    "0xF317E436bfF08ce952C2DAeE735D72233B8e292e"
+  ],
+  [
+    "0x9c9553cd0c8673651a36e5e11c4989bb629d4067",
+    "0xc382E2878485Bb42C9abE86814567D8b39ab4DeF"
+  ],
+  [
+    "0x848a9126ff57004aa8bfdc99384f36a4754d4367",
+    "0x1F8F006ac655c1E8d22Ebf888Dda985F07eE5a81"
+  ],
+  [
+    "0x28aa4f9ffe21365473b64c161b566c3cdead0108",
+    "0x54e0703EbCB52F9bCc4A2e57D66a3297b2d28596"
+  ],
+  [
+    "0x6ec7b4fec23015ed9daa8dbf0e3573da69e5d36e",
+    "0x048aC9f48fAD5b4C17aCD76495e5b9FdABA9F0c9"
+  ]
+]
+
+
+
+
+0x90736660fd2f611175939673f09362ea61e135bc78c057a9be0154af961ecbe9	24/8	45615479
+0xae11073e761322e9b00679725179df124bd2a5e9645e5394fdd7fcc3a84f4dfe	17/8	45130006
+0x0d00a68dba00f91cd9de748a271f6f353ef1b2261b0c227b706e71d1da296a19	10/8	44642279
+0xfa21c147a767ffd4fd2569be9a07f592a33b084a196b0b290031356678bbf3ec	3/8		44170768
+0x55d04e8921f226453c37d1ca9c6182331d73567277fc7fe73595777eae763355	27/8	43688561
+0xb375458987d4497b2066b9ff95704461940a55e2d718fee2b4b3b0971a21af1d	20/7
+0x996cef3a8af4657808c08256f05898090f73a0765810d510acc95ca0688437a5	13/7
+0xd4dcf073437d53b77377c056b92ac6d6e31a68380fa5717f943b40cc854dafe2	6/7
+0x7e0c28c4d41ede4d412ea75d94c78d1fe9443602869aa624e6639ca578004704	29/6
+0x69855a40de6869657dbd37193d72c6a80e58b44dd747500e9a9dbb594d3c08ab	22/6
+
+
+to vote
+	https://ftmscan.com/address/0xda007a39a692b0fefe9c6cb1a185feab2722c4fd
+
+elite/ftm	0xb0d9b878edece2019d4c57bd34c6f8c169c860f2
+
+0x0fdFA18b20feFCD9018a78898C44FdAFC05330Fd
+
+[{"constant": true,"inputs": [{"internalType": "address","name": "","type": "address"}],"name": "voteWeightTotalByAccount","outputs": [{"internalType": "uint256","name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"internalType": "address","name": "","type": "address"}],"name": "userProxyByAccount","outputs": [{"internalType": "address","name": "","type": "address"}],"payable": false,"stateMutability": "view","type": "function"},]
+
+
+
+
+
+
+
+submit 457 vlsex
+
+0xca082181C4f4a811bed68Ab61De6aDCe11158948
+
+0x01bf98fe000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000001000000000000000000000000b0d9b878edece2019d4c57bd34c6f8c169c860f2000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000001c9
+
+200k
+
+submit all vlsex
+
+0xde1db5af0e72270c97bd4ae588f12995a6048307
+
+0x45d2763f
+
+3.5m
+
+
+
+
+
+
+
 
 
 
@@ -618,7 +844,7 @@ async function stepnone() {
 }
 
 async function step2() {
-	alert("All delegators before Aug. 1 will be auto-registered!")
+	alert("Note: Self-Registrations begin when we have more than 50 delegators!")
 }
 
 
@@ -646,4 +872,206 @@ async function basecheck() {
 	})
 }
 
+
+//DATA AS ON 30-AUG-2022
+DD = [
+  [
+    "0x96d8c4f7839f1da51bfe4d8262d0ab2c842ed02a",
+    "0xB5AF9A7f5eBD11e37aA7EF18C059Bb1B4cf49513",
+    0,//100,
+    0,//100,
+    0,//100,
+    0,//154.60173376311423,
+    0,//154.60173376311423
+  ],
+  [
+    "0xb86b5568853c5963dd9b9836f5ec94a15966bbc9",
+    "0x3F98333D2F704d314cdD7bd04352470413e06918",
+    0,//1556.6044174546068,
+    0,//1580.861007582345,
+    0,//1589.1685799984648,
+    0,//1597.6890668543356,
+    1809.739741728057
+  ],
+  [
+    "0x4cae6fd5e70bf75cf7048a85858c169848fa3c2d",
+    "0x0fdFA18b20feFCD9018a78898C44FdAFC05330Fd",
+    0,//839.5591270962759,
+    0,//839.5591270962759,
+    0,//839.5591270962759,
+    839.5591270962759,
+    839.5591270962759
+  ],
+  [
+    "0x6ec7b4fec23015ed9daa8dbf0e3573da69e5d36e",
+    "0x048aC9f48fAD5b4C17aCD76495e5b9FdABA9F0c9",
+    0,//12175.080935374048,
+    12326.931349097895,
+    12326.931349097895,
+    12326.931349097895,
+    12326.931349097895
+  ],
+  [
+    "0x7c218a744fbf8dacb8256f6e39d712fed1f0d67f",
+    "0x9f534eaC97F321DceF3740A8eeb4f36337187D5c",
+    0,//0,
+    2.17,
+    14.823521713995696,
+    14.823521713995696,
+    14.823521713995696
+  ],
+  [
+    "0xaaee61b58dc32e7331104f7a51d2a3220edf4261",
+    "0x07C7ec15c671DEAEdE0ed2Ef004CE4C2ABD2A63a",
+    0,//2339.9018407917415,
+    2339.9018407917415,
+    2339.9018407917415,
+    2339.9018407917415,
+    2339.9018407917415
+  ],
+  [
+    "0xd11bcc0e7d44169a572da39ca6297d0dfa5c17fa",
+    "0x2AC47CdCb3a1ca01Bd8A3fFdDFf017fB8fDb89E9",
+    0,//1040.5924220386305,
+    1040.5924220386305,
+    1040.5924220386305,
+    1040.5924220386305,
+    1040.5924220386305
+  ],
+  [
+    "0x6a02225ef927f8c617156b1ddf883293895b109d",
+    "0x150CF932B0C3D653A8d7cE4777dE47F8B1fA4DfB",
+    4999.572597046652,
+    4999.572597046652,
+    4999.572597046652,
+    4999.572597046652,
+    4999.572597046652
+  ],
+  [
+    "0x14edc2ce4e34d610539543e19dbeac3ea8ac7d11",
+    "0x1d543Fdc01135e792814df839cb2793Ab6cCe68D",
+    963.7540238525847,
+    963.7540238525847,
+    963.7540238525847,
+    963.7540238525847,
+    963.7540238525847
+  ],
+  [
+    "0x96d8c4f7839f1da51bfe4d8262d0ab2c842ed02a",
+    "0xB5AF9A7f5eBD11e37aA7EF18C059Bb1B4cf49513",
+    100,
+    100,
+    100,
+    154.60173376311423,
+    154.60173376311423
+  ],
+  [
+    "0x2637652ac58addfb67b401a1befb5f48b967574d",
+    "0xe04f3988823038BDf32f423726E39F20A332d75E",
+    73312.69909946839,
+    73312.69909946839,
+    73312.69909946839,
+    73312.69909946839,
+    73312.69909946839
+  ],
+  [
+    "0xdac11260ea26aa7ace35f846ab7e389bd50c75ad",
+    "0xE2244Fa7CB05Dd352BAa283e9A43299cF1446e56",
+    698,
+    698,
+    698,
+    710,
+    710
+  ],
+  [
+    "0xc8b40fdb2693fcbd1ed0e92db931ea1e668ae828",
+    "0xe9Af450f2976ABEBE9BE7f24127d7680DAe8b9BE",
+    102.2080524653495,
+    102.2080524653495,
+    102.2080524653495,
+    102.2080524653495,
+    102.2080524653495
+  ],
+  [
+    "0x5c146cd18fa53914580573c9b9604588529406ca",
+    "0x5bABBC6DD46A14d95d0e91FCE820f5bbb39760C0",
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  [
+    "0x922731d7e2a193870f438abfc89f3c38df821190",
+    "0xF317E436bfF08ce952C2DAeE735D72233B8e292e",
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  [
+    "0x9c9553cd0c8673651a36e5e11c4989bb629d4067",
+    "0xc382E2878485Bb42C9abE86814567D8b39ab4DeF",
+    564.458538959924,
+    564.458538959924,
+    564.458538959924,
+    564.458538959924,
+    564.458538959924
+  ],
+  [
+    "0x848a9126ff57004aa8bfdc99384f36a4754d4367",
+    "0x1F8F006ac655c1E8d22Ebf888Dda985F07eE5a81",
+    12.605203798448322,
+    12.605203798448322,
+    12.605203798448322,
+    12.605203798448322,
+    12.605203798448322
+  ],
+  [
+    "0x28aa4f9ffe21365473b64c161b566c3cdead0108",
+    "0x54e0703EbCB52F9bCc4A2e57D66a3297b2d28596",
+    426070.2658163161,
+    428520.6912396133,
+    455556.9345145036,
+    457367.94006820495,
+    460052.9410618585
+  ],
+  [
+    "0x6ec7b4fec23015ed9daa8dbf0e3573da69e5d36e",
+    "0x048aC9f48fAD5b4C17aCD76495e5b9FdABA9F0c9",
+    12175.080935374048,
+    12326.931349097895,
+    12326.931349097895,
+    12326.931349097895,
+    12326.931349097895
+  ]
+]
+
+async function mktable() {
+	for(i=0;i< DD.length;i++) {
+		tr = document.createElement("tr")
+		tr.innerHTML = `
+			<td>${DD[i][0]}</td>
+			<td>${DD[i][2].toFixed()}</td>
+			<td>${DD[i][3].toFixed()}</td>
+			<td>${DD[i][4].toFixed()}</td>
+			<td>${DD[i][5].toFixed()}</td>
+			<td>${DD[i][6].toFixed()}</td>
+			<td id="v_${i}"></td>
+		`
+		$("mtab").appendChild(tr)
+	}
+}
+async function cv() {
+	v=new ethers.Contract("0xda007a39a692b0fefe9c6cb1a185feab2722c4fd",[{"constant": true,"inputs": [{"internalType": "address","name": "","type": "address"}],"name": "voteWeightTotalByAccount","outputs": [{"internalType": "uint256","name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"internalType": "address","name": "","type": "address"}],"name": "userProxyByAccount","outputs": [{"internalType": "address","name": "","type": "address"}],"payable": false,"stateMutability": "view","type": "function"},],provider)
+	w=[]
+	for(i=0;i< DD.length;i++) {	w[i] = v.voteWeightTotalByAccount(DD[i][1]) }
+	await Promise.all(w)
+	.then(
+		ww => {
+			for(i=0;i< ww.length;i++) { $("v_"+i).innerHTML = (ww[i]/1e18).toFixed() }
+		}
+	)
+}
 </script>
