@@ -527,55 +527,11 @@ let provider= {};
 let signer= {};
 window.addEventListener('load',async function()
 {
-	console.log("waitin for 3 secs..");
-	$("cw_m").innerHTML = "Connecting.. Please wait."
-	setTimeout(async () => { await basetrip(); await gg()}, 3000);
+	provider = new ethers.providers.JsonRpcProvider(RPC_URL);
+	await gg()
 
 }, false);
 
-async function basetrip()
-{
-	if(!(window.ethereum)){$("cw_m").innerHTML = "Wallet wasn't detected!";console.log("Wallet wasn't detected!");provider = new ethers.providers.JsonRpcProvider(RPC_URL);return}
-	else if(!Number(window.ethereum.chainId)==CHAINID){$("cw_m").innerHTML = "Wrong network! Please Switch to "+CHAINID;provider = new ethers.providers.Web3Provider(window.ethereum);return}
-	else if(//typeOf window.ethereum == Object &&Number(window.ethereum.chainId)
-		Number(window.ethereum.chainId)==CHAINID)
-	{
-		console.log("Recognized Ethereum Chain:", window.ethereum.chainId,CHAINID);
-		provider = new ethers.providers.Web3Provider(window.ethereum)
-		signer = provider.getSigner();
-		if(!(window.ethereum.selectedAddress==null)){console.log("Found old wallet:", window.ethereum.selectedAddress);cw();}
-		else{console.log("Didnt find a connected wallet!");cw();}
-		//chkAppr(tokes[1][0])
-	}
-	else //if(Number(window.ethereum.chainId)==CHAINID)
-	{
-		console.log("Couldn't find Ethereum Provider - ",CHAINID,window.ethereum.chainId)
-		if((typeof Number(window.ethereum.chainId) == "number")){$("cw_m").innerHTML = "Wrong network! Switch from " + Number(window.ethereum.chainId)+" to "+CHAINID}
-		provider = new ethers.providers.JsonRpcProvider(RPC_URL);
-		signer = provider.getSigner()
-		$("connect").innerHTML=`Wallet not found.<br><br><button onclick="window.location.reload()" id="btn-connect">Retry?</button>`;
-	}
-	if(Number(window.ethereum.chainId) != null &&(window.ethereum.chainId!=CHAINID))
-	{
-		await window.ethereum.request({
-    		method: "wallet_addEthereumChain",
-    		params: [{
-        		chainId: "0x"+(CHAINID).toString(16),
-        		rpcUrls: [RPC_URL],
-        		chainName: RPC_URL.split(".")[1],
-        		nativeCurrency: {
-            		name: RPC_URL.split(".")[1],
-            		symbol: RPC_URL.split(".")[1],
-            		decimals: 18
-        		},
-        		blockExplorerUrls: [EXPLORE.split("/address")[0]]
-    		}]
-		});
-		window.location.reload
-	}
-	//DrefreshFarm()
-	//arf()
-}
 CA_MIG ="0x12e569ce813d28720894c2a0ffe6bec3ccd959b2"
 CA_VEN = "0xcbd8fea77c2452255f59743f55a3ea9d83b3c72b"
 CA_SOL = "0x888ef71766ca594ded1f0fa3ae64ed2941740a20"
