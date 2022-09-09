@@ -125,6 +125,7 @@ tr:hover {background: yellow;color: navy}
 					<td>Aug-17</td>
 					<td>Aug-24</td>
 					<td>CURRENT</td>
+					<td>STATUS</td>
 				</tr>
 			</thead>
 			<tbody id="mtab">
@@ -1119,6 +1120,7 @@ async function mktable() {
 			<td>${DD[i][5].toFixed()}</td>
 			<td>${DD[i][6].toFixed()}</td>
 			<td id="v_${i}"></td>
+			<td id="s_${i}"></td>
 		`
 		$("mtab").appendChild(tr)
 	}
@@ -1148,6 +1150,15 @@ async function cv() {
 	.then(
 		ww => {
 			for(i=0;i< ww.length;i++) { $("v_"+i).innerHTML = (ww[i]/1e18).toFixed() }
+		}
+	)
+	s=[]
+	VS = new ethers.Contract("0xda007a39a692b0fefe9c6cb1a185feab2722c4fd",[{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"voteDelegateByAccount","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"accountAddress","type":"address"}],"name":"voteWeightAvailableByAccount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"accountAddress","type":"address"}],"name":"voteWeightTotalByAccount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"voteWeightUsedByAccount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}],provider)
+	for(i=0;i< DD.length;i++) { s[i] = VS.voteDelegateByAccount(DD[i][1]) }
+	await Promise.all(s)
+	.then(
+		ss => {
+			for(i=0;i< ss.length;i++) { $("s_"+i).innerHTML = ss[i] == GURUDAO ? "ACTIVE" : "Dormant" }
 		}
 	)
 }
